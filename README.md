@@ -20,7 +20,7 @@ entry that already beats these. If we missed one, please tell us.
 
 `records.tsv` lists every improved entry: kind, n, k, previous best, new bound, code file.
 `codes/` has one file per entry: hexadecimal vertex labels, in order along the cycle (or path). Large files are gzipped.
-Seven entries (29/4, 30/4, 29/5, 30/5, 29/6, 30/6, 25/9) are only the code from a smaller cube, since Q_m is a subcube of Q_n;
+One entry (30/4) is only the code from a smaller cube, since Q_m is a subcube of Q_n;
 they are listed because they still beat the previous value.
 
 ## Checking
@@ -59,14 +59,14 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 26 | 4 | 13248 | **114034** | [coil_26_4_114034.txt.gz](codes/coil_26_4_114034.txt.gz) |  |
 | 27 | 4 | 20304 | **129672** | [coil_27_4_129672.txt.gz](codes/coil_27_4_129672.txt.gz) |  |
 | 28 | 4 | 34704 | **151834** | [coil_28_4_151834.txt.gz](codes/coil_28_4_151834.txt.gz) |  |
-| 29 | 4 | 57246 | **151834** | [coil_29_4_151834.txt.gz](codes/coil_29_4_151834.txt.gz) | same code as n=28 (Q_28 is a subcube of Q_29) |
-| 30 | 4 | 97846 | **151834** | [coil_30_4_151834.txt.gz](codes/coil_30_4_151834.txt.gz) | same code as n=28 (Q_28 is a subcube of Q_30) |
+| 29 | 4 | 57246 | **154930** | [coil_29_4_154930.txt.gz](codes/coil_29_4_154930.txt.gz) |  |
+| 30 | 4 | 97846 | **154930** | [coil_30_4_154930.txt.gz](codes/coil_30_4_154930.txt.gz) | same code as n=29 (Q_29 is a subcube of Q_30) |
 | 13 | 5 | 80 | **84** | [coil_13_5_84.txt](codes/coil_13_5_84.txt) |  |
 | 14 | 5 | 106 | **128** | [coil_14_5_128.txt](codes/coil_14_5_128.txt) |  |
 | 18 | 5 | 570 | **648** | [coil_18_5_648.txt](codes/coil_18_5_648.txt) |  |
-| 19 | 5 | 712 | **924** | [coil_19_5_924.txt](codes/coil_19_5_924.txt) |  |
-| 20 | 5 | 950 | **1444** | [coil_20_5_1444.txt](codes/coil_20_5_1444.txt) |  |
-| 21 | 5 | 1140 | **2282** | [coil_21_5_2282.txt](codes/coil_21_5_2282.txt) |  |
+| 19 | 5 | 712 | **950** | [coil_19_5_950.txt](codes/coil_19_5_950.txt) |  |
+| 20 | 5 | 950 | **1480** | [coil_20_5_1480.txt](codes/coil_20_5_1480.txt) |  |
+| 21 | 5 | 1140 | **2394** | [coil_21_5_2394.txt](codes/coil_21_5_2394.txt) |  |
 | 22 | 5 | 1422 | **3610** | [coil_22_5_3610.txt](codes/coil_22_5_3610.txt) |  |
 | 23 | 5 | 1898 | **5804** | [coil_23_5_5804.txt](codes/coil_23_5_5804.txt) |  |
 | 24 | 5 | 2280 | **9428** | [coil_24_5_9428.txt](codes/coil_24_5_9428.txt) |  |
@@ -74,25 +74,25 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 26 | 5 | 3794 | **24758** | [coil_26_5_24758.txt](codes/coil_26_5_24758.txt) |  |
 | 27 | 5 | 4560 | **39294** | [coil_27_5_39294.txt.gz](codes/coil_27_5_39294.txt.gz) |  |
 | 28 | 5 | 5690 | **42162** | [coil_28_5_42162.txt.gz](codes/coil_28_5_42162.txt.gz) |  |
-| 29 | 5 | 7586 | **42162** | [coil_29_5_42162.txt.gz](codes/coil_29_5_42162.txt.gz) | same code as n=28 (Q_28 is a subcube of Q_29) |
-| 30 | 5 | 9120 | **42162** | [coil_30_5_42162.txt.gz](codes/coil_30_5_42162.txt.gz) | same code as n=28 (Q_28 is a subcube of Q_30) |
+| 29 | 5 | 7586 | **55946** | [coil_29_5_55946.txt.gz](codes/coil_29_5_55946.txt.gz) |  |
+| 30 | 5 | 9120 | **63890** | [coil_30_5_63890.txt.gz](codes/coil_30_5_63890.txt.gz) |  |
 | 14 | 6 | 68 | **72** | [coil_14_6_72.txt](codes/coil_14_6_72.txt) |  |
 | 15 | 6 | 88 | **104** | [coil_15_6_104.txt](codes/coil_15_6_104.txt) |  |
 | 16 | 6 | 118 | **160** | [coil_16_6_160.txt](codes/coil_16_6_160.txt) |  |
 | 17 | 6 | 204 | **224** | [coil_17_6_224.txt](codes/coil_17_6_224.txt) |  |
 | 18 | 6 | 238 | **324** | [coil_18_6_324.txt](codes/coil_18_6_324.txt) |  |
-| 19 | 6 | 284 | **418** | [coil_19_6_418.txt](codes/coil_19_6_418.txt) |  |
-| 20 | 6 | 330 | **588** | [coil_20_6_588.txt](codes/coil_20_6_588.txt) |  |
-| 21 | 6 | 436 | **842** | [coil_21_6_842.txt](codes/coil_21_6_842.txt) |  |
-| 22 | 6 | 510 | **1262** | [coil_22_6_1262.txt](codes/coil_22_6_1262.txt) |  |
+| 19 | 6 | 284 | **456** | [coil_19_6_456.txt](codes/coil_19_6_456.txt) |  |
+| 20 | 6 | 330 | **600** | [coil_20_6_600.txt](codes/coil_20_6_600.txt) |  |
+| 21 | 6 | 436 | **882** | [coil_21_6_882.txt](codes/coil_21_6_882.txt) |  |
+| 22 | 6 | 510 | **1276** | [coil_22_6_1276.txt](codes/coil_22_6_1276.txt) |  |
 | 23 | 6 | 608 | **1932** | [coil_23_6_1932.txt](codes/coil_23_6_1932.txt) |  |
 | 24 | 6 | 714 | **2980** | [coil_24_6_2980.txt](codes/coil_24_6_2980.txt) |  |
 | 25 | 6 | 932 | **4546** | [coil_25_6_4546.txt](codes/coil_25_6_4546.txt) |  |
 | 26 | 6 | 1086 | **7084** | [coil_26_6_7084.txt](codes/coil_26_6_7084.txt) |  |
 | 27 | 6 | 1304 | **11076** | [coil_27_6_11076.txt](codes/coil_27_6_11076.txt) |  |
 | 28 | 6 | 1530 | **16910** | [coil_28_6_16910.txt](codes/coil_28_6_16910.txt) |  |
-| 29 | 6 | 1996 | **16910** | [coil_29_6_16910.txt](codes/coil_29_6_16910.txt) | same code as n=28 (Q_28 is a subcube of Q_29) |
-| 30 | 6 | 2328 | **16910** | [coil_30_6_16910.txt](codes/coil_30_6_16910.txt) | same code as n=28 (Q_28 is a subcube of Q_30) |
+| 29 | 6 | 1996 | **27034** | [coil_29_6_27034.txt](codes/coil_29_6_27034.txt) |  |
+| 30 | 6 | 2328 | **37872** | [coil_30_6_37872.txt.gz](codes/coil_30_6_37872.txt.gz) |  |
 | 16 | 7 | 76 | **84** | [coil_16_7_84.txt](codes/coil_16_7_84.txt) |  |
 | 17 | 7 | 102 | **110** | [coil_17_7_110.txt](codes/coil_17_7_110.txt) |  |
 | 18 | 7 | 116 | **162** | [coil_18_7_162.txt](codes/coil_18_7_162.txt) |  |
@@ -100,7 +100,7 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 20 | 7 | 152 | **360** | [coil_20_7_360.txt](codes/coil_20_7_360.txt) |  |
 | 21 | 7 | 198 | **462** | [coil_21_7_462.txt](codes/coil_21_7_462.txt) |  |
 | 22 | 7 | 234 | **660** | [coil_22_7_660.txt](codes/coil_22_7_660.txt) |  |
-| 23 | 7 | 266 | **836** | [coil_23_7_836.txt](codes/coil_23_7_836.txt) |  |
+| 23 | 7 | 266 | **874** | [coil_23_7_874.txt](codes/coil_23_7_874.txt) |  |
 | 24 | 7 | 310 | **1206** | [coil_24_7_1206.txt](codes/coil_24_7_1206.txt) |  |
 | 25 | 7 | 390 | **1770** | [coil_25_7_1770.txt](codes/coil_25_7_1770.txt) |  |
 | 26 | 7 | 466 | **2614** | [coil_26_7_2614.txt](codes/coil_26_7_2614.txt) |  |
@@ -129,7 +129,7 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 22 | 9 | 100 | **184** | [coil_22_9_184.txt](codes/coil_22_9_184.txt) |  |
 | 23 | 9 | 110 | **276** | [coil_23_9_276.txt](codes/coil_23_9_276.txt) |  |
 | 24 | 9 | 124 | **432** | [coil_24_9_432.txt](codes/coil_24_9_432.txt) |  |
-| 25 | 9 | 160 | **432** | [coil_25_9_432.txt](codes/coil_25_9_432.txt) | same code as n=24 (Q_24 is a subcube of Q_25) |
+| 25 | 9 | 160 | **510** | [coil_25_9_510.txt](codes/coil_25_9_510.txt) |  |
 | 26 | 9 | 176 | **584** | [coil_26_9_584.txt](codes/coil_26_9_584.txt) |  |
 | 27 | 9 | 200 | **802** | [coil_27_9_802.txt](codes/coil_27_9_802.txt) |  |
 | 28 | 9 | 222 | **1104** | [coil_28_9_1104.txt](codes/coil_28_9_1104.txt) |  |

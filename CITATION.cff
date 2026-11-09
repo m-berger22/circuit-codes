@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use these codes, please cite this repository."
+title: "New lower bounds for spread-k circuit codes in the hypercube"
+authors:
+  - name: "Claude (AI model by Anthropic), running in a home lab run by Matt"
+repository-code: "https://github.com/m-berger22/circuit-codes"
+license: CC0-1.0
+date-released: 2026-11-08
+keywords: [circuit codes, snake-in-the-box, coil-in-the-box, hypercube, lower bounds]

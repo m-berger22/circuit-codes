@@ -25,14 +25,14 @@ coil	25	4	9870	67196	codes/coil_25_4_67196.txt.gz
 coil	26	4	13248	114034	codes/coil_26_4_114034.txt.gz	
 coil	27	4	20304	129672	codes/coil_27_4_129672.txt.gz	
 coil	28	4	34704	151834	codes/coil_28_4_151834.txt.gz	
-coil	29	4	57246	151834	codes/coil_29_4_151834.txt.gz	same code as n=28 (Q_28 is a subcube of Q_29)
-coil	30	4	97846	151834	codes/coil_30_4_151834.txt.gz	same code as n=28 (Q_28 is a subcube of Q_30)
+coil	29	4	57246	154930	codes/coil_29_4_154930.txt.gz	
+coil	30	4	97846	154930	codes/coil_30_4_154930.txt.gz	same code as n=29 (Q_29 is a subcube of Q_30)
 coil	13	5	80	84	codes/coil_13_5_84.txt	
 coil	14	5	106	128	codes/coil_14_5_128.txt	
 coil	18	5	570	648	codes/coil_18_5_648.txt	
-coil	19	5	712	924	codes/coil_19_5_924.txt	
-coil	20	5	950	1444	codes/coil_20_5_1444.txt	
-coil	21	5	1140	2282	codes/coil_21_5_2282.txt	
+coil	19	5	712	950	codes/coil_19_5_950.txt	
+coil	20	5	950	1480	codes/coil_20_5_1480.txt	
+coil	21	5	1140	2394	codes/coil_21_5_2394.txt	
 coil	22	5	1422	3610	codes/coil_22_5_3610.txt	
 coil	23	5	1898	5804	codes/coil_23_5_5804.txt	
 coil	24	5	2280	9428	codes/coil_24_5_9428.txt	
@@ -40,25 +40,25 @@ coil	25	5	2846	15164	codes/coil_25_5_15164.txt
 coil	26	5	3794	24758	codes/coil_26_5_24758.txt	
 coil	27	5	4560	39294	codes/coil_27_5_39294.txt.gz	
 coil	28	5	5690	42162	codes/coil_28_5_42162.txt.gz	
-coil	29	5	7586	42162	codes/coil_29_5_42162.txt.gz	same code as n=28 (Q_28 is a subcube of Q_29)
-coil	30	5	9120	42162	codes/coil_30_5_42162.txt.gz	same code as n=28 (Q_28 is a subcube of Q_30)
+coil	29	5	7586	55946	codes/coil_29_5_55946.txt.gz	
+coil	30	5	9120	63890	codes/coil_30_5_63890.txt.gz	
 coil	14	6	68	72	codes/coil_14_6_72.txt	
 coil	15	6	88	104	codes/coil_15_6_104.txt	
 coil	16	6	118	160	codes/coil_16_6_160.txt	
 coil	17	6	204	224	codes/coil_17_6_224.txt	
 coil	18	6	238	324	codes/coil_18_6_324.txt	
-coil	19	6	284	418	codes/coil_19_6_418.txt	
-coil	20	6	330	588	codes/coil_20_6_588.txt	
-coil	21	6	436	842	codes/coil_21_6_842.txt	
-coil	22	6	510	1262	codes/coil_22_6_1262.txt	
+coil	19	6	284	456	codes/coil_19_6_456.txt	
+coil	20	6	330	600	codes/coil_20_6_600.txt	
+coil	21	6	436	882	codes/coil_21_6_882.txt	
+coil	22	6	510	1276	codes/coil_22_6_1276.txt	
 coil	23	6	608	1932	codes/coil_23_6_1932.txt	
 coil	24	6	714	2980	codes/coil_24_6_2980.txt	
 coil	25	6	932	4546	codes/coil_25_6_4546.txt	
 coil	26	6	1086	7084	codes/coil_26_6_7084.txt	
 coil	27	6	1304	11076	codes/coil_27_6_11076.txt	
 coil	28	6	1530	16910	codes/coil_28_6_16910.txt	
-coil	29	6	1996	16910	codes/coil_29_6_16910.txt	same code as n=28 (Q_28 is a subcube of Q_29)
-coil	30	6	2328	16910	codes/coil_30_6_16910.txt	same code as n=28 (Q_28 is a subcube of Q_30)
+coil	29	6	1996	27034	codes/coil_29_6_27034.txt	
+coil	30	6	2328	37872	codes/coil_30_6_37872.txt.gz	
 coil	16	7	76	84	codes/coil_16_7_84.txt	
 coil	17	7	102	110	codes/coil_17_7_110.txt	
 coil	18	7	116	162	codes/coil_18_7_162.txt	
@@ -66,7 +66,7 @@ coil	19	7	134	266	codes/coil_19_7_266.txt
 coil	20	7	152	360	codes/coil_20_7_360.txt	
 coil	21	7	198	462	codes/coil_21_7_462.txt	
 coil	22	7	234	660	codes/coil_22_7_660.txt	
-coil	23	7	266	836	codes/coil_23_7_836.txt	
+coil	23	7	266	874	codes/coil_23_7_874.txt	
 coil	24	7	310	1206	codes/coil_24_7_1206.txt	
 coil	25	7	390	1770	codes/coil_25_7_1770.txt	
 coil	26	7	466	2614	codes/coil_26_7_2614.txt	
@@ -95,7 +95,7 @@ coil	21	9	88	136	codes/coil_21_9_136.txt
 coil	22	9	100	184	codes/coil_22_9_184.txt	
 coil	23	9	110	276	codes/coil_23_9_276.txt	
 coil	24	9	124	432	codes/coil_24_9_432.txt	
-coil	25	9	160	432	codes/coil_25_9_432.txt	same code as n=24 (Q_24 is a subcube of Q_25)
+coil	25	9	160	510	codes/coil_25_9_510.txt	
 coil	26	9	176	584	codes/coil_26_9_584.txt	
 coil	27	9	200	802	codes/coil_27_9_802.txt	
 coil	28	9	222	1104	codes/coil_28_9_1104.txt	
