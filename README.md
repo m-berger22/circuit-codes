@@ -10,7 +10,7 @@ for all i, j:   d_H(v_i, v_j) < k  implies  d_C(i, j) = d_H(v_i, v_j),
 where d_C is the distance along the cycle. Spread 2 is coil-in-the-box. K(n,k) is the maximum length. A k-snake is the
 same with a path instead of a cycle (length = number of edges).
 
-This repository improves **102 entries** of the K(n,k) lower-bound table in
+This repository improves **106 entries** of the K(n,k) lower-bound table in
 K. M. Byrnes, *A new method for constructing circuit codes*, arXiv:1604.02755 (2016), Table 3
 (n = 11..30, k = 3..9), and **12 entries** of the spread-k snake table in
 K. J. Hood, D. Recoskie, J. Sawada, D. Wong, *Snakes, coils, and single-track circuit codes with spread k*,
@@ -20,11 +20,18 @@ entry that already beats these. If we missed one, please tell us.
 
 `records.tsv` lists every improved entry: kind, n, k, previous best, new bound, code file.
 `codes/` has one file per entry: hexadecimal vertex labels, in order along the cycle (or path). Large files are gzipped.
-One entry (30/4) is only the code from a smaller cube, since Q_m is a subcube of Q_n;
+One entry (30/3) is only the code from a smaller cube, since Q_m is a subcube of Q_n;
 they are listed because they still beat the previous value.
 
+## Updates
+- **2026-11-09**: added the spread-3 entries for n = 27..30 (the first version stopped at n = 26 by mistake; Byrnes' table
+  goes to n = 30), e.g. K(29,3) >= 4194270 (previous 250114). Symmetric rerouting also beat our first-version spread-4 and
+  spread-5 entries for n = 26..30 (e.g. K(30,4) >= 1153860, was 154930 here, 97846 in the table), and an exhaustive class
+  search improved K(25,9) and K(26,9). New entries are marked in the git history; all files pass `verify.py --all`.
+  A fourth checker, `src/checkhash.c` (hash table, memory O(N)), was added for the multi-million-vertex codes.
+
 ## Checking
-`python3 verify.py --all` checks every file (requires numpy 2; about 10 minutes on one core). `python3 verify.py FILE n k [open]`
+`python3 verify.py --all` checks every file (requires numpy 2; about an hour on one core since the multi-million-vertex spread-3 and spread-4 codes were added). `python3 verify.py FILE n k [open]`
 checks one. It tests that consecutive vertices are adjacent, vertices are distinct, and the spread condition for every
 pair (either all pairs directly, or a Hamming ball of radius k-1 around each vertex, whichever is cheaper). It rejects
 swapped or flipped vertices and the same codes checked with spread k+1. Each code was also accepted by two other
@@ -45,6 +52,10 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 24 | 3 | 41696 | **219888** | [coil_24_3_219888.txt.gz](codes/coil_24_3_219888.txt.gz) |  |
 | 25 | 3 | 62530 | **392050** | [coil_25_3_392050.txt.gz](codes/coil_25_3_392050.txt.gz) |  |
 | 26 | 3 | 83392 | **688428** | [coil_26_3_688428.txt.gz](codes/coil_26_3_688428.txt.gz) |  |
+| 27 | 3 | 125058 | **1354050** | [coil_27_3_1354050.txt.gz](codes/coil_27_3_1354050.txt.gz) |  |
+| 28 | 3 | 166784 | **2464504** | [coil_28_3_2464504.txt.gz](codes/coil_28_3_2464504.txt.gz) |  |
+| 29 | 3 | 250114 | **4194270** | [coil_29_3_4194270.txt.gz](codes/coil_29_3_4194270.txt.gz) |  |
+| 30 | 3 | 333568 | **4194270** | [coil_30_3_4194270.txt.gz](codes/coil_30_3_4194270.txt.gz) | same code as n=29 (Q_29 is a subcube of Q_30) |
 | 11 | 4 | 70 | **72** | [coil_11_4_72.txt](codes/coil_11_4_72.txt) |  |
 | 12 | 4 | 102 | **120** | [coil_12_4_120.txt](codes/coil_12_4_120.txt) |  |
 | 14 | 4 | 280 | **286** | [coil_14_4_286.txt](codes/coil_14_4_286.txt) |  |
@@ -56,11 +67,11 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 23 | 4 | 5910 | **23690** | [coil_23_4_23690.txt](codes/coil_23_4_23690.txt) |  |
 | 24 | 4 | 7480 | **41136** | [coil_24_4_41136.txt](codes/coil_24_4_41136.txt) |  |
 | 25 | 4 | 9870 | **67196** | [coil_25_4_67196.txt.gz](codes/coil_25_4_67196.txt.gz) |  |
-| 26 | 4 | 13248 | **114034** | [coil_26_4_114034.txt.gz](codes/coil_26_4_114034.txt.gz) |  |
-| 27 | 4 | 20304 | **129672** | [coil_27_4_129672.txt.gz](codes/coil_27_4_129672.txt.gz) |  |
-| 28 | 4 | 34704 | **151834** | [coil_28_4_151834.txt.gz](codes/coil_28_4_151834.txt.gz) |  |
-| 29 | 4 | 57246 | **154930** | [coil_29_4_154930.txt.gz](codes/coil_29_4_154930.txt.gz) |  |
-| 30 | 4 | 97846 | **154930** | [coil_30_4_154930.txt.gz](codes/coil_30_4_154930.txt.gz) | same code as n=29 (Q_29 is a subcube of Q_30) |
+| 26 | 4 | 13248 | **122564** | [coil_26_4_122564.txt.gz](codes/coil_26_4_122564.txt.gz) |  |
+| 27 | 4 | 20304 | **215514** | [coil_27_4_215514.txt.gz](codes/coil_27_4_215514.txt.gz) |  |
+| 28 | 4 | 34704 | **376376** | [coil_28_4_376376.txt.gz](codes/coil_28_4_376376.txt.gz) |  |
+| 29 | 4 | 57246 | **659518** | [coil_29_4_659518.txt.gz](codes/coil_29_4_659518.txt.gz) |  |
+| 30 | 4 | 97846 | **1153860** | [coil_30_4_1153860.txt.gz](codes/coil_30_4_1153860.txt.gz) |  |
 | 13 | 5 | 80 | **84** | [coil_13_5_84.txt](codes/coil_13_5_84.txt) |  |
 | 14 | 5 | 106 | **128** | [coil_14_5_128.txt](codes/coil_14_5_128.txt) |  |
 | 18 | 5 | 570 | **648** | [coil_18_5_648.txt](codes/coil_18_5_648.txt) |  |
@@ -71,11 +82,11 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 23 | 5 | 1898 | **5804** | [coil_23_5_5804.txt](codes/coil_23_5_5804.txt) |  |
 | 24 | 5 | 2280 | **9428** | [coil_24_5_9428.txt](codes/coil_24_5_9428.txt) |  |
 | 25 | 5 | 2846 | **15164** | [coil_25_5_15164.txt](codes/coil_25_5_15164.txt) |  |
-| 26 | 5 | 3794 | **24758** | [coil_26_5_24758.txt](codes/coil_26_5_24758.txt) |  |
-| 27 | 5 | 4560 | **39294** | [coil_27_5_39294.txt.gz](codes/coil_27_5_39294.txt.gz) |  |
-| 28 | 5 | 5690 | **42162** | [coil_28_5_42162.txt.gz](codes/coil_28_5_42162.txt.gz) |  |
-| 29 | 5 | 7586 | **55946** | [coil_29_5_55946.txt.gz](codes/coil_29_5_55946.txt.gz) |  |
-| 30 | 5 | 9120 | **63890** | [coil_30_5_63890.txt.gz](codes/coil_30_5_63890.txt.gz) |  |
+| 26 | 5 | 3794 | **26156** | [coil_26_5_26156.txt](codes/coil_26_5_26156.txt) |  |
+| 27 | 5 | 4560 | **44982** | [coil_27_5_44982.txt.gz](codes/coil_27_5_44982.txt.gz) |  |
+| 28 | 5 | 5690 | **74872** | [coil_28_5_74872.txt.gz](codes/coil_28_5_74872.txt.gz) |  |
+| 29 | 5 | 7586 | **124062** | [coil_29_5_124062.txt.gz](codes/coil_29_5_124062.txt.gz) |  |
+| 30 | 5 | 9120 | **205500** | [coil_30_5_205500.txt.gz](codes/coil_30_5_205500.txt.gz) |  |
 | 14 | 6 | 68 | **72** | [coil_14_6_72.txt](codes/coil_14_6_72.txt) |  |
 | 15 | 6 | 88 | **104** | [coil_15_6_104.txt](codes/coil_15_6_104.txt) |  |
 | 16 | 6 | 118 | **160** | [coil_16_6_160.txt](codes/coil_16_6_160.txt) |  |
@@ -129,8 +140,8 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 22 | 9 | 100 | **184** | [coil_22_9_184.txt](codes/coil_22_9_184.txt) |  |
 | 23 | 9 | 110 | **276** | [coil_23_9_276.txt](codes/coil_23_9_276.txt) |  |
 | 24 | 9 | 124 | **432** | [coil_24_9_432.txt](codes/coil_24_9_432.txt) |  |
-| 25 | 9 | 160 | **510** | [coil_25_9_510.txt](codes/coil_25_9_510.txt) |  |
-| 26 | 9 | 176 | **584** | [coil_26_9_584.txt](codes/coil_26_9_584.txt) |  |
+| 25 | 9 | 160 | **550** | [coil_25_9_550.txt](codes/coil_25_9_550.txt) |  |
+| 26 | 9 | 176 | **676** | [coil_26_9_676.txt](codes/coil_26_9_676.txt) |  |
 | 27 | 9 | 200 | **802** | [coil_27_9_802.txt](codes/coil_27_9_802.txt) |  |
 | 28 | 9 | 222 | **1104** | [coil_28_9_1104.txt](codes/coil_28_9_1104.txt) |  |
 | 29 | 9 | 248 | **1534** | [coil_29_9_1534.txt](codes/coil_29_9_1534.txt) |  |
@@ -160,7 +171,7 @@ Three methods, all of them plain search, none clever:
    from constructions, and that is where this gains most.
 2. **Symmetric rerouting** (spread 3, n >= 15): the old spread-3 records are invariant under rotating the coordinates.
    Searching only among cycles with v_(i+L) = rot(v_i) XOR t, and rerouting all R images at once, gives the n = 15, 16
-   and 18..26 entries.
+   and 18..30 entries; with the same method at spread 4 and 5 (R = 2n), the n = 26..28 entries (2026-11-09 update).
 3. **Exhaustive search inside one symmetry class**: for an automorphism g(v) = sigma(v) XOR t of Q_n (sigma a coordinate
    permutation of a chosen cycle type), search every cycle with v_(i+L) = g(v_i) completely (with exact pruning).
    This gives the n <= 17 entries such as K(11,3) >= 192 (sigma of cycle type 6+3+2), K(12,4) >= 120 (4+4+4),
