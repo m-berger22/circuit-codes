@@ -1,0 +1,5 @@
+email_draft*.txt
+build.py
+mkreadme.py
+verify_all.log
+__pycache__/

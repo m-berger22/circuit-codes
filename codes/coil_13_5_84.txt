@@ -1,0 +1,2 @@
+# coil n=13 k=5 length=84 (vertices); hex vertex list, one cycle
+0 2 3 7 f 8f 9f 109f 109d 109c 10dc 14dc 14fc 14f8 14fa 14f2 14f3 4f3 5f3 df3 d73 d33 d37 d35 d3d d3c d2c d0c 1d0c 1d08 1d0a 1d8a 198a 19ca 19c2 19c6 19c7 19c5 9c5 bc5 3c5 3d5 355 35d 359 358 35a 37a 33a 133a 1332 1336 1326 1726 17a6 17a7 17af 17ad 17a9 7a9 6a9 ea9 e89 e99 e98 e90 e92 e96 ed6 e56 1e56 1e57 1e5f 1e7f 1a7f 1a6f 1a6d 1a6c 1a68 1a60 a60 860 60 20
