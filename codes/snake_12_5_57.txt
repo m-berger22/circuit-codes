@@ -1,0 +1,2 @@
+# snake n=12 k=5 length=57 (edges); hex vertex list, one path
+d87 f87 e87 ea7 ee7 ae7 ae3 ae1 be1 b61 b71 b79 b7d b5d b5c a5c adc edc ed8 e98 eb8 cb8 cba c3a 83a 82a 80a 802 800 0 1 5 15 35 435 475 474 574 564 5e4 5ec 1ec 1ac 3ac 3ae 3be 3b6 3b2 392 3d2 1d2 1d3 1db 5db 55b 54b 74b 64b

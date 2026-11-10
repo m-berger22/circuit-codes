@@ -1,0 +1,2 @@
+# coil n=17 k=9 length=50 (vertices); hex vertex list, one cycle
+0 1 5 15 55 155 1d5 5d5 5dd 15dd 15df 55df 55db 5ddb 5d9b 7d9b fd9b f99b f99a fb9a fb98 fbb8 fb38 f338 f33c 1f33c 1f334 1f734 1f774 1f764 1f765 1f665 1f667 1fe67 1be67 1ae67 1aee7 1aae7 1aaef 12aef 12aee 10aee 10aea 102ea 102aa 100aa 1002a 1000a 10002 10000

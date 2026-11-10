@@ -1,2 +1,0 @@
-# coil n=19 k=9 length=76 (vertices); hex vertex list, one cycle
-0 4 404 424 425 42d c2d c6d c6f c7f 1c7f 1cff 1cfb 1cdb 3cdb 3ddb 3dd3 3d93 7d93 7f93 7f83 7f03 ff03 fb03 fb23 fa23 1fa23 1f223 1f263 1f063 3f063 3e063 3e0e3 3e4e3 7e4e3 7c4e3 7c5e3 7cde3 7cde2 78de2 78fe2 79fe2 79fe0 71fe0 71be0 73be0 73be4 63be4 633e4 673e4 673ec 473ec 463ec 4e3ec 4e3fc e3fc c3fc 1c3fc 1c3dc 1c3dd 183dd 383dd 3839d 3839f 3039f 7039f 7031f 7031b 6031b 6031a 6021a 60212 40212 40210 40010 40000

@@ -10,9 +10,9 @@ for all i, j:   d_H(v_i, v_j) < k  implies  d_C(i, j) = d_H(v_i, v_j),
 where d_C is the distance along the cycle. Spread 2 is coil-in-the-box. K(n,k) is the maximum length. A k-snake is the
 same with a path instead of a cycle (length = number of edges).
 
-This repository improves **106 entries** of the K(n,k) lower-bound table in
+This repository improves **109 entries** of the K(n,k) lower-bound table in
 K. M. Byrnes, *A new method for constructing circuit codes*, arXiv:1604.02755 (2016), Table 3
-(n = 11..30, k = 3..9), and **12 entries** of the spread-k snake table in
+(n = 11..30, k = 3..9), and **17 entries** of the spread-k snake table in
 K. J. Hood, D. Recoskie, J. Sawada, D. Wong, *Snakes, coils, and single-track circuit codes with spread k*,
 J. Comb. Optim. 30 (2015). Before publishing we checked the later literature we could find (Byrnes 2018-2021 on
 codes with long bit runs and isomorphism; the 2026 snake-in-the-box papers, which are spread 2 only) and found no
@@ -29,6 +29,14 @@ they are listed because they still beat the previous value.
   spread-5 entries for n = 26..30 (e.g. K(30,4) >= 1153860, was 154930 here, 97846 in the table), and an exhaustive class
   search improved K(25,9) and K(26,9). New entries are marked in the git history; all files pass `verify.py --all`.
   A fourth checker, `src/checkhash.c` (hash table, memory O(N)), was added for the multi-million-vertex codes.
+- **2026-11-10**: a new family of symmetry classes. Everything before used cycles with a rotational symmetry
+  (v_(i+L) = g(v_i)). A cycle can instead have only a *reflection*: an automorphism h of Q_n with v_(-i) = h(v_i).
+  Searching those classes (`src/exhr2.c` exhaustive, `src/refl.c` local search) gives K(15,7) >= 64 (table 60),
+  K(16,8) >= 56 (table 46, 52 here before), K(17,9) >= 50 (table 48) and improves K(18,8), K(18,9), K(19,9), K(20,9)
+  (see the table). The spread 6..9 entries
+  for n = 26..30 were also improved by symmetric rerouting (method 2 with R = 2n).
+  The same idea for open paths (`src/exhs.c`: the reflection fixes the middle vertex or flips the middle edge) gives
+  new snakes, e.g. spread 4 in Q_11 with 71 edges (68) and spread 7 in Q_14 and Q_15 with 43 and 57 edges (42, 55).
 
 ## Checking
 `python3 verify.py --all` checks every file (requires numpy 2; about an hour on one core since the multi-million-vertex spread-3 and spread-4 codes were added). `python3 verify.py FILE n k [open]`
@@ -99,11 +107,12 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 23 | 6 | 608 | **1932** | [coil_23_6_1932.txt](codes/coil_23_6_1932.txt) |  |
 | 24 | 6 | 714 | **2980** | [coil_24_6_2980.txt](codes/coil_24_6_2980.txt) |  |
 | 25 | 6 | 932 | **4546** | [coil_25_6_4546.txt](codes/coil_25_6_4546.txt) |  |
-| 26 | 6 | 1086 | **7084** | [coil_26_6_7084.txt](codes/coil_26_6_7084.txt) |  |
-| 27 | 6 | 1304 | **11076** | [coil_27_6_11076.txt](codes/coil_27_6_11076.txt) |  |
-| 28 | 6 | 1530 | **16910** | [coil_28_6_16910.txt](codes/coil_28_6_16910.txt) |  |
-| 29 | 6 | 1996 | **27034** | [coil_29_6_27034.txt](codes/coil_29_6_27034.txt) |  |
-| 30 | 6 | 2328 | **37872** | [coil_30_6_37872.txt.gz](codes/coil_30_6_37872.txt.gz) |  |
+| 26 | 6 | 1086 | **7748** | [coil_26_6_7748.txt](codes/coil_26_6_7748.txt) |  |
+| 27 | 6 | 1304 | **11826** | [coil_27_6_11826.txt](codes/coil_27_6_11826.txt) |  |
+| 28 | 6 | 1530 | **18760** | [coil_28_6_18760.txt](codes/coil_28_6_18760.txt) |  |
+| 29 | 6 | 1996 | **30218** | [coil_29_6_30218.txt](codes/coil_29_6_30218.txt) |  |
+| 30 | 6 | 2328 | **45180** | [coil_30_6_45180.txt.gz](codes/coil_30_6_45180.txt.gz) |  |
+| 15 | 7 | 60 | **64** | [coil_15_7_64.txt](codes/coil_15_7_64.txt) |  |
 | 16 | 7 | 76 | **84** | [coil_16_7_84.txt](codes/coil_16_7_84.txt) |  |
 | 17 | 7 | 102 | **110** | [coil_17_7_110.txt](codes/coil_17_7_110.txt) |  |
 | 18 | 7 | 116 | **162** | [coil_18_7_162.txt](codes/coil_18_7_162.txt) |  |
@@ -115,13 +124,13 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 24 | 7 | 310 | **1206** | [coil_24_7_1206.txt](codes/coil_24_7_1206.txt) |  |
 | 25 | 7 | 390 | **1770** | [coil_25_7_1770.txt](codes/coil_25_7_1770.txt) |  |
 | 26 | 7 | 466 | **2614** | [coil_26_7_2614.txt](codes/coil_26_7_2614.txt) |  |
-| 27 | 7 | 532 | **3820** | [coil_27_7_3820.txt](codes/coil_27_7_3820.txt) |  |
-| 28 | 7 | 618 | **5672** | [coil_28_7_5672.txt](codes/coil_28_7_5672.txt) |  |
-| 29 | 7 | 774 | **8444** | [coil_29_7_8444.txt](codes/coil_29_7_8444.txt) |  |
-| 30 | 7 | 930 | **10814** | [coil_30_7_10814.txt](codes/coil_30_7_10814.txt) |  |
-| 16 | 8 | 46 | **52** | [coil_16_8_52.txt](codes/coil_16_8_52.txt) |  |
+| 27 | 7 | 532 | **4050** | [coil_27_7_4050.txt](codes/coil_27_7_4050.txt) |  |
+| 28 | 7 | 618 | **5880** | [coil_28_7_5880.txt](codes/coil_28_7_5880.txt) |  |
+| 29 | 7 | 774 | **8642** | [coil_29_7_8642.txt](codes/coil_29_7_8642.txt) |  |
+| 30 | 7 | 930 | **13500** | [coil_30_7_13500.txt](codes/coil_30_7_13500.txt) |  |
+| 16 | 8 | 46 | **56** | [coil_16_8_56.txt](codes/coil_16_8_56.txt) |  |
 | 17 | 8 | 54 | **72** | [coil_17_8_72.txt](codes/coil_17_8_72.txt) |  |
-| 18 | 8 | 68 | **92** | [coil_18_8_92.txt](codes/coil_18_8_92.txt) |  |
+| 18 | 8 | 68 | **96** | [coil_18_8_96.txt](codes/coil_18_8_96.txt) |  |
 | 19 | 8 | 78 | **122** | [coil_19_8_122.txt](codes/coil_19_8_122.txt) |  |
 | 20 | 8 | 86 | **180** | [coil_20_8_180.txt](codes/coil_20_8_180.txt) |  |
 | 21 | 8 | 116 | **252** | [coil_21_8_252.txt](codes/coil_21_8_252.txt) |  |
@@ -129,22 +138,24 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 23 | 8 | 148 | **506** | [coil_23_8_506.txt](codes/coil_23_8_506.txt) |  |
 | 24 | 8 | 168 | **624** | [coil_24_8_624.txt](codes/coil_24_8_624.txt) |  |
 | 25 | 8 | 188 | **824** | [coil_25_8_824.txt](codes/coil_25_8_824.txt) |  |
-| 26 | 8 | 236 | **1158** | [coil_26_8_1158.txt](codes/coil_26_8_1158.txt) |  |
-| 27 | 8 | 272 | **1646** | [coil_27_8_1646.txt](codes/coil_27_8_1646.txt) |  |
+| 26 | 8 | 236 | **1196** | [coil_26_8_1196.txt](codes/coil_26_8_1196.txt) |  |
+| 27 | 8 | 272 | **1674** | [coil_27_8_1674.txt](codes/coil_27_8_1674.txt) |  |
 | 28 | 8 | 308 | **2322** | [coil_28_8_2322.txt](codes/coil_28_8_2322.txt) |  |
 | 29 | 8 | 348 | **3356** | [coil_29_8_3356.txt](codes/coil_29_8_3356.txt) |  |
-| 30 | 8 | 396 | **4806** | [coil_30_8_4806.txt](codes/coil_30_8_4806.txt) |  |
-| 19 | 9 | 60 | **76** | [coil_19_9_76.txt](codes/coil_19_9_76.txt) |  |
-| 20 | 9 | 80 | **90** | [coil_20_9_90.txt](codes/coil_20_9_90.txt) |  |
+| 30 | 8 | 396 | **5100** | [coil_30_8_5100.txt](codes/coil_30_8_5100.txt) |  |
+| 17 | 9 | 48 | **50** | [coil_17_9_50.txt](codes/coil_17_9_50.txt) |  |
+| 18 | 9 | 52 | **68** | [coil_18_9_68.txt](codes/coil_18_9_68.txt) |  |
+| 19 | 9 | 60 | **84** | [coil_19_9_84.txt](codes/coil_19_9_84.txt) |  |
+| 20 | 9 | 80 | **108** | [coil_20_9_108.txt](codes/coil_20_9_108.txt) |  |
 | 21 | 9 | 88 | **136** | [coil_21_9_136.txt](codes/coil_21_9_136.txt) |  |
 | 22 | 9 | 100 | **184** | [coil_22_9_184.txt](codes/coil_22_9_184.txt) |  |
 | 23 | 9 | 110 | **276** | [coil_23_9_276.txt](codes/coil_23_9_276.txt) |  |
 | 24 | 9 | 124 | **432** | [coil_24_9_432.txt](codes/coil_24_9_432.txt) |  |
 | 25 | 9 | 160 | **550** | [coil_25_9_550.txt](codes/coil_25_9_550.txt) |  |
-| 26 | 9 | 176 | **676** | [coil_26_9_676.txt](codes/coil_26_9_676.txt) |  |
-| 27 | 9 | 200 | **802** | [coil_27_9_802.txt](codes/coil_27_9_802.txt) |  |
-| 28 | 9 | 222 | **1104** | [coil_28_9_1104.txt](codes/coil_28_9_1104.txt) |  |
-| 29 | 9 | 248 | **1534** | [coil_29_9_1534.txt](codes/coil_29_9_1534.txt) |  |
+| 26 | 9 | 176 | **780** | [coil_26_9_780.txt](codes/coil_26_9_780.txt) |  |
+| 27 | 9 | 200 | **918** | [coil_27_9_918.txt](codes/coil_27_9_918.txt) |  |
+| 28 | 9 | 222 | **1176** | [coil_28_9_1176.txt](codes/coil_28_9_1176.txt) |  |
+| 29 | 9 | 248 | **1566** | [coil_29_9_1566.txt](codes/coil_29_9_1566.txt) |  |
 | 30 | 9 | 320 | **2202** | [coil_30_9_2202.txt](codes/coil_30_9_2202.txt) |  |
 
 ## Snakes
@@ -153,18 +164,23 @@ independent checkers written earlier (an O(N^2) pair check in Python and an O(N 
 | 11 | 3 | 157 | **189** | [snake_11_3_189.txt](codes/snake_11_3_189.txt) |  |
 | 15 | 3 | 1379 | **1407** | [snake_15_3_1407.txt](codes/snake_15_3_1407.txt) |  |
 | 16 | 3 | 2240 | **2333** | [snake_16_3_2333.txt](codes/snake_16_3_2333.txt) |  |
+| 11 | 4 | 68 | **71** | [snake_11_4_71.txt](codes/snake_11_4_71.txt) |  |
 | 12 | 4 | 104 | **116** | [snake_12_4_116.txt](codes/snake_12_4_116.txt) |  |
 | 14 | 4 | 279 | **282** | [snake_14_4_282.txt](codes/snake_14_4_282.txt) |  |
+| 12 | 5 | 56 | **57** | [snake_12_5_57.txt](codes/snake_12_5_57.txt) |  |
+| 13 | 5 | 79 | **83** | [snake_13_5_83.txt](codes/snake_13_5_83.txt) |  |
 | 14 | 5 | 112 | **123** | [snake_14_5_123.txt](codes/snake_14_5_123.txt) |  |
-| 14 | 6 | 66 | **67** | [snake_14_6_67.txt](codes/snake_14_6_67.txt) |  |
+| 14 | 6 | 66 | **68** | [snake_14_6_68.txt](codes/snake_14_6_68.txt) |  |
 | 15 | 6 | 89 | **98** | [snake_15_6_98.txt](codes/snake_15_6_98.txt) |  |
 | 16 | 6 | 117 | **154** | [snake_16_6_154.txt](codes/snake_16_6_154.txt) |  |
 | 17 | 6 | 200 | **218** | [snake_17_6_218.txt](codes/snake_17_6_218.txt) |  |
-| 16 | 7 | 72 | **77** | [snake_16_7_77.txt](codes/snake_16_7_77.txt) |  |
-| 17 | 7 | 98 | **105** | [snake_17_7_105.txt](codes/snake_17_7_105.txt) |  |
+| 14 | 7 | 42 | **43** | [snake_14_7_43.txt](codes/snake_14_7_43.txt) |  |
+| 15 | 7 | 55 | **57** | [snake_15_7_57.txt](codes/snake_15_7_57.txt) |  |
+| 16 | 7 | 72 | **79** | [snake_16_7_79.txt](codes/snake_16_7_79.txt) |  |
+| 17 | 7 | 98 | **109** | [snake_17_7_109.txt](codes/snake_17_7_109.txt) |  |
 
 ## How they were found
-Three methods, all of them plain search, none clever:
+Four methods, all of them plain search, none clever:
 1. **Windowed rerouting** (most entries with n >= 18 and k >= 4): start from the trivial cycle of length 2n, repeatedly
    cut a stretch of the cycle and look by depth-first search for a longer replacement path that keeps every spread
    constraint with the rest; accept longer (sometimes equal) paths. Minutes per case. The old entries for n >= 18 came
@@ -179,13 +195,20 @@ Three methods, all of them plain search, none clever:
    is proven, no class ever exceeds the optimum and the best class reaches it in 7 of 8 cases; and with rotation symmetry
    alone the old structured records K(12,3) = 288, K(13,4) = 182, K(14,4) = 280, K(15,5) = 210 come out exactly as the
    in-class optimum.
+4. **Reflection classes** (2026-11-10; spread 7 to 9, n = 15..20, and several snakes): cycles with v_(-i) = h(v_i) (h fixes two opposite
+   vertices of the cycle) or v_(1-i) = h(v_i) (h flips two opposite edges), where h swaps m disjoint pairs of coordinates
+   (and, in the edge case, flips one more coordinate). The code is then determined by half of the cycle, a path between
+   two vertices that h fixes (or moves to a neighbour). Searched exhaustively for small cases and by rerouting windows of
+   the half path otherwise. Sanity check: on all 23 pairs (n,k) with a proven optimum that we tried (n <= 16), the
+   reflection classes contain a code of exactly the optimal length and never a longer one. They do not reach the
+   table value 64 for (9,3) (best 60), and for spread 3..7 they stay at or below the rotation classes.
 
 The search programs (C) are in `src/`. They are research code, not polished.
 
 ## Not claimed
 Nothing here is an upper bound or an optimality proof. Table entries in the same range that we did NOT improve
 (we reproduced some, fell short on others): k=3: n=9, 10, 12, 13, 14, 17; k=4: n=9, 10, 13, 15, 16, 17;
-k=5: n=12, 15, 16, 17; k=6: n=12, 13; k=7: n=14, 15; k=8: n=14, 15; k=9: n=14..18. Several of these are proven optima.
+k=5: n=12, 15, 16, 17; k=6: n=12, 13; k=7: n=14; k=8: n=14, 15; k=9: n=14..16. Several of these are proven optima.
 
 ## License and contact
 Everything here is CC0 (public domain). Questions or corrections: open an issue on this repository.

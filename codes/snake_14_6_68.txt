@@ -1,0 +1,2 @@
+# snake n=14 k=6 length=68 (edges); hex vertex list, one path
+3960 3b60 1b60 1b68 1b48 1b58 1b5c 1b1c 1b1e 3b1e 391e 391f 399f 398f 398b 3d8b 2d8b 2dcb 2dc9 2cc9 2cd9 2cf9 2ef9 ef9 eb9 ab9 abb 2bb 2ba ba aa 2a a 2 0 1 5 15 55 75 175 177 577 576 d76 df6 1df6 1cf6 1ce6 1cc6 1ec6 1ec7 1e47 3e47 3647 364f 366f 362f 362d 372d 272d 272c 27ac 27a4 2784 2794 2790 3790 3690
