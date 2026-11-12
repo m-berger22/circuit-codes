@@ -138,6 +138,23 @@ and every N' admitting one is ≤ N.     Notation: K = k+1, l = 2n−3k−1.
     ≤ 2n−a) forces k ≤ |odd set of [0,p)| ≤ k+1 on [a+k, N−k]; at p = H−1..H+2 with the symmetry this gives a window with only
     k−1 odd coordinates.  Supersedes items 26/31's role for S (Lemma 2, Lemma 3, alternation lemma not needed).
 
+34. SPREAD-k PATHS (S178, NEW: Path.lean, PathDouglas.lean, PathWalk.lean, PathDouglasWord.lean; `IsPath k L v`: walk v on ℕ,
+    d_H(v_i, v_{i+w}) < k ⇒ = w for i+w ≤ L; `IsMaxPath d k L`: P(d,k) = L).  Written proofs: ../paths/.
+    `maxPath_low`:  P(d,k) = 2d−k for k ≤ d ≤ (3k+1)/2   and   `maxPath_douglas_even`:  P(3k/2+1, k) = 2k+3 (k even ≥ 2)
+       -- together Douglas 1969, 'Further remarks' (8), which he states without proof.
+    `four_piece` (Four-Piece Lemma: four consecutive pieces of length ≤ k+1; the six windows made of ≥ 2 consecutive pieces
+       have odd-counts summing to ≤ 6d − total length; = Plotkin on the five piece boundaries),
+    `path_bound_odd` (k odd, 8k+6 ≤ 6d ≤ 10k+8 ⇒ L ≤ 6(d−k)−5), `twelve_windows` + `path_bound_even` (k even,
+       9k+7 ≤ 6d ≤ 10k+6 ⇒ L ≤ 6(d−k)−5), `path_length_bound` (vertex version: l = 2d−3k−1 ≥ 2, k ≥ 3l−5 (k odd) / 3l−3 (k even)
+       ⇒ L ≤ 3k+3l−2).
+    `isPathWord_of_walk`, `isPathWord_of_height` (Walk Lemma: a word is a path word if the walk w ↦ oddc T s w is at height
+       ≥ k+1 before every down-step), `cnt_three`, `oddc_snoc`.
+    `famEven_isPathWord` (PathFamEven*.lean, 900 lines; famT κ h = ../paths/pfam.py fam(2κ−1, 2h), checked by #eval at 4
+       sizes): the even-l family A B C D is a spread-k path word of length 6κ+6h+1 = 3k+3l−2 over 3κ+h coordinates for ALL
+       κ ≥ max(1, 2h) (k = 2κ−1, l = 2h+2);   **`maxPath_even_l`: P(d,k) = 6(d−k)−5 = 3k+3l−2 for k odd, l even, k ≥ 3l−5**
+       (IsMaxPath (3κ+h) k (6κ+6h+1) for κ ≥ 3h+1).  Proof = Walk Lemma + Sign Table (17 rows) + block heights.
+    NOT formal yet: the odd-l family (hand proof ../paths/PROOF_family_odd.md).
+
 NOT machine-checked: the second half of Theorem 33 (u ≥ 2e), Theorem 30, and the lower bounds "the family is a code for ALL
 parameters" other than families 10 and 6 × odd m (Theorems 10-12, 14, 19-22, 27-29, 31): there only the single instances in
 Values/.  So k_max(l) is formal as an exact value for l ≡ 1 (mod 4) and for l = 8, 9, 11, 12, 13, 15; for the other lines only

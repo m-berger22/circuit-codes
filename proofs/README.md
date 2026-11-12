@@ -55,6 +55,8 @@ range is his theorem (re-proved here without the quoted Douglas bounds, and for 
   definition), e.g. `python3 odd10.py 13 1`, `python3 ex4fam.py 8`, `python3 evenfam.py 8`. The header of each file
   states the family. (`p8fam.py` and `ex4fam2.py` are imported for their residue tables; run on their own they call a
   solver script that is not included.)
+- `paths/`: the OPEN version (spread-k paths): exact maximum length for dimension up to about 5k/3, with its own
+  README (added later the same day).
 - `check.py`: `python3 check.py` re-checks every file in `codes/` from the definition (pure Python, a few minutes)
   and prints l, 4k+2l and the excess for each.
 

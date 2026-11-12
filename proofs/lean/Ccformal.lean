@@ -40,3 +40,8 @@ import Ccformal.SymRun2
 import Ccformal.SymRun3
 import Ccformal.SymExact
 import Ccformal.Blocks
+import Ccformal.Path
+import Ccformal.PathDouglas
+import Ccformal.PathWalk
+import Ccformal.PathDouglasWord
+import Ccformal.PathFamEven
