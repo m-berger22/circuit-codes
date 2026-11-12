@@ -25,7 +25,7 @@ With the family of PROOF_family_odd.md (valid for k >= 2l-6) B and C give P(d,k)
 (the Four-Piece theorem needed k >= 3l-3).  The window LP is FEASIBLE at these points: these are integrality statements.
 Data: A is attained for every K >= 12: K = 12 by a SAT word (P(20,11) = 50), K >= 18 by the family pfam2.py (proof:
 PROOF_family_excess.md; P(30,17) = 74, P(40,23) = 98, ...); it is not attained at K = 6 (P(10,5) = 25);
-the line fails at the next step in all known cases: odd l, k = 3l-9: P(12,6) = 33 > 31, P(22,12) >= 59 > 55 (SAT; the word is not included).
+the line fails at the next step for every odd l >= 5 (k = 3l-9: P(12,6) = 33 > 31, P(22,12) = 59 > 55, and pfam4.py in general; section 8).
 
 ## 2. The reduction (valid for any d, k)
 
@@ -123,11 +123,28 @@ above the exact value P(27,15) = 72. The runs listed under E', G below were NOT 
 More runs of the five-piece model (NOT refereed; log not included):
    E':  K even, K >= 15, d = (5K+2)/3:  P <= 5K+2   (red 0 6 00000 14 3: 96,393,534 nodes, 0 solutions; 5K+2 has solutions at M = 14).
    G:   K odd,  K >= 9,  d = (5K+1)/3  [odd l, k = 3l-9]:  P <= 5K   (red 1 3 00000 8 1: 146,871 nodes, 0 solutions; 5K has
-        solutions for M <= 12).  Data: P(12,6) = 33 (K = 7), P(22,12) >= 59 (K = 13, bound 65).
+        solutions for M <= 12).  Data: P(12,6) = 33 (K = 7), P(22,12) = 59 (K = 13, bound 65; section 8).
    Four pieces, odd K, C = 2: solutions for every tail length E <= 12 (no bound of the form 4K+E), as for even K.
    Zero budget at the other Plotkin thresholds: d = 3K/2 (4 points): 3K+1 feasible, 3K+2 impossible (24 nodes) [= the known line
    start]; d = 7K/4 (7 points, K = 0 mod 4): 6K+1 feasible (M <= 10), 6K+2 impossible (red 0 0 000000 4 2: 84,935 nodes), seven
    K-pieces impossible (45,669 nodes): P(7K/4, K-1) <= 6K+1, which equals the generic six-piece Plotkin bound 12d-15K+1 there.
 EXACT VALUE by typed SAT: P(27,15) = 72 = 4K+8 (lazy2.py: near-simplex type configurations of window 0, exhaustive over the 11
 configurations with B = 1; length 73: all 11 UNSAT, 62-212 s each; length 72: SAT; pfam3.py n = 2 is such a word). K = 10: P(17,9) = 46
-= 4K+6 reproduced in 30 s. K = 22: P(37,21) >= 98 (pfam3.py, n = 3).
+= 4K+6 reproduced in 30 s. K = 22: P(37,21) >= 98 (pfam3.py, n = 3; = 98, see section 8).
+
+## 8. The second step d = (5K+1)/3: exact values by two computer-assisted methods (S179)
+
+Lower bound (13K+8)/3: pfam3.py (K = 6n+4), pfam4.py (K = 6n+1). Upper bounds, both resting on the reduction of section 2:
+ (a) TYPED SAT: the type configurations of window 0 (the solutions of the budget equation of (R3) together with the linear system
+     for the numbers of coordinates of each type) are enumerated; for each one a SAT instance with the coordinate types as constants
+     decides the length. Length (13K+8)/3 + 1 is unsatisfiable in every configuration at K = 10 (11 configurations), K = 16 (11),
+     K = 7 (183), K = 13 (287): P(17,9) = 46, P(27,15) = 72, P(12,6) = 33, P(22,12) = 59. (Programs not included; 46 and 33 are
+     also plain SAT results.)
+ (b) SUPPLY CAP: redcap.c = the reduced boundary model in which every type may be used by at most CAP modelled coordinates. At
+     K = 6n+4 every type has at most n+1 coordinates in every configuration (checked by enumerating the 11 configurations, i.e. the
+     integer solutions of the type-count system, at K = 10, 16, 22; program not included), so CAP = n+1 is a valid relaxation as long
+     as M <= K-1:
+        redcap 0 2 0000 7 7 1 2      (n = 1: length 4K+7)    18,077,920 nodes, 0 solutions
+        redcap 0 2 0000 9 9 1 3      (n = 2: length 4K+9)    196,407,628 nodes, 0 solutions
+        redcap 0 2 0000 11 11 1 4    (n = 3: length 4K+11)   1,615,574,042 nodes, 0 solutions      => P(37,21) = 98
+     while lengths 4K+6, 4K+8, 4K+10 have solutions. Neither (a) nor (b) is refereed or formalized.

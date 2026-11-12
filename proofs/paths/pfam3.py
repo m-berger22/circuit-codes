@@ -3,6 +3,7 @@
 #   K = 6n+4, k = K-1, d = (5K+1)/3 = 10n+7, n >= 1   [even l = 2n+4, k = 3l-9; length = line + l - 3 = 3k+4l-5 = (13d+9)/5].
 # EXACT for n = 1, 2: P(17,9) = 46 (SAT), P(27,15) = 72 (SAT restricted by the type reduction of PROOF_threshold.md: one more edge is
 # UNSAT in all 11 type configurations of the first window; computer-assisted, program not included).
+# Also exact for n = 3: P(37,21) = 98 (reduced boundary model with a supply cap, redcap.c: 1.6e9 nodes, 0 solutions for length 99).
 # Conjecture: P(d,k) = (13K+8)/3 for every n.  Checked by the definition for n = 1..14 (this script).
 # Structure: window 0 is a near-simplex with d(v_0, v_4K) = K+2 (all other distances between the v_jK are K); coordinates (type, i),
 # types 01 02 03 04 14 24 34 with n+1 coordinates, types 12 13 23 with n. Word = P0 P1 P2 P3 + tail of 2n+4 letters, by COLUMNS

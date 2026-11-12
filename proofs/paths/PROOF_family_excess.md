@@ -386,7 +386,7 @@ Script twins for the Lean definitions: states.py (State Table), positions.py (po
 
 ---------------------------------------------------------------------------------------------------------------------
 
-## 9. Tests (all in this directory; python3; memory capped at 1.5 GB in common.py; default t = 3..12, env TMAX)
+## 9. Tests (scripts and data files NOT included in this folder; python3; memory capped at 1.5 GB in common.py; default t = 3..12, env TMAX)
 
 | script | what it checks | result |
 |---|---|---|

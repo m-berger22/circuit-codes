@@ -108,7 +108,7 @@ Equivalent linear form (this is what the LP found; cert12.py checks it for every
        l = 5: k0 = 8  (k = 4: 28 > 25, k = 6: 33 > 31; k = 8, 10 by SAT; theorem from 12).  NOT sharp.
        l = 6: k0 = 13 = 3l-5: SHARP. New SAT paths: (17,9) length 44 > 43 and (20,11) length 50 > 49
               (words/sat_17_9_44.txt, sat_20_11_50.txt), plus (11,5) >= 39, (14,7) >= 43 (computed tables).
-       S178 SAT values: P(17,9) = 46, P(20,11) = 50, P(23,13) = 55 (line);  l = 7: P(22,12) >= 58 > 55, P(25,14) = 61 and
+       S178 SAT values: P(17,9) = 46, P(20,11) = 50, P(23,13) = 55 (line);  l = 7: P(22,12) = 59 > 55, P(25,14) = 61 and
        P(28,16) = 67 (line holds although k < 18).
     So k0(l) is not a simple function of the window LP: at (10,5), (15,8), (18,10) the bound holds although the full
     window LP is feasible (integrality is needed there; only SAT proves them), while at (20,11) -- the same position

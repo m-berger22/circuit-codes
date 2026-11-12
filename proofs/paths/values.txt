@@ -41,3 +41,9 @@
 40 23 10 98
 50 29 12 122
 60 35 14 146
+# Second step d = (5K+1)/3, value (13K+8)/3:
+# 22 12: word pfam4.py n = 2; one more edge UNSAT in all 287 type configurations (typed SAT, program not included)
+# 37 21: word pfam3.py n = 3; upper bound: reduced boundary model with a supply cap of 4 coordinates per type (`redcap 0 2 0000 11 11 1 4`, compiled from redcap.c:
+#        1,615,574,042 nodes, 0 solutions for length 99)
+22 12 7 59
+37 21 10 98
