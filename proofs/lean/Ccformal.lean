@@ -48,3 +48,4 @@ import Ccformal.PathFamEven
 import Ccformal.PathFamOdd
 import Ccformal.PathReducedThms
 import Ccformal.PathThresholdMax
+import Ccformal.PathExcessMax

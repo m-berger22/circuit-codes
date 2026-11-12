@@ -60,18 +60,20 @@ The table above stops at k = 3l-5 (l even) resp. k = 3l-3 (l odd). What happens 
 | point | P(d,k) | upper bound | lower bound |
 |---|---|---|---|
 | l odd, k = 3l-5 and k = 3l-7 (k even) | 3k + 3l - 2 (the formula still holds) | [Lean] `path_threshold_B`, `path_threshold_C` | [Lean] `famOdd_isPathWord`; together `maxPath_odd_l_sharp` |
-| l even, k = 3l-7 (K = 6t, d = 10t, t >= 2) | 3k + 3l - 1 = 4K + 2 (formula + 1) | [Lean] `path_threshold_A` | `pfam2.py` (t >= 3; hand proof `PROOF_family_excess.md`; checked from the definition for t <= 30); t = 2: SAT word `word_20_11_50.txt` |
-| l even, k = 3l-9 (K = 6n+4, d = 10n+7, n >= 1) | >= 3k + 4l - 5 = (13K+8)/3, with equality for n = 1, 2, 3 | 5K - 1 for K >= 16 (computer-assisted, `PROOF_threshold.md` Theorem D) | `pfam3.py` (checked from the definition for n <= 14; proof `PROOF_family_second.md`, a case analysis whose 343 cases were generated and certified by program) |
+| l even, k = 3l-7 (K = 6t, d = 10t, t >= 2) | 3k + 3l - 1 = 4K + 2 (formula + 1) | [Lean] `path_threshold_A` | `pfam2.py` (t >= 3; hand proof `PROOF_family_excess.md`; [Lean] `famX_isPathWord`, together with `path_threshold_A`: `maxPath_excess`, P(10t, 6t-1) = 24t+2 for all t >= 3; checked from the definition for t <= 30); t = 2: SAT word `word_20_11_50.txt` |
+| l even, k = 3l-9 (K = 6n+4, d = 10n+7, n >= 1) | 13K/3 + O(1); >= 3k + 4l - 5 = (13K+8)/3, with equality for n = 1..5 | (13K+119)/3 for all n (computer-assisted, `PROOF_second_upper.md`; new for K >= 64); 5K - 1 for K >= 16 (`PROOF_threshold.md` Theorem D) | `pfam3.py` (checked from the definition for n <= 14; proof `PROOF_family_second.md`, a case analysis whose 343 cases were generated and certified by program) |
 | l odd, k = 3l-9 (K = 6n+1, d = 10n+2, n >= 1) | >= 3k + 4l - 5 = (13K+8)/3, with equality for n = 1, 2 | (none proved) | n >= 2: `pfam4.py` (checked from the definition for n <= 14; proof `PROOF_family_second_odd.md`, 441 cases generated and certified by program); n = 1: SAT |
 
 So for odd l the formula 3k+3l-2 holds for all even k >= 3l-7 [Lean], and at k = 3l-9 it fails for every odd l >= 5 (l >= 7: family
 `pfam4.py`, proof `PROOF_family_second_odd.md`, not formalized, checked from the definition for l <= 31; l = 5: P(12,6) = 33 > 31). For even l >= 6 it holds exactly for k >= 3l-5 (at l = 4
 it still holds at k = 5: P(10,5) = 25); one step further the maximum is the formula plus one. At k = 3l-9, for both parities of l, the maximum
-is at least the formula plus l-3, i.e. (13K+8)/3, and this is the exact value in the five cases that could be decided:
+is at least the formula plus l-3, i.e. (13K+8)/3, and this is the exact value in the seven cases that could be decided:
 P(12,6) = 33 and P(17,9) = 46 by plain SAT; P(22,12) = 59 and P(27,15) = 72 by SAT restricted by the type reduction of
 `PROOF_threshold.md` (one more edge is unsatisfiable in every type configuration of the first window; program not included);
 P(37,21) = 98 by the reduced model with a bound on the number of coordinates per type (`redcap 0 2 0000 11 11 1 4`, compiled from `redcap.c`; about an
-hour). All of these upper bounds are computer-assisted, none is formalized. Conjecture: P((5K+1)/3, K-1) = (13K+8)/3 for
+hour); P(47,27) = 124 and P(57,33) = 150 by the same model with the exact number of coordinates of each type prescribed per
+budget configuration (`NTAB=4 redrev 0 2 0000 13 13` resp. `NTAB=5 redrev 0 2 0000 15 15`, compiled from `redrev.c`; 0 solutions,
+the second one 1,268,583,069 nodes, 19 minutes). All of these upper bounds are computer-assisted, none is formalized. Conjecture: P((5K+1)/3, K-1) = (13K+8)/3 for
 every K = 1 (mod 3), K >= 7.
 
 **Method** (`PROOF_threshold.md`). At these points the Plotkin count on the five cut vertices v_0, v_K, .., v_4K is tight or
@@ -90,8 +92,17 @@ The same reduction with five pieces gives Theorem D (computer-assisted only, not
 printed 'in columns' (the letters at the same offset of the four pieces side by side), where coordinates recurring with
 period K become visible.
 
-**Beyond.** At d = (5K+1)/3 the maximum is no longer 4K + O(1): it is at least 4K + (K+8)/3 by `pfam3.py` / `pfam4.py`.
-No formula is proved there or for larger d.
+**The growth rate at the second step** (`PROOF_second_upper.md`). For K = 4 (mod 6) the maximum at d = (5K+1)/3 is
+13K/3 + O(1): P <= (13K+119)/3 for every K. Proof: re-cutting the path at every shift s turns each stretch of 8 consecutive
+columns (the letters at the same offset of the four pieces and the tail) into a solution of the finite reduced model R(8);
+an exhaustive census of all 4,739,254 solutions of R(8) (`COLT=3,4 redrev 0 2 0000 8 8`, 24 s; data `colt8.out`, analysis
+`coltan.py`) shows that deep columns come in only seven kinds with ten possible transitions ('interior rigidity'), and in
+every second deep column a coordinate of type 23 is used up (there are at most n+1 of them); a one-line distance
+inequality shows that, up to O(1), no other coordinate can take its place. Exact value and odd K: open (for odd K the census is just as rigid, but the counting step
+does not go through as it stands).
+
+**Beyond.** At d = (5K+1)/3 the maximum is no longer 4K + O(1): it is 4K + K/3 + O(1) (proved for K = 4 mod 6, at least
+4K + (K+8)/3 for all K = 1 mod 3 by `pfam3.py` / `pfam4.py`). No formula is proved for larger d.
 
 ## Prior work
 Douglas (1969) as above. Byrnes' three papers on circuit codes (arXiv:1809.08428, 2008.04839, 2101.00642) and
@@ -114,8 +125,13 @@ overlap with the latter.
   in the second one the 343 cases of the main table were generated and certified by a program that is not included.
 - `pfam4.py` (+ `pfam4_raw.py`), `PROOF_family_second_odd.md`: the odd-K family of length (13K+8)/3 and its proof (same status as
   `PROOF_family_second.md`; 441 generated cases). `redcap.c`: `red.c` with a bound on the number of coordinates per type.
+- `PROOF_second_upper.md`: the upper bound 13K/3 + O(1) at the second step (interior rigidity); `redrev.c` (the reduced model
+  with a faster column order, per-type caps CAPS, per-configuration exact counts NTAB, census output COLT), `colt8.out` (the
+  census), `coltan.py` (its analysis), `counts_second.py` (the type counts per budget configuration).
 - `values.txt`: the exact values of P(d,k) computed by SAT / exhaustive search that are quoted above.
 - Lean: `../lean/Ccformal/Path.lean` (upper bound), `PathDouglas.lean`, `PathDouglasWord.lean` (rows 1-2),
   `PathWalk.lean` (Walk Lemma), `PathFamEven*.lean` (the family, even l), `PathFamOdd*.lean` (the family, odd l).
-  `PathReduced*.lean`, `PathThresholdMax.lean` (threshold theorems; generator and python twin of the search: `../lean/scripts/pathred/`).
-- Labels such as S177, S178, S179 in the files are internal session numbers.
+  `PathReduced*.lean`, `PathThresholdMax.lean` (threshold theorems; generator and python twin of the search: `../lean/scripts/pathred/`),
+  `PathFamX*.lean` (the family pfam2: 583 small generated modules, one lemma each; the generator is not included) and
+  `PathExcessMax.lean` (`maxPath_excess`).
+- Labels such as S177 .. S180 in the files are internal session numbers.

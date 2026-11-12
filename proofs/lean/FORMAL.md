@@ -171,6 +171,16 @@ and every N' admitting one is ≤ N.     Notation: K = k+1, l = 2n−3k−1.
     **`maxPath_odd_l_sharp`: P(d,k) = 3k+3l−2 for k even, l odd and ALL k ≥ 3l−7** (IsMaxPath (3κ+h+2) (2κ) (6κ+6h+7) for κ ≥ 3h+1;
        item 34 had κ ≥ 3h+3).  The window LP is feasible at these points: these are integrality statements.
 
+36. THE FIRST POINT PAST THE LINE RANGE, EVEN l (S179-S180, NEW: PathFamXDefs.lean, PathFamXEv0..12.lean, PathFamXTr0..11.lean,
+    PathFamXPB*.lean (559 generated one-lemma modules), PathFamX.lean, PathExcessMax.lean; generator scripts/pathfamx/gen2.py;
+    written proof ../paths/famproof2/).
+    **`famX_isPathWord`**: the word fam(t) of pfam2.py (`FamX.famXT t`, #eval-identical to the python generator for t = 3, 4, 5, 6, 9)
+       is a spread-(6t−1) path word of length 24t+2 over 10t letters, for every t ≥ 3;  `famX_path`, `maxPath_excess_ge`.
+    **`maxPath_excess`: P(10t, 6t−1) = 24t+2 for every t ≥ 3** (IsMaxPath (10t) (6t−1) (24t+2); upper bound = `path_threshold_A`
+       of item 35): on even lines l = 2t+2 the value at k = 3l−7 is 3k+3l−1, the line formula plus one.
+    BUILD: 583 modules, one Lean process at a time (scripts/pathfamx/build_all2.sh; ~3 h; the heaviest module PathFamXPB7_7e needs
+    2.4 GB). Axioms: the three standard ones.
+
 NOT machine-checked: the second half of Theorem 33 (u ≥ 2e), Theorem 30, and the lower bounds "the family is a code for ALL
 parameters" other than families 10 and 6 × odd m (Theorems 10-12, 14, 19-22, 27-29, 31): there only the single instances in
 Values/.  So k_max(l) is formal as an exact value for l ≡ 1 (mod 4) and for l = 8, 9, 11, 12, 13, 15; for the other lines only

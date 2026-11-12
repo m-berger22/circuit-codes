@@ -47,3 +47,8 @@
 #        1,615,574,042 nodes, 0 solutions for length 99)
 22 12 7 59
 37 21 10 98
+# 47 27: word pfam3.py n = 4; upper bound: reduced model with the exact type counts per budget configuration (`NTAB=4 redrev 0 2 0000 13 13`,
+#        compiled from redrev.c: 282,687,851 nodes, 0 solutions for length 125)
+# 57 33: word pfam3.py n = 5; upper bound: `NTAB=5 redrev 0 2 0000 15 15`: 1,268,583,069 nodes, 0 solutions for length 151
+47 27 12 124
+57 33 14 150
