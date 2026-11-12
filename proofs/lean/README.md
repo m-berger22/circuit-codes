@@ -1,0 +1,92 @@
+# ccformal — Lean 4 formalization of the circuit-code theory (started S172, 2026-11-11)
+
+Why: the hand proofs (PROOF*.md) holds 270 kB of hand proofs that only AI referees have read.
+This project machine-checks them (Lean 4.35 + Mathlib; axioms used: propext, Classical.choice, Quot.sound only;
+no native_decide, no sorry).
+
+Layout: ccformal/ (lake project).  Build: `lake build` in this folder.
+Single file: `lake env lean Ccformal/X.lean` (3-50 s).
+HEADLINES: `cd ccformal && lake env lean Headlines.lean` prints the statements + axioms of the 22 headline theorems (30 s).
+
+
+| file | content |
+|------|---------|
+| Ccformal/Basic.lean | definitions `IsCoil k N v` (vertices v : ℕ → α → Bool, N-periodic, adjacent, d_H < k → d_C = d_H) and `IsCoilWord k N T` (transition word); `chord_inequality` = Lemma 1; `no_long` = Lemma 2; `main_theorem` / `coil_length_bound` = MAIN THEOREM of PROOF.md (N ≤ 4k+2l beyond k ~ l²/2); `IsMaxLength n k N` (= "K(n,k) = N"), `isMaxLength_of_chord` (instance-level upper bound from Lemma 2 + Lemma 1 at one L, numeric side conditions by `decide`) |
+| Ccformal/Example.lean | `counterexample_23_13`: a spread-13 coil of length 66 in Q_23 by naive kernel `decide` (Byrnes Conj 4.2 predicts 64); `K_23_13 : IsMaxLength 23 13 66` |
+| Ccformal/Checker.lean | VERIFIED CHECKER: `run`/`okAt` (running xor mask + distance, O(N²) cheap kernel steps), `check_sound`, `exists_coil_of_check`; `IsCoilWord.exists_coil` (word → vertices) |
+| Ccformal/Values/K_n_k.lean | generated (gen.py CODEFILE n k [L]): `K_n_k : IsMaxLength n k N` for the 94 pairs listed in values.list (scan.py: every code in optcensus/codes whose length Lemma 1 + Lemma 2 prove optimal); built one at a time by runvalues.sh (unit leanvals), log logs/values.log |
+| Ccformal/Equality.lean | `equality_case`: zero slack in Lemma 1 ⇒ exactly N/2−n coordinates used 4× ("F"), every L-window has exactly ⌊(L−k)/2⌋ repeated coordinates, F coordinates occur in every L-window, other coordinates never twice. Tools: `gap_ge` (F2), `cnt_slide`, `two_le_cnt`, `exists_two_of_cnt`, `uses_le_four`, `cnt_mod` |
+| Ccformal/Thm7.lean | `thm7`: l = 4q, k = (l²−l−2)/2: NO coil of length 4k+2l+2 (PROOF2 sec 7); `thm7_bound`: K(n,k) ≤ 4k+2l there (q ≥ 2) |
+| Ccformal/Parity.lean | generic equality-case tools: `typeword_period` (Z4), `exists_FF`, `serve` (Z5), `bwd`/`fwd`/`adj_ne` (congruent occurrences have the same neighbours), `tmod`; `parity_obstruction_aux` = THEOREM 24 (zero slack at L = 2K, 4K+2 < N < 6K, p = gcd(2K,N) ∣ K, N/p odd ⇒ no code) |
+| Ccformal/Cor25.lean | `cor25` = COROLLARY 25 (even lines, excess e = 2 mod 4 never attains the Lemma-1 bound; parameters u, ρ = e/2), `parity_obstruction` (Thm 24 for vertices); example: no (30,17,90) code |
+| Ccformal/Thm26.lean | odd lines (k even), zero slack at L = 2k+1: `dots_per_period_even`, `odd_line_condition` (4n−N is an even multiple of N/gcd(2k+1,N)), `thm26` = THEOREM 26 (N = 2 mod 4, i.e. e = 0 mod 4: no code; contains Thm 16); tools `periodic_gcd`, `sum_periodic`, `serve_odd`, `no_two_dots`, `F_positions`; example: no (38,22,114) code |
+| Ccformal/OddL3.lean | `l3_zero_slack`: l = 4j+3, k = (l²−1)/2: no code of length 4k+2l+2 (PROOF2 sec 2); `l3_bound`: K ≤ 4k+2l there (j ≥ 1) |
+| Ccformal/PropU.lean | `propU_even`, `propU_odd` = PROPOSITION U for all parameters (K(n,k) ≤ 4K+2u at every equality point; the upper halves of Thms 13, 14, 18-22, 27-29, 31, 35, 36) |
+| Ccformal/Structure.lean | `structure_S1` ((H) ⇒ exactly N/2−n F coordinates, all others used exactly twice), `balanced` ((S3a), for every window length in [k, min(2K, N−k)]) |
+| Ccformal/Thm8Setup.lean | `TypeWord K l N φ` ((U1), (U2), period, F count) and `typeWord_of_coil`: the F/dot word of an excess-2 code on an odd line is a TypeWord |
+| Ccformal/Thm8Comb.lean | `arc_card` (points of a cyclic window pairwise at distance < b: at most b), `no_xi` (Step 3 as a lemma on periodic sequences) |
+| Ccformal/Thm8Walk.lean | the walk `wk`, (L1), (U3), (L2), last exits `lastExit` (Nat.findGreatest), `xm`, `fm`, `ym`, (X1)-(X4), (G1), (G2) |
+| Ccformal/Thm8Step.lean | `step1` (LOW / HIGH), `no_typeWord`: no TypeWord for l = 4c+3, K = (l²+1)/2 − 2j, 1 ≤ j ≤ c |
+| Ccformal/Thm8.lean | `thm8`, `thm8_bound` = THEOREM 8 (no code of length 4k+2l+2 and K(n,k) ≤ 4k+2l for l = 3 mod 4, k = (l²−1)/2 − 2j, 1 ≤ j ≤ (l−3)/4; includes l = 7) |
+| Ccformal/Thm9Setup.lean | `TypeWordT` (type word + predicates tr "t, t+K, t+2K carry one coordinate", e0 "T t = T (t+K)"), `typeWordT_of_coil` |
+| Ccformal/Thm9Step.lean | `step1x` (exact Step 1 identities), `xm_zero_tr`, structure `Xi9 a ξ` (the six options of PROOF2 sec 9 Step 1'), `xi9_of_typeWordT`: l = 4c+3, K = l(l−1)/2 ⇒ ∃ ξ, Xi9 (2c+2) ξ.  |
+| Ccformal/Thm9Comb.lean | `bipolar_gap`, `no_bipolar`, `no_xi9`: no ξ with Xi9 a ξ for a ≥ 6 (NEW proof of Step 2') |
+| Ccformal/Thm9.lean | `thm9`, `thm9_bound` = THEOREM 9 (l = 4c+3 ≥ 11, k = (l²−l−2)/2: no code of length 4k+2l+2; K(n,k) ≤ 4k+2l) |
+| Ccformal/LineEleven.lean, KmaxLines.lean | CAPSTONES `kmax_8, kmax_9, kmax_11, kmax_12, kmax_13, kmax_15`: on the line l, K(n,k) = 4k+2l+2 at k = k_max(l) = 25, 40, 52, 63, 84, 102 (kernel-checked code) AND K ≤ 4k+2l for EVERY larger k on the line. (They import six Values files; the rest of Values/ is not in the root target.) |
+| Ccformal/KmaxUpper.lean | THE k_max TABLE, upper bounds, for all l: `kmax_upper_l0` (l = 4q ≥ 8, k odd > (l²−l−6)/2), `kmax_upper_l3` (l = 4c+3 ≥ 11, k even > (l²−l−6)/2), `kmax_upper_l1` (l = 4c+1, k even > (l²−1)/2), `kmax_upper_l2` (l = 4c+2, k odd > (l²−l−4)/2): N ≤ 4k+2l |
+| Ccformal/Criterion.lean | `isCoilWord_of_windows` / `exists_coil_of_windows`: the 'Reduction' step of every family proof (even uses per period + any k+1 consecutive distinct + odd(W) ≥ k for k+1 ≤ L ≤ N/2 ⇒ code); `oddc_compl`, `oddc_eq_of_le_one`, `cnt_mono` |
+| Ccformal/Trivial.lean | `K_trivial`: K(n,k) = 2n for k+1 ≤ n ≤ (3k−2)/2 (classical; the first exact value for infinitely many (n,k) whose LOWER bound is formal too -- the template for family proofs: `trivWord`, `trivial_coil`, `trivial_upper`) |
+| Ccformal/GapCriterion.lean | S173 **THE GAP CRITERION** `isCoilWord_of_gaps`: a word T with a gap function g (G1: T(x+g x) = T x; G2: no occurrence in between; G3: g ≥ k+1; G4: three consecutive gaps ≥ N/2; G5: the orbit closes after 2 or 4 gaps) is a coil word as soon as, for every window [t,t+L), k+1 ≤ L ≤ N/2: 2·#{x in W : chord (x, x+g x) inside W, triple not} ≤ L−k. Tools: `oddc_cons`, `oddc_peel` (odd(W) = L − 2#{x ∈ W: T x occurs an odd number of times later in W}), `cnt_chain`, `odd_cnt_gap`. Every family proof starts here. |
+| Ccformal/CountP.lean | `cP Q t L` = number of positions in [t,t+L) with Q; `cP_add/succ/cons/two`, `cP_mono`, `cP_or_le`, `cP_congr`, `cP_le_half` (no two adjacent members), `cP_ge_half` (no two adjacent non-members), periodic Q: `cP_shift(_mul)`, `cP_mod`, `cP_period`, `cP_full`; residues: `res_add`, `mod_of`, `cP_res_le_one`, `cP_even`; `card_split`, `card_le_cP` |
+| Ccformal/Fam10Count.lean, Fam10Word.lean, Fam10.lean | S173 **FAMILY 10 = Theorems 36 and 36', all parameters, lower AND upper bound**: `K_family10 (a i) : IsMaxLength (f10n a i) (f10k a i) (f10N a i)` (p = 4a+9, l = p+(2p−2)i, k = (p²−1)/2+p(p+1)i, K = 4k+2l+4i+2; `f10_params`); `kmax_exact_l1`: K = 4k+2l+2 at k = (l²−1)/2 for every l = 4c+1 ≥ 9. Count: `Fam10.count_le` (new proof in START-position coordinates, no i = 0 special case; `Zlem` = exact count at L = 2K); word: labels `lab`, `lab_succ` (G1), `lab_gap` (G2), `orbit` (G4, G5), `card_labS` (≤ n labels); `isMaxLength_of_root` (upper bound when N is a root of the Lemma-1 quadratic at L = 2k+1) |
+| Ccformal/Byrnes.lean | S173 **BYRNES' SEQUENCE** (arXiv 2008.04839 eq. (8)): `byrnes_lower`: for ALL l ≥ 2, k ≥ l−1 of opposite parity a spread-k circuit code of length 4k+2l in Q_n, 2n = 3k+l+1 (count `Byr.countB` by three injections); `byrnes_word` (the word is symmetric and has a bit run k+l); **`K_beyond`: K(n,k) = 4k+2l whenever the Main Theorem applies** (both bounds formal); **`conj42_region`: there S(n,k,k+l) = K(n,k) = 4k+2l, i.e. Byrnes' Conjecture 4.2 itself** |
+| Ccformal/Lines.lean | S173 exact values on whole lines: `exact_l0`, `exact_l1`, `exact_l2`, `exact_l3` (K(n,k) = 4k+2l beyond the k_max thresholds of KmaxUpper; l = 7: `exact_l7` in Line7.lean), `line_l1` (l = 4c+1 ≥ 9: K for EVERY even k ≥ (l²−1)/2) |
+| Ccformal/Contraction.lean | S173 **DEIMER'S CONTRACTION** for a set C of j < k coordinates each used exactly twice (N ≥ 2k+2): `contraction` (word over {x // x ∉ C}, spread k−j, length N−2j, other usage counts unchanged), `contraction_fin` (in Q_(n−j)); `IsCoilWord.map_equiv` (relabel coordinates by a bijection). Enumeration of the surviving positions = `Nat.nth`; `card_window_nth` (window ↔ contracted window) |
+| Ccformal/Conj42.lean, Values/C_28_16.lean | S173 **`conj42_fails`: for EVERY l ≥ 6 there are k ≥ 2l+1 and a code longer than 4k+2l** (the full statement S = 4k+2l < K is `conj42_false`); `excess2_lines` (l = 4c+1+j, j ≤ 3, k = 8c²+4c−j: length 4k+2l+2 = family 10 contracted j times); `contract_j` |
+| Ccformal/Fam6Count.lean, Fam6Word.lean, Fam6.lean | S173 **FAMILY 6 × m = Theorem 18 (m = 1: Theorem 13), all parameters, both bounds**: `K_family6 (c μ) : IsMaxLength (f6n c μ) (f6k c μ) (f6N c μ)`: p = 4c+8, m = 2μ+1, k = m p(p+2)/4 − 1, n = m(3p−2)(p+4)/8: K(n,k) = m p(p+4) = 4k+2l+4m (`f6_params`) -- unbounded excess on even lines. Count `Fam6.count_le` (zones from the right end; `Zlem`, `Blem`, `GZ2_half`, `count_A`, `count_A2`, `count_first`); `isMaxLength_of_root_odd`; (p,m) = (8,1) = K_33_19 |
+| Ccformal/SymRun.lean | S173 **BYRNES' UPPER BOUND** `symRun_le`: `SymRun k N r T` (symmetric coil word with a bit run of length r); `symRun_gap` (ALL k ≥ 2, l ≥ 1: N ≤ 4k+2l or N ≥ 6k+6); 2n = 3k+l+1 and the hypothesis of Lemma 2 ⇒ every SymRun k N (k+l) word has N ≤ 4k+2l (`run_window` = his Lemma 3.5/2.1; H ≥ 2k+l+2 via N ≤ 5k+3 instead of Douglas' bounds; H = 2k+l+1 via his Lemma 2.3/Cor 2.4 argument); `IsCoilWord.shift`; in Conj42.lean: **`conj42_false`: for EVERY l ≥ 6: S(n,k,k+l) = 4k+2l < K(n,k) for some k ≥ 2l+1 — Conjecture 4.2 is false there with no quoted step** |
+| Ccformal/Thm9Four.lean, Line7.lean | S173 **Theorem 9 at l = 7**: `Xi9.shift`, `bip4_*` (the four bipolar geometries for a = 4, by omega), `no_bipolar4`, `no_xi9_of` (Step 2' for a ≥ 4 given 'no bipolar'), `no_xi9_four`; `thm9_seven` (no (34,20) code of length 96), `K_34_20 : K(34,20) = 94`, **`exact_l7`: K(n,k) = 4k+14 for every even k ≥ 20** (so K = 4k+2l beyond the k_max thresholds on every line l ≥ 5; l = 2: `exact_l2`; l = 3, 4: only `K_beyond`) |
+| Ccformal/Gap.lean | S173 `conj42_gap_family6`, `conj42_gap_family10`: at every point of families 6 × m and 10: S(n,k,k+l) = 4k+2l (upper bound + Byrnes' word) and K(n,k) = 4k+2l+4m resp. 4k+2l+4i+2; **`conj42_gap_unbounded`: K − S is unbounded in the range k ≥ 2l+1** |
+| Ccformal/KmaxTable.lean, Values/C_31_18.lean | S173 **`kmax_table`** (file generated by a script): k_max(l) for ALL l = 6..31 (13, 18, 25, 40, 43, 52, 63, 84, 89, 102, 117, .., 462): a code longer than 4k+2l at k_max, and K(n,k) = 4k+2l for every larger k on the line |
+| Ccformal/Lemma3.lean | S173 **LEMMA 3** `no_long6`, `length_le_seven`: N ≥ 7k+6 ⇒ 21k+12+9(k mod 2) ≤ 12n, so N ≤ 7k+5 for k ≥ 2l (k even) / k ≥ 2l−3 (k odd); `pattern6` = the per-coordinate inequality over six K-blocks (certificate from lp5.py: LP over block patterns; the file is generated) |
+| Ccformal/SymRun2.lean | S173 `rev`, `rev_cnt`, `IsCoilWord.rev` (reversed word), `alt` (Byrnes' Lemma 2.3 = alternation, by induction on two tracked windows), `fwd_new`, `bwd_new`, `new_odd`, `symRun_mid_aux` (no symmetric bit-run code with 6k+6 ≤ N ≤ 7k+5 if k > 3l−7), **`symRun_le2`: S(n,k,k+l) ≤ 4k+2l for k > 3l−7, k ≥ l+1, k ≥ 2l / 2l−3, without Lemma 2** (used for l = 7 in `conj42_false`) |
+| Ccformal/Blocks.lean | S173 **THE BLOCK LEMMA** `blocks_bound` (any j: N ≥ j(k+1)+k ⇒ j(k+1) + (j(j+1)/2−j)k ≤ ⌊(j+1)/2⌋⌊(j+2)/2⌋ n; proof = prefix parities per coordinate, `pairs_eq`: #{a<b : v_a ≠ v_b} = #zeros · #ones, `zo_le`) and `length_le_blocks` ((s+1)(l+1) < (s−1)k+4 ⇒ N ≤ (2s+1)k+2s−1): explicit upper bound for K(n,k), all n ≤ 2k−1; `windows_sum_le` (pure counting half), `blocks_bound_odd` (k odd: (j(j+1)/2)(k+1) ≤ ⌊(j+1)²/4⌋ n), `blocks_bound_even` (+ `oddWindows j`): Lemma 2 / Lemma 3 are exactly the cases j = 4 / 6 |
+What formalizing changed in the proofs (all simpler than the written versions):
+ * Lemma 1 needs no gap function: count_c(W) ≤ 1 + [count_c(W) = 2], summed over windows.
+ * Lemma 2 is purely LOCAL: one window W of length 4K, no averaging: with a_i = counts in the four K-blocks,
+   [s odd] + s + 2[a1+a2+a3=3] + 2[a2+a3+a4=3] ≤ 2 + 2[a1+a2=2] + 2[a3+a4=2] + 2[a2+a3=2]  (16 cases), summed over coordinates.
+ * Theorem 24: new counting step (not the one in PROOF10): one serve (x,y,z) per FF pair; X = {x}, Z = {z} are disjoint (else 5 occurrences in a period) and lie in B (the 2N/p positions of the two residues), so B = X ⊔ Z; every middle y is then a start or an end, and 'y_t ≡ x_t'' is a perfect matching of the N/p pairs ⇒ N/p even. Needs only 2 ≤ u < K (the written theorem assumes K ≥ 2u+2).
+ * Theorem 26: for a dot t exactly one of t+k, t+k+1 is a dot (no two adjacent dots; FF at t+k forces F at t+2k+1 ≡ t): a perfect matching of the dots of a period. Needs only 3K ≤ N < min(6K, 8K−4).
+ * Theorem 8: (U1) holds for ALL window lengths k ≤ L ≤ 2K (no 'gmax ≤ L'), which makes (L1) a two-line argument valid for every B in [2l−1, 2K+2l−1]. Steps 2-3 without the bijection τ = l·m and without Helly: set ξ(τ) := x(τ·l) from the start (the index identities are shifts by multiples of 2l+2; the mass is a telescoping sum), then zeros whose RIGHT interval is heavy are pairwise at cyclic distance < a, those with a heavy LEFT interval at distance ≤ a, so each kind injects into a window of a resp. a+1 positions: at most 2a+1 zeros. Works for l = 7 too.
+ * Theorem 9, Step 2' (new proof, replaces the hull/Suf/Pre analysis of PROOF2 sec 9): (bipolar case) if two disjoint windows of the same length ℓ ∈ {a, a+1} each carry mass ≥ 2a, everything else is zero, and a gap of ≥ 5 positions would contain interior zeros τ and τ+2 which both need an L1/L3 window starting at a nonzero point of the first window -- impossible, the later window misses the earlier start; so 4a ≤ 2ℓ + 8. (Otherwise) right-type zeros are pairwise close (≤ a of them), left-type zeros too (≤ a+1), there are ≥ 2a zeros, so ≥ a left-type; the a positions before the cyclically last left-type zero y₀ hold ≥ a−1 zeros, hence the remaining 3a−1 positions of the period hold ≥ 2a−3 nonzero values (mass ≥ 4a−6) while the window of y₀ has mass ≥ 2a: 4a ≥ 6a−6. No Helly, no 'at most one 4'.
+ * Theorem 7 without gaps/e_i: type word is 2K-periodic because P(t+1) ≠ P(t) otherwise; C1 from the parity of the
+   (2K+2)-window; the chase is propositional (3× C1, 2× Y2, adjacent distinct, "no 5 occurrences per period") — closed by `grind`.
+
+Traps (S172): naive `decide` over Finset.filter blows RAM (3 GB at N = 96): use the checker. One `decide +kernel` per
+BLOCK of start positions (kernel caches are per declaration): gen.py BLK. `ulimit -v` breaks olean mmap. `ps` RSS counts
+mapped oleans: watch RssAnon. omega treats `8*q*q` and `8*(q*q)` as different atoms: introduce Q with hQ : Q = q*q.
+`import Mathlib` costs 2 min cold on the machine used: import Mathlib.Tactic + the few files needed.
+
+HOW TO FORMALIZE A FAMILY (S173 recipe, used twice: Fam10*.lean 950 lines, Byrnes.lean 320 lines; ~30 min each):
+ 1. python: write the gap function g on positions (residues of the period), a label lab x (canonical position of the orbit),
+    and brute-force EVERY planned step in the exact Lean conventions (scripts/fam10chk.py, byrplan.py).
+ 2. the count in START-position coordinates: x is counted iff x + e(x) < right end (e = gap − K) and the triple is not inside;
+    exclusions sit near the right end of the window, so short windows are 'no two adjacent' (`cP_le_half`) and long ones split
+    into zones (`card_split` + `card_le_cP'`), or are handled by an explicit injection into `range ((y+1)/2)`
+    (`card_le_card_of_injOn`, then `split_ifs <;> omega`).
+ 3. a `*_cases` lemma: for every position its class (residue conditions WITHOUT natural subtraction), gap, label; then
+    G1/G2/G4/G5 are `omega` (two `*_cases` + `res_add`) or a few rewrites.
+ 4. labels: a Finset S ∋ lab x with card ≤ n; T x := castLE (S.equivFin ⟨lab x, _⟩) (no explicit bijection with Fin n needed).
+ Traps: lemmas declared after `include P` silently take P; `rw [Nat.add_comm]` without arguments hits the Decidable instance;
+ a 6×6-way omega is fine, but put heavy case lemmas under `set_option maxHeartbeats 4000000 in`; keep p (or H) a VARIABLE with
+ hp : p = 4*a+9 so that `x % p` is one omega atom.
+
+NOT YET FORMAL (next sessions, in order of value):
+ (1) [DONE S173: Contraction.lean, Conj42.lean.]
+ (2) families 3, 5 (⇒ k_max EXACT for l ≡ 0, 3 mod 4; PROOF3/4: half-turn symmetric, not shift-invariant), family 4.
+ (3) [family 6 × odd m DONE S173 (Fam6*.lean).] Left: family 7 (l = 2 mod 8, period 2p; Thms 14, 20), the uniform ladder family
+     for EVEN multipliers (Thm 22, 27-29), family 8 (Thm 31): shift-invariant, so Fam6*.lean is the template.
+ (3') [DONE S173: SymRun.lean, SymRun2.lean, Lemma3.lean, conj42_false for every l ≥ 6.] Left: S ≤ 4k+2l in ALL of Byrnes' range
+     (k ≥ 2l−2 / 2l+1) and beyond (conjecture: for all k ≥ l−1; data in symsearch.out): the case k ≤ 3l−7.
+ (4) Thm 33(b) (u ≥ 2e; PROOF13 Part A lemmas A1-A6 first), Thm 30.  [Thm 9 at l = 7: DONE S173, Thm9Four.lean.]
+Audit of the statements (definition vs Byrnes, vacuity, consistency with all code files): audit/REPORT.md (agent, S172).

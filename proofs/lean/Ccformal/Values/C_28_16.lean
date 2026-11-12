@@ -1,0 +1,17 @@
+import Ccformal.Checker
+
+namespace Coil
+
+def W_28_16 : ℕ := 0x10001b0011001a000c00180012000900190007000f001700040016000b001500030010000100140006000c00130012000e0011000700080009000d000f0004000a000b0005000100020010000000060012001b00030007001a00110019000f0018000c0017000b000100090016000400060015001400030013001200110010000f000e000d000c000b000a0009000800070006000500040003000200010000
+
+def f_28_16 (i : ℕ) : ℕ := (W_28_16 >>> (16 * i)) &&& 0xFFFF
+
+theorem ok_28_16_0 : ∀ t < 0, okAt f_28_16 28 16 80 t = true := allRange_zero
+
+theorem blk_28_16_0 : allRange (okAt f_28_16 28 16 80) 0 80 = true := by decide +kernel
+theorem ok_28_16_80 : ∀ t < 80, okAt f_28_16 28 16 80 t = true := allRange_extend ok_28_16_0 blk_28_16_0
+
+theorem coil_28_16 : ∃ v : ℕ → Fin 28 → Bool, IsCoil 16 80 v :=
+  exists_coil_of_check f_28_16 16 80 (by norm_num) ok_28_16_80 (by decide +kernel)
+
+end Coil

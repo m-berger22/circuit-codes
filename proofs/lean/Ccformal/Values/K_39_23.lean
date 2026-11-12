@@ -1,0 +1,22 @@
+import Ccformal.Checker
+
+namespace Coil
+
+def W_39_23 : ℕ := 0xf000c0025000e0026000a0023000b0022000800240006000d000500210009001f000700200002001d000400010000001b000f001e0003001c000a0018000c001a000e000800060016000d0019000b001700090015000500140004001300000007000f00100002001200030011000a0026000e002500010006000d0024000c0023000b0022000900210008000400200007001f000f0005001e0003001d0002001c000e001b00010000000d001a000c0019000b0018000a001700090016000800070006001500050014000400130003001200020011000100100000
+
+def f_39_23 (i : ℕ) : ℕ := (W_39_23 >>> (16 * i)) &&& 0xFFFF
+
+theorem ok_39_23_0 : ∀ t < 0, okAt f_39_23 39 23 110 t = true := allRange_zero
+
+theorem blk_39_23_0 : allRange (okAt f_39_23 39 23 110) 0 110 = true := by decide +kernel
+theorem ok_39_23_110 : ∀ t < 110, okAt f_39_23 39 23 110 t = true := allRange_extend ok_39_23_0 blk_39_23_0
+
+theorem coil_39_23 : ∃ v : ℕ → Fin 39 → Bool, IsCoil 23 110 v :=
+  exists_coil_of_check f_39_23 23 110 (by norm_num) ok_39_23_110 (by decide +kernel)
+
+/-- K(39,23) = 110  (= 4k+2l+2, l = 8; code: skel_39_23_110.txt) -/
+theorem K_39_23 : IsMaxLength 39 23 110 :=
+  isMaxLength_of_chord coil_39_23 (by norm_num) 48 (by norm_num) (by norm_num) (by decide +kernel)
+
+
+end Coil

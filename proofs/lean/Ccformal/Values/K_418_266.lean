@@ -1,0 +1,156 @@
+import Ccformal.Checker
+
+namespace Coil
+
+def W_418_266 : ℕ := 0x1a10127010801a00121019f0115019e0102019d0112019c0110019b011f00fb019a01190199010a019800f501970106019601040195011700ee0194010e019300fd019200e8019100f9019000f7018f010c00e1018e0101018d00f0018c00db018b00ec018a00ea018900ff00d4018800f4018700e3018600ce018500df018400dd018300f200c7018200e7018100d6018000c1017f00d2017e00d0017d00e500ba017c00da017b00c9017a00b4017900c5017800c3017700d800ad017600cd017500bc017400a7017300b8017200b6017100cb00a0017000c0016f00af016e009a016d00ab016c00a9016b00be0093016a00b3016900a20168008d0167009e0166009c016500b10086016400a60163009501620080016100910160008f015f00a40079015e0099015d0088015c0073015b0084015a008201590097006c0158008c0157007b0156006601550077015400750153008a005f0152007f0151006e01500059014f006a014e0068014d007d0052014c0072014b0061014a004c0149005d0148005b01470070004501460065014500540144003f014300500142004e01410063003801400058013f0047013e0032013d0043013c0041013b0056002b013a004b0139003a01380025013700360136003401350049001e0134003e0133002d013200180131002901300027012f003c0011012e0031012d0020012c000b012b001c012a001a0129002f00040128002401260013012501270124000f0123000d01220022010201200017011e0006011d011f011c0002011b0000011a001500f50118000a01160115011401170113011201110110010f000800e8010d0108010b010a0109010c01070106010501040103012100db010000fb00fe00fd00fc00ff00fa00f900f800f700f6011900ce00f300ee00f100f000ef00f200ed00ec00eb00ea00e9010e00c100e600e100e400e300e200e500e000df00de00dd00dc010100b400d900d400d700d600d500d800d300d200d100d000cf00f400a700cc00c700ca00c900c800cb00c600c500c400c300c200e7009a00bf00ba00bd00bc00bb00be00b900b800b700b600b500da008d00b200ad00b000af00ae00b100ac00ab00aa00a900a800cd008000a500a000a300a200a100a4009f009e009d009c009b00c00073009800930096009500940097009200910090008f008e00b30066008b0086008900880087008a0085008400830082008100a60059007e0079007c007b007a007d007800770076007500740099004c0071006c006f006e006d0070006b006a006900680067008c003f0064005f0062006100600063005e005d005c005b005a007f003200570052005500540053005600510050004f004e004d00720025004a004500480047004600490044004300420041004000650018003d0038003b003a0039003c003700360035003400330058000b0030002b002e002d002c002f002a0029002800270026004b01270023001e00210020001f0022001d001c001b001a0019003e011f0016001100140013001200150010000f000e000d000c00310117000900040007000600050008000300020001000001a10024010c01a00102019f0115019e0121019d0112019c0110019b001700ff019a00f50199010a0198011901970106019601040195000a00f2019400e8019300fd0192010e019100f9019000f7018f010800e5018e00db018d00f0018c0101018b00ec018a00ea018900fb00d8018800ce018700e3018600f4018500df018400dd018300ee00cb018200c1018100d6018000e7017f00d2017e00d0017d00e100be017c00b4017b00c9017a00da017900c5017800c3017700d400b1017600a7017500bc017400cd017300b8017200b6017100c700a40170009a016f00af016e00c0016d00ab016c00a9016b00ba0097016a008d016900a2016800b30167009e0166009c016500ad008a0164008001630095016200a6016100910160008f015f00a0007d015e0073015d0088015c0099015b0084015a0082015900930070015800660157007b0156008c0155007701540075015300860063015200590151006e0150007f014f006a014e0068014d00790056014c004c014b0061014a00720149005d0148005b0147006c00490146003f0145005401440065014300500142004e0141005f003c01400032013f0047013e0058013d0043013c0041013b0052002f013a00250139003a0138004b0137003601360034013500450022013400180133002d0132003e0131002901300027012f00380015012e000b012d0020012c0031012b001c012a001a0129002b00080128012701260013012500240124000f0123000d0122001e01210120011f011e0006011d0017011c0002011b0000011a0011011901180117011601150114000a0113011201110110010f0004010e010d010c010b010a010901080107010601050104010301020101010000ff00fe00fd00fc00fb00fa00f900f800f700f600f500f400f300f200f100f000ef00ee00ed00ec00eb00ea00e900e800e700e600e500e400e300e200e100e000df00de00dd00dc00db00da00d900d800d700d600d500d400d300d200d100d000cf00ce00cd00cc00cb00ca00c900c800c700c600c500c400c300c200c100c000bf00be00bd00bc00bb00ba00b900b800b700b600b500b400b300b200b100b000af00ae00ad00ac00ab00aa00a900a800a700a600a500a400a300a200a100a0009f009e009d009c009b009a0099009800970096009500940093009200910090008f008e008d008c008b008a0089008800870086008500840083008200810080007f007e007d007c007b007a0079007800770076007500740073007200710070006f006e006d006c006b006a0069006800670066006500640063006200610060005f005e005d005c005b005a0059005800570056005500540053005200510050004f004e004d004c004b004a0049004800470046004500440043004200410040003f003e003d003c003b003a0039003800370036003500340033003200310030002f002e002d002c002b002a0029002800270026002500240023002200210020001f001e001d001c001b001a0019001800170016001500140013001200110010000f000e000d000c000b000a0009000800070006000500040003000200010000
+
+def f_418_266 (i : ℕ) : ℕ := (W_418_266 >>> (16 * i)) &&& 0xFFFF
+
+theorem ok_418_266_0 : ∀ t < 0, okAt f_418_266 418 266 1144 t = true := allRange_zero
+
+theorem blk_418_266_0 : allRange (okAt f_418_266 418 266 1144) 0 17 = true := by decide +kernel
+theorem ok_418_266_17 : ∀ t < 17, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_0 blk_418_266_0
+theorem blk_418_266_17 : allRange (okAt f_418_266 418 266 1144) 17 17 = true := by decide +kernel
+theorem ok_418_266_34 : ∀ t < 34, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_17 blk_418_266_17
+theorem blk_418_266_34 : allRange (okAt f_418_266 418 266 1144) 34 17 = true := by decide +kernel
+theorem ok_418_266_51 : ∀ t < 51, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_34 blk_418_266_34
+theorem blk_418_266_51 : allRange (okAt f_418_266 418 266 1144) 51 17 = true := by decide +kernel
+theorem ok_418_266_68 : ∀ t < 68, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_51 blk_418_266_51
+theorem blk_418_266_68 : allRange (okAt f_418_266 418 266 1144) 68 17 = true := by decide +kernel
+theorem ok_418_266_85 : ∀ t < 85, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_68 blk_418_266_68
+theorem blk_418_266_85 : allRange (okAt f_418_266 418 266 1144) 85 17 = true := by decide +kernel
+theorem ok_418_266_102 : ∀ t < 102, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_85 blk_418_266_85
+theorem blk_418_266_102 : allRange (okAt f_418_266 418 266 1144) 102 17 = true := by decide +kernel
+theorem ok_418_266_119 : ∀ t < 119, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_102 blk_418_266_102
+theorem blk_418_266_119 : allRange (okAt f_418_266 418 266 1144) 119 17 = true := by decide +kernel
+theorem ok_418_266_136 : ∀ t < 136, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_119 blk_418_266_119
+theorem blk_418_266_136 : allRange (okAt f_418_266 418 266 1144) 136 17 = true := by decide +kernel
+theorem ok_418_266_153 : ∀ t < 153, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_136 blk_418_266_136
+theorem blk_418_266_153 : allRange (okAt f_418_266 418 266 1144) 153 17 = true := by decide +kernel
+theorem ok_418_266_170 : ∀ t < 170, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_153 blk_418_266_153
+theorem blk_418_266_170 : allRange (okAt f_418_266 418 266 1144) 170 17 = true := by decide +kernel
+theorem ok_418_266_187 : ∀ t < 187, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_170 blk_418_266_170
+theorem blk_418_266_187 : allRange (okAt f_418_266 418 266 1144) 187 17 = true := by decide +kernel
+theorem ok_418_266_204 : ∀ t < 204, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_187 blk_418_266_187
+theorem blk_418_266_204 : allRange (okAt f_418_266 418 266 1144) 204 17 = true := by decide +kernel
+theorem ok_418_266_221 : ∀ t < 221, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_204 blk_418_266_204
+theorem blk_418_266_221 : allRange (okAt f_418_266 418 266 1144) 221 17 = true := by decide +kernel
+theorem ok_418_266_238 : ∀ t < 238, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_221 blk_418_266_221
+theorem blk_418_266_238 : allRange (okAt f_418_266 418 266 1144) 238 17 = true := by decide +kernel
+theorem ok_418_266_255 : ∀ t < 255, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_238 blk_418_266_238
+theorem blk_418_266_255 : allRange (okAt f_418_266 418 266 1144) 255 17 = true := by decide +kernel
+theorem ok_418_266_272 : ∀ t < 272, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_255 blk_418_266_255
+theorem blk_418_266_272 : allRange (okAt f_418_266 418 266 1144) 272 17 = true := by decide +kernel
+theorem ok_418_266_289 : ∀ t < 289, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_272 blk_418_266_272
+theorem blk_418_266_289 : allRange (okAt f_418_266 418 266 1144) 289 17 = true := by decide +kernel
+theorem ok_418_266_306 : ∀ t < 306, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_289 blk_418_266_289
+theorem blk_418_266_306 : allRange (okAt f_418_266 418 266 1144) 306 17 = true := by decide +kernel
+theorem ok_418_266_323 : ∀ t < 323, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_306 blk_418_266_306
+theorem blk_418_266_323 : allRange (okAt f_418_266 418 266 1144) 323 17 = true := by decide +kernel
+theorem ok_418_266_340 : ∀ t < 340, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_323 blk_418_266_323
+theorem blk_418_266_340 : allRange (okAt f_418_266 418 266 1144) 340 17 = true := by decide +kernel
+theorem ok_418_266_357 : ∀ t < 357, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_340 blk_418_266_340
+theorem blk_418_266_357 : allRange (okAt f_418_266 418 266 1144) 357 17 = true := by decide +kernel
+theorem ok_418_266_374 : ∀ t < 374, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_357 blk_418_266_357
+theorem blk_418_266_374 : allRange (okAt f_418_266 418 266 1144) 374 17 = true := by decide +kernel
+theorem ok_418_266_391 : ∀ t < 391, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_374 blk_418_266_374
+theorem blk_418_266_391 : allRange (okAt f_418_266 418 266 1144) 391 17 = true := by decide +kernel
+theorem ok_418_266_408 : ∀ t < 408, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_391 blk_418_266_391
+theorem blk_418_266_408 : allRange (okAt f_418_266 418 266 1144) 408 17 = true := by decide +kernel
+theorem ok_418_266_425 : ∀ t < 425, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_408 blk_418_266_408
+theorem blk_418_266_425 : allRange (okAt f_418_266 418 266 1144) 425 17 = true := by decide +kernel
+theorem ok_418_266_442 : ∀ t < 442, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_425 blk_418_266_425
+theorem blk_418_266_442 : allRange (okAt f_418_266 418 266 1144) 442 17 = true := by decide +kernel
+theorem ok_418_266_459 : ∀ t < 459, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_442 blk_418_266_442
+theorem blk_418_266_459 : allRange (okAt f_418_266 418 266 1144) 459 17 = true := by decide +kernel
+theorem ok_418_266_476 : ∀ t < 476, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_459 blk_418_266_459
+theorem blk_418_266_476 : allRange (okAt f_418_266 418 266 1144) 476 17 = true := by decide +kernel
+theorem ok_418_266_493 : ∀ t < 493, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_476 blk_418_266_476
+theorem blk_418_266_493 : allRange (okAt f_418_266 418 266 1144) 493 17 = true := by decide +kernel
+theorem ok_418_266_510 : ∀ t < 510, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_493 blk_418_266_493
+theorem blk_418_266_510 : allRange (okAt f_418_266 418 266 1144) 510 17 = true := by decide +kernel
+theorem ok_418_266_527 : ∀ t < 527, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_510 blk_418_266_510
+theorem blk_418_266_527 : allRange (okAt f_418_266 418 266 1144) 527 17 = true := by decide +kernel
+theorem ok_418_266_544 : ∀ t < 544, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_527 blk_418_266_527
+theorem blk_418_266_544 : allRange (okAt f_418_266 418 266 1144) 544 17 = true := by decide +kernel
+theorem ok_418_266_561 : ∀ t < 561, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_544 blk_418_266_544
+theorem blk_418_266_561 : allRange (okAt f_418_266 418 266 1144) 561 17 = true := by decide +kernel
+theorem ok_418_266_578 : ∀ t < 578, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_561 blk_418_266_561
+theorem blk_418_266_578 : allRange (okAt f_418_266 418 266 1144) 578 17 = true := by decide +kernel
+theorem ok_418_266_595 : ∀ t < 595, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_578 blk_418_266_578
+theorem blk_418_266_595 : allRange (okAt f_418_266 418 266 1144) 595 17 = true := by decide +kernel
+theorem ok_418_266_612 : ∀ t < 612, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_595 blk_418_266_595
+theorem blk_418_266_612 : allRange (okAt f_418_266 418 266 1144) 612 17 = true := by decide +kernel
+theorem ok_418_266_629 : ∀ t < 629, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_612 blk_418_266_612
+theorem blk_418_266_629 : allRange (okAt f_418_266 418 266 1144) 629 17 = true := by decide +kernel
+theorem ok_418_266_646 : ∀ t < 646, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_629 blk_418_266_629
+theorem blk_418_266_646 : allRange (okAt f_418_266 418 266 1144) 646 17 = true := by decide +kernel
+theorem ok_418_266_663 : ∀ t < 663, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_646 blk_418_266_646
+theorem blk_418_266_663 : allRange (okAt f_418_266 418 266 1144) 663 17 = true := by decide +kernel
+theorem ok_418_266_680 : ∀ t < 680, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_663 blk_418_266_663
+theorem blk_418_266_680 : allRange (okAt f_418_266 418 266 1144) 680 17 = true := by decide +kernel
+theorem ok_418_266_697 : ∀ t < 697, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_680 blk_418_266_680
+theorem blk_418_266_697 : allRange (okAt f_418_266 418 266 1144) 697 17 = true := by decide +kernel
+theorem ok_418_266_714 : ∀ t < 714, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_697 blk_418_266_697
+theorem blk_418_266_714 : allRange (okAt f_418_266 418 266 1144) 714 17 = true := by decide +kernel
+theorem ok_418_266_731 : ∀ t < 731, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_714 blk_418_266_714
+theorem blk_418_266_731 : allRange (okAt f_418_266 418 266 1144) 731 17 = true := by decide +kernel
+theorem ok_418_266_748 : ∀ t < 748, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_731 blk_418_266_731
+theorem blk_418_266_748 : allRange (okAt f_418_266 418 266 1144) 748 17 = true := by decide +kernel
+theorem ok_418_266_765 : ∀ t < 765, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_748 blk_418_266_748
+theorem blk_418_266_765 : allRange (okAt f_418_266 418 266 1144) 765 17 = true := by decide +kernel
+theorem ok_418_266_782 : ∀ t < 782, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_765 blk_418_266_765
+theorem blk_418_266_782 : allRange (okAt f_418_266 418 266 1144) 782 17 = true := by decide +kernel
+theorem ok_418_266_799 : ∀ t < 799, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_782 blk_418_266_782
+theorem blk_418_266_799 : allRange (okAt f_418_266 418 266 1144) 799 17 = true := by decide +kernel
+theorem ok_418_266_816 : ∀ t < 816, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_799 blk_418_266_799
+theorem blk_418_266_816 : allRange (okAt f_418_266 418 266 1144) 816 17 = true := by decide +kernel
+theorem ok_418_266_833 : ∀ t < 833, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_816 blk_418_266_816
+theorem blk_418_266_833 : allRange (okAt f_418_266 418 266 1144) 833 17 = true := by decide +kernel
+theorem ok_418_266_850 : ∀ t < 850, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_833 blk_418_266_833
+theorem blk_418_266_850 : allRange (okAt f_418_266 418 266 1144) 850 17 = true := by decide +kernel
+theorem ok_418_266_867 : ∀ t < 867, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_850 blk_418_266_850
+theorem blk_418_266_867 : allRange (okAt f_418_266 418 266 1144) 867 17 = true := by decide +kernel
+theorem ok_418_266_884 : ∀ t < 884, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_867 blk_418_266_867
+theorem blk_418_266_884 : allRange (okAt f_418_266 418 266 1144) 884 17 = true := by decide +kernel
+theorem ok_418_266_901 : ∀ t < 901, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_884 blk_418_266_884
+theorem blk_418_266_901 : allRange (okAt f_418_266 418 266 1144) 901 17 = true := by decide +kernel
+theorem ok_418_266_918 : ∀ t < 918, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_901 blk_418_266_901
+theorem blk_418_266_918 : allRange (okAt f_418_266 418 266 1144) 918 17 = true := by decide +kernel
+theorem ok_418_266_935 : ∀ t < 935, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_918 blk_418_266_918
+theorem blk_418_266_935 : allRange (okAt f_418_266 418 266 1144) 935 17 = true := by decide +kernel
+theorem ok_418_266_952 : ∀ t < 952, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_935 blk_418_266_935
+theorem blk_418_266_952 : allRange (okAt f_418_266 418 266 1144) 952 17 = true := by decide +kernel
+theorem ok_418_266_969 : ∀ t < 969, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_952 blk_418_266_952
+theorem blk_418_266_969 : allRange (okAt f_418_266 418 266 1144) 969 17 = true := by decide +kernel
+theorem ok_418_266_986 : ∀ t < 986, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_969 blk_418_266_969
+theorem blk_418_266_986 : allRange (okAt f_418_266 418 266 1144) 986 17 = true := by decide +kernel
+theorem ok_418_266_1003 : ∀ t < 1003, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_986 blk_418_266_986
+theorem blk_418_266_1003 : allRange (okAt f_418_266 418 266 1144) 1003 17 = true := by decide +kernel
+theorem ok_418_266_1020 : ∀ t < 1020, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_1003 blk_418_266_1003
+theorem blk_418_266_1020 : allRange (okAt f_418_266 418 266 1144) 1020 17 = true := by decide +kernel
+theorem ok_418_266_1037 : ∀ t < 1037, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_1020 blk_418_266_1020
+theorem blk_418_266_1037 : allRange (okAt f_418_266 418 266 1144) 1037 17 = true := by decide +kernel
+theorem ok_418_266_1054 : ∀ t < 1054, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_1037 blk_418_266_1037
+theorem blk_418_266_1054 : allRange (okAt f_418_266 418 266 1144) 1054 17 = true := by decide +kernel
+theorem ok_418_266_1071 : ∀ t < 1071, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_1054 blk_418_266_1054
+theorem blk_418_266_1071 : allRange (okAt f_418_266 418 266 1144) 1071 17 = true := by decide +kernel
+theorem ok_418_266_1088 : ∀ t < 1088, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_1071 blk_418_266_1071
+theorem blk_418_266_1088 : allRange (okAt f_418_266 418 266 1144) 1088 17 = true := by decide +kernel
+theorem ok_418_266_1105 : ∀ t < 1105, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_1088 blk_418_266_1088
+theorem blk_418_266_1105 : allRange (okAt f_418_266 418 266 1144) 1105 17 = true := by decide +kernel
+theorem ok_418_266_1122 : ∀ t < 1122, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_1105 blk_418_266_1105
+theorem blk_418_266_1122 : allRange (okAt f_418_266 418 266 1144) 1122 17 = true := by decide +kernel
+theorem ok_418_266_1139 : ∀ t < 1139, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_1122 blk_418_266_1122
+theorem blk_418_266_1139 : allRange (okAt f_418_266 418 266 1144) 1139 5 = true := by decide +kernel
+theorem ok_418_266_1144 : ∀ t < 1144, okAt f_418_266 418 266 1144 t = true := allRange_extend ok_418_266_1139 blk_418_266_1139
+
+theorem coil_418_266 : ∃ v : ℕ → Fin 418 → Bool, IsCoil 266 1144 v :=
+  exists_coil_of_check f_418_266 266 1144 (by norm_num) ok_418_266_1144 (by decide +kernel)
+
+/-- K(418,266) = 1144  (= 4k+2l+6, l = 37; code: fam10_418_266_1144.txt) -/
+theorem K_418_266 : IsMaxLength 418 266 1144 :=
+  isMaxLength_of_chord coil_418_266 (by norm_num) 533 (by norm_num) (by norm_num) (by decide +kernel)
+
+
+end Coil

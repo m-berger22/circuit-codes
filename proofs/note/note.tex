@@ -1,0 +1,715 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newcommand{\odd}{\operatorname{odd}}
+\newcommand{\pos}[1]{(#1)^{+}}
+\title{Circuit codes of dimension near $3k/2$:\\ an upper bound by window counting, and counterexamples\\ to a conjecture of Byrnes}
+\author{Claude (an AI model made by Anthropic), working autonomously}
+\date{Draft of 12 November 2026 --- not reviewed by a human mathematician;\\ the main statements are machine-checked in Lean (Section~\ref{sec:formal})}
+\begin{document}
+\maketitle
+\begin{abstract}
+A circuit code of spread $k$ is a cycle in the $n$-cube $Q_n$ in which any two vertices at Hamming distance less than
+$k$ are at the same distance along the cycle; $K(n,k)$ is the maximum length. Write $n=(3k+l+1)/2$. Exact values
+were known for $l\le 3$ and, for $k\ge 9$, $l=4$ (Singleton, 1966; Douglas, 1969). Byrnes constructed codes of length $4k+2l$ for $k\ge 2l+1$ ($k$ odd) and
+$k\ge 2l-2$ ($k$ even) and conjectured that they are optimal. We show:
+(i) by explicit codes, the conjecture fails for more than $60$ pairs $(n,k)$ on the lines $l=6,\dots,17$;
+(ii) by an elementary double count over windows of the transition sequence,
+$K(n,k)\le 4k+2l$ whenever $k>(l^2-1)/2$ ($l$ odd) or $k>(l-2)(l+1)/2$ ($l$ even), so the conjecture is true
+for all but finitely many $k$ on every line;
+(iii) a code of length $4k+2l+2$ has a rigid shape (a balanced two-letter ``type word''), which reduces its existence to a
+small satisfiability problem. With (iii) the lines $l=5,\dots,9$ are settled completely: the conjecture fails exactly for
+$k=13$ ($l=6$), $k=12,\dots,18$ ($l=7$), $k=17,\dots,25$ ($l=8$) and for every admissible $k=16,\dots,40$ on the line $l=9$,
+where the bound (ii) is therefore sharp;
+(iv) an explicit family of codes of length $4k+2l+2$ at $k=(l^2-1)/2$ for every $l\equiv 1\pmod 4$, $l\ge 9$: the bound (ii) is
+sharp for infinitely many $l$, the conjecture fails on every line $l\ge 6$, and the largest $k$ for which it fails on the line $l$ is $l^2/2-O(l)$. We obtain $K(n,k)$ exactly on these lines for $k\ge 20$ ($l=7$) and $k\ge 19$ ($l=8$), including $K(33,19)=96=4k+2l+4$,
+and on the line $l=9$ for $k\ge 26$.
+(v) (Section~\ref{sec:last}, added last) for $l\equiv 0,3\pmod 4$ no code of length $4k+2l+2$ exists for $k>(l^2-l-6)/2$, and explicit codes
+exist at $k=(l^2-l-6)/2$: the last $k$ at which the conjecture fails is $(l^2-1)/2$ for $l\equiv 1$ and $(l^2-l-6)/2$ for $l\equiv 0,3 \pmod 4$;
+for $l\equiv 2\pmod 4$ it is $(l^2-l-8)/2$ or $(l^2-l-4)/2$ (the latter for all $l\le 38$).
+(vi) (Section~\ref{sec:sym}) Byrnes' bound for symmetric codes with a bit run $k+l$ holds for all $k$, with a short proof, so
+Conjecture~4.2 is equivalent to $K(n,k)=4k+2l$; it fails on every line $l\ge 6$, by an unbounded amount.
+The main upper bounds, the families for $l\equiv 1\pmod 4$, and (vi) are checked in Lean~4 (Section~\ref{sec:formal}).
+\end{abstract}
+
+\section{Definitions and results}
+Let $C=(v_0,\dots,v_{N-1})$ be a cycle in $Q_n$ (indices mod $N$), $d_H$ the Hamming distance and
+$d_C(i,j)=\min(|i-j|,N-|i-j|)$. $C$ is a \emph{circuit code of spread $k$} (a $k$-coil) if
+\[ d_H(v_i,v_j)<k \;\Longrightarrow\; d_C(i,j)=d_H(v_i,v_j)\qquad\text{for all } i,j. \]
+$K(n,k)$ denotes the maximum length $N$ of such a code. Throughout, $k\ge 2$,
+\[ l=2n-3k-1,\qquad\text{i.e. } n=\tfrac{3k+l+1}{2},\qquad K=k+1, \]
+so $k$ and $l$ have opposite parity. $K(n,k)=2n$ for $l\le 1$ (Singleton), and Douglas determined $K(n,k)$ for $l=2,3$ and for $l=4$, $k\ge 9$
+(the value is $4k+2l$).
+Byrnes \cite{B2} constructs, for every $l\ge 2$ and every $k\ge 2l+1$ ($k$ odd) or $k\ge 2l-2$ ($k$ even), a code of
+length $4k+2l$, proves that this is the maximum among codes with a certain symmetry and bit run $k+l$, and conjectures
+(Conjecture~4.2 of \cite{B2}) that $K(n,k)=4k+2l$ in this whole range.
+
+\begin{theorem}\label{main}
+Let $l\ge 2$, $n=(3k+l+1)/2$, and suppose
+\[ k>\frac{l^2-1}{2}\ \text{ and }\ k>3l-3\quad(l\text{ odd}),\qquad\text{or}\qquad k>\frac{(l-2)(l+1)}{2}\quad(l\text{ even}). \]
+Then every spread-$k$ circuit code in $Q_n$ has length at most $4k+2l$. (For odd $l\geq 5$ the condition $k>3l-3$ is implied by the first.)
+\end{theorem}
+
+With Byrnes' construction, $K(n,k)=4k+2l$ in the range of Theorem~\ref{main} when $l\ge 5$.
+The largest $k$ \emph{not} covered is $12,13,24,27,40,43,60,65$ for $l=5,\dots,12$.
+
+\begin{theorem}\label{ce}
+$K(n,k)\ge 4k+2l+2$ for the pairs of Table~\ref{tab}, all of which lie in the range of Byrnes' conjecture; and $K(33,19)\ge 96$, $K(32,18)\ge 94$ (excess $4$).
+\end{theorem}
+
+\begin{table}[h]\centering
+\begin{tabular}{cp{0.84\textwidth}}\toprule
+$l$ & $(n,k)$ with a code of length $4k+2l+2$ \quad($^*$: also $4k+2l+4$) \\ \midrule
+6 & $(23,13)$ \\
+7 & $(22,12)$, $(25,14)$, $(28,16)$, $(31,18)$ \\
+8 & $(30,17)$, $(33,19)^*$, $(36,21)$, $(39,23)$, $(42,25)$ \\
+9 & $(29,16)$, $(32,18)^*$, $(35,20)$, $(38,22)$, $(41,24)$, $(44,26)$, $(47,28)$, $(50,30)$, $(53,32)$, $(56,34)$, $(59,36)$, $(62,38)$, $(65,40)$ \\
+10 & $(37,21)$, $(40,23)$, $(43,25)^*$, $(46,27)$, $(49,29)$, $(52,31)$, $(55,33)$, $(58,35)$, $(61,37)$, $(64,39)$ \\
+11 & $(36,20)$, $(39,22)$, $(42,24)$, $(45,26)$, $(48,28)$ \\
+12 & $(44,25)$, $(47,27)$ \\
+13 & $(43,24)$, $(46,26)$ \\ \bottomrule
+\end{tabular}
+\caption{Counterexamples to Conjecture 4.2 of \cite{B2} (state of 10 Nov 2026, 13:25; lines $l\ge 11$ incomplete, further pairs on $l=11,\dots,17$ follow by contraction: see \texttt{listce.py}). The codes are in the files
+\texttt{codes/sat\_*}, \texttt{pump\_*}, \texttt{con\_*}, \texttt{skel\_*};
+each was validated by three independent programs directly from the definition.}\label{tab}
+\end{table}
+
+The first entry of each line is the smallest $k$ admitted by the conjecture ($k=2l+1$ or $2l-2$). An explicit
+$(23,13)$ code of length $66$ is given in the Appendix.
+
+\begin{corollary}\label{lines}
+(a) $K\bigl(\tfrac{3k+6}{2},k\bigr)=4k+10$ for every even $k\ge 8$.\quad
+(b) $K(23,13)=66$, and $K\bigl(\tfrac{3k+7}{2},k\bigr)=4k+12$ for every odd $k\ge 15$.
+\end{corollary}
+Here $k\ge 14$ in (a) and $k\ge 15$ in (b) follow from Theorem~\ref{main}; the cases $K(15,8)=42$, $K(18,10)=50$, $K(21,12)=58$
+and the upper bound $K(23,13)\le 66$ are computer proofs (SAT, with DRAT certificates checked by \texttt{drat-trim}; see Section~\ref{comp}). So the conjecture is true on the line $l=5$,
+and on the line $l=6$ it fails exactly at its first case $k=13$, which is also the last $k$ not covered by Theorem~\ref{main}.
+
+\begin{theorem}\label{l78}
+(a) $K(34,20)=94$, $K(37,22)=102$, $K(40,24)=110$. Hence on the line $l=7$: $K\bigl(\tfrac{3k+8}{2},k\bigr)=4k+14$ for every even
+$k\ge 20$, while $K>4k+14$ for $k=12,14,16,18$.\\
+(b) $K(33,19)=96$, $K(36,21)=102$, $K(39,23)=110$, $K(42,25)=118$, $K(45,27)=124$. Hence on the line $l=8$:
+$K\bigl(\tfrac{3k+9}{2},k\bigr)=4k+16$ for every odd $k\ge 27$, while $K>4k+16$ for $k=17,\dots,25$.\\
+(c) On the line $l=9$: $K\bigl(\tfrac{3k+10}{2},k\bigr)=4k+20$ for every even $k$ with $26\le k\le 40$ (and $K\ge 4k+20$ for $16\le k\le 24$), while
+$K=4k+18$ for $k\ge 42$. In particular $K(65,40)=180$, the case $2k+1=l^2$ excluded from Theorem~\ref{main}: the hypothesis of
+Theorem~\ref{main} cannot be weakened for $l=9$ (nor for $l=6$).
+\end{theorem}
+The upper bounds in Theorem~\ref{l78} combine Lemmas~\ref{L1} and \ref{L2} with Proposition~\ref{shape} and a computer search
+(Section~\ref{sec:shape}); $K(40,24)=110$ is proved by hand there.
+
+\section{Windows}
+Let $T=(T_0,\dots,T_{N-1})$ be the cyclic transition sequence: $T_i$ is the coordinate in which $v_i$ and $v_{i+1}$
+differ. A \emph{window} $W$ of length $L<N$ is a set of $L$ cyclically consecutive positions $t,\dots,t+L-1$;
+it joins $v_t$ to $v_{t+L}$. Let $\odd(W)$ be the number of coordinates occurring an odd number of times in $W$, so
+$\odd(W)=d_H(v_t,v_{t+L})$ and $\odd(W)\equiv L \pmod 2$.
+
+\medskip\noindent\textbf{(F1)} If $k\le L\le N-k$ then $\odd(W)\ge k$, hence $\odd(W)\ge k+\bigl((L-k)\bmod 2\bigr)$.
+
+Indeed $d_C(t,t+L)=\min(L,N-L)\ge k$, and $d_H<k$ would force $d_C=d_H<k$.
+
+\medskip\noindent\textbf{(F2)} If $N\ge 2k+1$, any $K=k+1$ consecutive transitions are distinct.
+
+For $j\le k-1$ a window of length $j$ joins vertices with $d_C=j$ and $d_H\le j$; $d_H<j$ would give $d_C=d_H<j$.
+So the $j$ transitions are distinct. For $j=k$ and $j=k+1$ use (F1): $\odd\ge k$ and $\odd\equiv j$.
+
+\medskip\noindent\textbf{(F3)} For a position $i$ let $i^+$ be the next position (cyclically) carrying the same coordinate,
+$g_i=i^+-i\ge K$ the \emph{gap}, and $e_i=g_i-K\ge 0$. A coordinate used $u$ times has $u$ gaps summing to $N$ ($u$ is even,
+since the walk closes; $u\geq 2$ if the coordinate is used at all). Hence
+$\sum_i g_i = N\cdot\#\{\text{used coordinates}\}\le Nn$. The occurrences $i,i^+,\dots,i^{+(j-1)}$ of one coordinate
+(with $j\le u$, total span $G=g_i+\dots+g_{i^{+(j-2)}}<N$) lie together in exactly $\pos{L-G}$ of the $N$ windows of length $L$,
+where $\pos{x}=\max(x,0)$. A window of length $L\le jK$ contains each coordinate at most $j$ times.
+
+\medskip We use two elementary facts about $\pos{\cdot}$: $\pos{a+b}\le\pos a+\pos b$; and if $c\ge a$ and $c\ge b$ then
+\begin{equation}\label{el} \pos{a+b-c}\ \ge\ \pos a+\pos b-\pos c . \end{equation}
+(If $a,b\ge 0$ then $c\ge0$ and the right side is $a+b-c$. If $a<0\le b$ the right side is $b-\pos c= b-c\le 0$; similarly
+for $b<0\le a$. If $a,b<0$ the right side is $-\pos c\le 0$.)
+
+\begin{lemma}[chord inequality]\label{L1}
+Let $C$ be a spread-$k$ circuit code of length $N$ in $Q_n$ with $2k+2\le N<6K$, and let $L$ be an integer with
+$\max(k,N/4)\le L\le\min(2K,N-k)$. Then
+\[ \Bigl(\frac N2-n\Bigr)(4L-N)\ \le\ N\Bigl\lfloor\frac{L-k}{2}\Bigr\rfloor . \]
+\end{lemma}
+\begin{proof}
+Since $L\le 2K$, every coordinate occurs at most twice in a window $W$ of length $L$, so $\odd(W)=L-2P(W)$ where
+$P(W)$ is the number of coordinates occurring twice, i.e.\ the number of pairs $(i,i^+)$ inside $W$ (``chords'').
+By (F1), $P(W)\le\lfloor (L-k)/2\rfloor$. By (F3), $\sum_W P(W)=\sum_i\pos{L-g_i}$.
+Since $N<6K$, by (F2) every coordinate is used $0$, $2$ or $4$ times. If $n_1$ coordinates are used twice and $n_2$ four times,
+then $n_1+n_2\le n$ and $2n_1+4n_2=N$, so $n_2\ge N/2-n$. The four gaps of a coordinate used four times sum to $N$, so
+they contribute $\sum\pos{L-g}\ge 4L-N\ge 0$; all other terms are non-negative. Therefore
+\[ \Bigl(\frac N2-n\Bigr)(4L-N)\le n_2(4L-N)\le\sum_W P(W)\le N\Bigl\lfloor\frac{L-k}{2}\Bigr\rfloor. \qedhere\]
+\end{proof}
+
+\begin{lemma}[no long codes]\label{L2}
+Let $C$ be a spread-$k$ circuit code of length $N\ge 5k+4$ in $Q_n$. Then
+\[ k+(k\bmod 2)\ \le\ 6n-12K+6\Bigl\lfloor\frac{k+2}{2}\Bigr\rfloor . \]
+With $n=(3k+l+1)/2$ the right side equals $3l-3$ for $k$ even and $3l-6$ for $k$ odd. Consequently a code with
+$k>3l-3$ ($k$ even) or $k>3l-7$ ($k$ odd) has length $N\le 5k+3$.
+\end{lemma}
+\begin{proof}
+$N\ge 5k+4$ guarantees $k\le L\le N-k$ for $L=2K,3K,4K$. Put $A=\lfloor (k+2)/2\rfloor$,
+$x_i=\pos{K-e_i}$ and $b_i=\pos{K-e_i-e_{i^+}}$.
+
+\emph{(a) $L=2K$.} As in Lemma~\ref{L1}, $P(W)\le\lfloor(2K-k)/2\rfloor=A$ and
+$\sum_WP(W)=\sum_i\pos{2K-g_i}=\sum_ix_i$, so
+\begin{equation}\label{e1}\sum_i x_i\le NA.\end{equation}
+
+\emph{(b) $L=3K$.} Each coordinate occurs at most three times in $W$; let $c_j$ be the number occurring exactly $j$ times.
+Then $3K=c_1+2c_2+3c_3$, $\odd(W)=c_1+c_3$ and $c_1+c_2+c_3\le n$. So $c_2+c_3=(3K-\odd)/2$ and
+$c_1+c_2+c_3=(3K+\odd)/2-c_3\le n$, whence, using $\odd\ge k$ and $\odd\equiv 3K$,
+$c_3\ge\lceil(3K+k)/2\rceil-n=2K-n$. As $c_3(W)$ is the number of triples $(i,i^+,i^{++})$ inside $W$, (F3) gives
+\begin{equation}\label{e2}\sum_i b_i=\sum_i\pos{3K-g_i-g_{i^+}}=\sum_Wc_3(W)\ge N(2K-n).\end{equation}
+(For a coordinate used twice, $g_i+g_{i^+}=N>3K$ and the term vanishes, as it should.)
+
+\emph{(c) $L=4K$.} Each coordinate occurs at most four times. With $c_j$ as before,
+$4K=c_1+2c_2+3c_3+4c_4$ and
+\[ \odd(W)=c_1+c_3=4K-2\,\mathrm{ch}(W)+2\,t(W)-2\,q(W), \]
+where $\mathrm{ch}=c_2+2c_3+3c_4$ is the number of chords $(i,i^+)$ inside $W$, $t=c_3+2c_4$ the number of triples
+$(i,i^+,i^{++})$ inside $W$ and $q=c_4$ the number of quadruples $(i,i^+,i^{++},i^{+++})$ inside $W$. Summing over the $N$ windows with (F3):
+\begin{align*}
+\sum_W\mathrm{ch}&=\sum_i\pos{4K-g_i}\ \ge\ \sum_i(4K-g_i)\ \ge\ N(4K-n);\\
+\sum_Wt&=\sum_i\pos{(K-e_i)+(K-e_{i^+})}\ \le\ \sum_i(x_i+x_{i^+})=2\sum_ix_i\ \le\ 2NA;\\
+\sum_Wq&=\sum_i\pos{K-e_i-e_{i^+}-e_{i^{++}}}\ \ge\ \sum_i\bigl(b_i+b_{i^+}-x_{i^+}\bigr)\\ &=2\sum_ib_i-\sum_ix_i\ \ge\ 2N(2K-n)-NA.
+\end{align*}
+The second line uses that $i\mapsto i^+$ is a bijection and \eqref{e1}; the third uses \eqref{el} with
+$a=K-e_i-e_{i^+}$, $b=K-e_{i^+}-e_{i^{++}}$, $c=K-e_{i^+}$, then \eqref{e1} and \eqref{e2}.
+(A coordinate used twice has no triples or quadruples; its terms in the sums for $t$ and $q$ are $0$, since the spans are
+$\ge N>4K$, and the bounds remain valid for them: the upper bound $x_i+x_{i^+}$ is $\ge 0$, and the lower bound
+$b_i+b_{i^+}-x_{i^+}=-x_{i^+}$ is $\le 0$ because $b_i=b_{i^+}=\pos{3K-N}=0$.) Hence
+\[ \sum_W\odd(W)\le N\bigl[4K-2(4K-n)+4A-4(2K-n)+2A\bigr]=N\,[\,6n-12K+6A\,], \]
+while $\odd(W)\ge k+(k\bmod 2)$ for every $W$ by (F1) with $L=4K$ even.
+For $k$ even $6A=3K+3$ and $6n=9K+3l-6$, giving $3l-3$; for $k$ odd $6A=3K$, giving $3l-6$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{main}]
+Suppose a code has length $N=4k+2l+e$ with $e\ge 2$ ($N$ is even).
+
+If $N\ge 5k+4$, Lemma~\ref{L2} is violated: for $k$ even $k>3l-3$ holds by hypothesis; for $k$ odd,
+$k>(l-2)(l+1)/2\ge 3l-7$ because $(l-3)(l-4)\ge 0$.
+
+Otherwise $2\le e\le k+4-2l$ and $N<6K$, so Lemma~\ref{L1} applies; note $N/2-n=(k+l-1+e)/2$.
+
+\emph{$k$ even.} Take $L=2k+1$ (then $\lfloor(L-k)/2\rfloor=k/2$ and $4L-N=4k+4-2l-e>0$). Lemma~\ref{L1} says $f(e)\le 0$ for
+\[ f(e)=(k+l-1+e)(4k+4-2l-e)-(4k+2l+e)k=-e^2+(2k+5-3l)e-(2l^2-6l+4). \]
+But $f$ is concave, $f(2)=4k+2-2l^2>0$ since $k>(l^2-1)/2$, and $f(k+4-2l)=k(k+5-3l)>0$ since $k>3l-3$.
+So $f>0$ on $[2,k+4-2l]$, a contradiction.
+
+\emph{$k$ odd.} Take $L=2k+2$ (then $\lfloor(L-k)/2\rfloor=(k+1)/2$ and $4L-N=4k+8-2l-e>0$). Lemma~\ref{L1} says $f(e)\le 0$ for
+\[ f(e)=(k+l-1+e)(4k+8-2l-e)-(4k+2l+e)(k+1)=-e^2+(2k+8-3l)e-(2l^2-8l+8). \]
+Now $f(2)=4k+4+2l-2l^2>0$ since $k>(l-2)(l+1)/2$, and $f(k+4-2l)=k^2+(8-3l)k+8-4l$. For $l=2$ this is $k(k+2)>0$.
+For even $l\ge 4$, $k\ge(l-2)(l+1)/2+1$ gives $k+8-3l\ge(l^2-7l+16)/2\ge 2$, so
+$f(k+4-2l)\ge 2k-(4l-8)\ge l^2-5l+8>0$. Again $f>0$ on the whole range, a contradiction.
+(The window lengths are admissible: $N/4\le L\le 2K$ and $L\le N-k$ hold because $2\le e\le k+4-2l$ and $l\ge 2$.)
+\end{proof}
+
+\begin{remark}
+For $l=2,3,4$ Theorem~\ref{main} gives $K(n,k)\le 4k+2l$ for odd $k\geq 3$, even $k\ge 8$, odd $k\ge 7$ respectively, in agreement
+with the classical exact values.
+\end{remark}
+\begin{remark}[structure at equality]
+If $f(2)=0$ (e.g.\ $(n,k)=(40,24)$, $l=7$) a code of length $4k+2l+2$ must have: every window of length $2k+1$ at
+Hamming distance exactly $k+1$\,; every coordinate used; exactly $k$ coordinates used twice, with both gaps $\ge 2k+1$; and all
+gaps of the $n-k$ four-times coordinates $\le 2k+1$. All sixteen codes of Theorem~\ref{ce}, and all excess-$2$ codes we have seen, have
+exactly $k$ twice-used and $n-k$ four-times-used coordinates.
+\end{remark}
+
+\section{The shape of a code just above $4k+2l$}\label{sec:shape}
+Let $C$ be a spread-$k$ circuit code of even length $N$ with $2K\le N<6K$, put $m=N/2-n$, $L_0=2k+1$ ($k$ even) or $2k+2$ ($k$ odd),
+$c_0=\lfloor (L_0-k)/2\rfloor$, and assume $N/4\le L_0\le N-k$ and
+\begin{equation}\label{H} (m+1)(4L_0-N)>Nc_0 . \end{equation}
+For $N=4k+2l+2$ we have $m=n-k$, and \eqref{H} holds in every case used below.
+\begin{proposition}\label{shape}
+Under \eqref{H}: exactly $m$ coordinates are used four times (``$F$ coordinates''), $n-m$ are used twice (``dots''), none is unused,
+and every gap of an $F$ coordinate is at most $g_{\max}=N-3K$. For a window $W$ of length $L$ let $F(W)$ be the number of its
+positions carrying $F$ coordinates, $s(W)$ the number of dots occurring twice in $W$ and $t(W)$ the number of $F$ coordinates
+occurring three times in $W$. If $g_{\max}\le L\le 3K$ then
+\begin{equation}\label{id} \odd(W)=L+2m-2F(W)-2s(W)+2t(W), \end{equation}
+and therefore, if also $k\le L\le N-k$,
+\begin{equation}\label{bal} F(W)\ \le\ \Bigl\lfloor\frac{L+2m-k}{2}\Bigr\rfloor+t(W)-s(W). \end{equation}
+Here $t(W)=0$ for $L\le 2K$; and for $L=2K+1+j$, $W=[a,a+L)$, $t(W)$ is at most the number of $F$ positions in each of
+$[a,a+j]$, $[a+2K,a+2K+j]$ and $[a+K,a+L-1-K]$.
+\end{proposition}
+\begin{proof}
+As in Lemma~\ref{L1}, uses are $0,2,4$, the number $n_2$ of four-times coordinates is at least $m$ and satisfies
+$n_2(4L_0-N)\le Nc_0$; by \eqref{H} $n_2=m$, so $n_1=(N-4m)/2=n-m$ and all $n$ coordinates are used. Four gaps $\ge K$ summing to $N$
+are each $\le N-3K$. If $L\ge g_{\max}$ every $F$ coordinate occurs in $W$, and at most three times if $L\le 3K$; with $a_j$ of them
+occurring $j$ times, $a_1+a_2+a_3=m$ and $F(W)=a_1+2a_2+3a_3$ give $a_1+a_3=2m-F(W)+2a_3$; the dots contribute $L-F(W)-2s(W)$.
+This is \eqref{id}; \eqref{bal} follows from (F1). Three occurrences $p<p'<p''$ of a coordinate in $W$ have gaps $\ge K$, so
+$p\le a+j$, $p''\ge a+2K$, $a+K\le p'\le a+L-1-K$, and distinct coordinates use distinct positions.
+\end{proof}
+Summing \eqref{bal} over all windows of length $L_0$ gives Lemma~\ref{L1} again; but \eqref{bal} holds window by window and for many
+lengths, and says that the cyclic two-letter \emph{type word} ($F$ or dot at each position) is balanced.
+
+\paragraph{Example: $K(40,24)=110$ by hand.} Suppose $N=112$: $K=25$, $m=16$ ($64$ $F$ positions with gaps in $[25,37]$), $24$ dots.
+By \eqref{bal} every window of length $49$ has $F(W)\le 28$, and the average of $F(W)$ is $49\cdot 64/112=28$; so $F(W)=28$ always,
+the type word is invariant under the shift by $49$, hence has period $\gcd(49,112)=7$ with four $F$ and three dots per period.
+A window of length $47$ has $F(W)\le 27$; it is a $49$-window without its two ends $t$, $t+48\equiv t-1 \pmod 7$, so these are not
+both dots: no two cyclically adjacent dots, and the period is $\cdot FF\cdot F\cdot F$. Let $s,s+1$ be the residues of the two
+adjacent $F$'s; then $s+4$ is a dot residue. A window $[p,p+50]$ of length $51$ with $p\equiv s$ has $F(W)=28+2=30>29$, so by
+\eqref{bal} $t(W)\ge1$, which needs an $F$ at $p+25\equiv s+4$: contradiction. Lengths $\ge 114$ are excluded by Lemmas~\ref{L1} and \ref{L2}. \qed
+
+\paragraph{The general case.} Relax the dots to anonymous positions. A code as in Proposition~\ref{shape} yields an
+\emph{$F$-skeleton}: an assignment of $m$ coordinates and $n-m$ dot marks to the $N$ positions such that each coordinate is used an
+even number of times, never twice within $K$ consecutive positions, at least once in every $g_{\max}$ consecutive positions, and
+for every window $W$ with $k\le |W|\le N-k$
+\[ D(W)+\odd_F(W)\ \ge\ k+\bigl((|W|-k)\bmod 2\bigr), \]
+where $D(W)$ is the number of dots in $W$ and $\odd_F(W)$ the number of $F$ coordinates occurring an odd number of times
+(since $\odd(W)=D(W)-2s(W)+\odd_F(W)$). Existence of an $F$-skeleton is a satisfiability problem with only $m$ coordinates;
+if it is unsatisfiable there is no code of length $N$. For $(n,k,N)=(37,22,104)$, $(40,24,112)$, $(34,20,96)$, $(45,27,126)$ it is
+unsatisfiable (kissat: $51$, $38$, $134$, $221$ seconds; DRAT proofs by cadical verified with drat-trim), whereas a direct encoding of
+the definition did not terminate in $3.5$ hours. When it is satisfiable, a second small SAT problem assigns the dots; this produced
+the codes for $(36,21)$, $(39,23)$, $(42,25)$, all pairs with $24\le k\le 40$ on the line $l=9$, $(43,25),\dots,(55,33)$ on $l=10$, and the
+$(33,19)$ code of length $96$. For $(33,19)$ the length $98$ is excluded by Lemma~\ref{L1} and larger ones by Lemma~\ref{L2}.
+In the whole region $k>3l-3$ ($k$ even), $k>3l-7$ ($k$ odd), $7\le l\le 12$, every length $4k+2l<N\le 5k+3$ either violates
+Lemma~\ref{L1} or satisfies \eqref{H}, so there $K(n,k)$ is determined by at most three such queries.
+
+\paragraph{An explicit family at $2k+1=l^2$.} Let $l\equiv 1 \pmod 4$, $l\ge 9$, $k=(l^2-1)/2$, $K=k+1$, $N=2l(l+1)=4k+2l+2$ and
+$n=(3k+l+1)/2=(3l-1)(l+1)/4$. Define a cyclic word $T$ on $\mathbb{Z}_N$ over $n$ symbols by
+\begin{itemize}
+\item[(A)] $T(lj)=T(lj+K)=T(lj+2K)=T(lj+3K+1)=A_j$ for $j=0,\dots,2l+1$ (these positions are exactly those with residues
+$0$, $\tfrac{l+1}{2}$, $1$, $\tfrac{l+5}{2}$ modulo $l$);
+\item[(B)] $T(t)=B_{t \bmod N/4}$ if $t \bmod l\in\{3,5,\dots,l-2\}\setminus\{\tfrac{l+1}{2},\tfrac{l+5}{2}\}$;
+\item[(D)] $T(t)=D_{t\bmod N/2}$ if $t\bmod l\in\{2,4,\dots,l-1\}$.
+\end{itemize}
+This uses $2l+2$ symbols $A_j$, $(l-7)(l+1)/4$ symbols $B$ (together $(l+1)^2/4=n-k$, each four times) and $k$ symbols $D$ (each twice,
+at antipodal positions); the type word is the one forced by the argument for $(40,24)$ above.
+\begin{theorem}\label{fam}
+For every $l\equiv 1\pmod 4$, $l\ge 9$, $T$ is the transition sequence of a spread-$k$ circuit code of length $4k+2l+2$ in $Q_n$. Consequently
+$K(n,k)=4k+2l+2$ for $k=(l^2-1)/2$, $n=(3k+l+1)/2$, and the condition $k>(l^2-1)/2$ in Theorem~\ref{main} cannot be weakened for these $l$.
+\end{theorem}
+\begin{proof}[Proof for $l\ge 13$ (the case $l=9$, and all $l\le 161$, were checked by computer from the definition)]
+Put $h=(l-1)/2$, $Q=N/4=l(l+1)/2\equiv 0 \pmod l$, so $K=Q-h$. The gaps are $K,K,K+1,g_4:=Q+3h-1$ for the $A_j$, $Q$ for the $B$'s and $2Q$ for the $D$'s:
+all are $\ge K$ and every symbol is used an even number of times, so $T$ closes up and any $K$ consecutive transitions are distinct.
+It remains to show $\odd(W)\ge k$ for every window $W=[t,t+L)$ with $K<L\le N/2$. Such a window contains no $D$ twice.
+Let $c_R(t,x)$ be the number of $p\in[t,t+x)$ with $p \bmod l\in R$.
+
+\emph{Step 1: $L=K+y$, $1\le y\le 2l-3$ (i.e.\ $L\le g_4$).} No symbol occurs three times, so $\odd(W)=L-2\,\mathrm{ch}(W)$ with
+$\mathrm{ch}(W)=c_{\{0\}}(t,y)+c_{\{(l+1)/2\}}(t,y)+c_{\{1\}}(t,y-1)+c_{\mathcal B}(t,y-h)$ ($\mathcal B$ the residues of type (B)), and we need $2\,\mathrm{ch}\le y+1$.
+Positions that start a pair have residue $0$ or an odd residue, so two adjacent positions both start pairs only for the residues $(0,1)$;
+and the residue $(l+1)/2$ is at cyclic distance $\ge h$ from the residues $0$ and $1$.
+If $y\le h-1$ only the residues $0,1,(l+1)/2$ count and at most the pair $(0,1)$ fits: $\mathrm{ch}\le 2$, and $\mathrm{ch}\le1$ for $y\le 2$.
+If $y\ge h$, the last $h$ positions contribute at most $2$ and the first $y-h$ positions at most $\lceil (y-h-J)/2\rceil+J$, where $J\le 2$ is the
+number of pairs $(0,1)$ among them; so $2\,\mathrm{ch}\le y-h+J+5\le y+1$ as $h\ge 6$.
+
+\emph{Step 2: $g_4<L\le 2K$.} By the counting that gives \eqref{id} (it does not need $T$ to be a code; every $F$ symbol occurs once or twice in $W$) $\odd(W)\ge k$ iff $F(W)\le\lfloor (L+l+1)/2\rfloor$.
+Write $L=lq+\rho$, $0\le\rho<l$. The type word has $(l+1)/2$ letters $F$ per period and at most $\lfloor\rho/2\rfloor+1$ in $\rho\ge1$ consecutive positions.
+The inequality becomes $q\le l-1+(\rho\bmod 2)-((q+\rho)\bmod 2)$ for $\rho\ge 1$ and $q\le l+1-(q\bmod 2)$ for $\rho=0$; it holds for $q\le l-2$, for $q=l-1$ (even),
+and for $q=l$, which occurs only with $\rho\in\{0,1\}$.
+
+\emph{Step 3: $L=2K+z$, $1\le z\le l-1$.} A symbol occurs three times in $W$ exactly for $A_j$ with $lj\in[t,t+z)$ or $lj+K\in[t,t+z-1)$; let $\tau$ be their number.
+By \eqref{id}, $\odd(W)\ge k$ iff $F(W)\le\lfloor (L+l+1)/2\rfloor+\tau$, i.e.\ $F'\le 1+\lfloor z/2\rfloor+\tau$, where $F'$ is the number of $F$ letters among the
+residues $t,\dots,t+z$. If these do not contain $0$ followed by $1$, they alternate and $F'\le\lfloor z/2\rfloor+1$; otherwise $F'\le\lfloor (z-1)/2\rfloor+2$ and $\tau\ge1$.
+
+The upper bound $K(n,k)\le 4k+2l+2$ is Lemma~\ref{L1} with $L=2k+1$ ($f(2)=0$, $f$ concave, $f(k+4-2l)>0$) and Lemma~\ref{L2}.
+\end{proof}
+\begin{corollary}
+Conjecture 4.2 of \cite{B2} fails on every line $l\ge 6$. More precisely $k_{\max}(l)\ge \tfrac{(l-3)^2-1}{2}-3$ for $l\ge 9$, while $k_{\max}(l)\le\tfrac{l^2-1}{2}$ by Theorem~\ref{main}.
+\end{corollary}
+\begin{proof}
+Deleting a twice-used coordinate (Deimer) from a code of length $4k+2l+2$ on the line $l$ gives a code of length $4(k-1)+2(l+1)+2$ on the line $l+1$.
+Apply this $j\le 3$ times to the code of Theorem~\ref{fam} for the largest $l_0\equiv 1\pmod 4$ with $l_0\le l$; the resulting $k=(l_0^2-1)/2-j$ is in the range of the conjecture.
+Lines $6,7,8$: Table~\ref{tab}.
+\end{proof}
+\begin{remark}[$l\equiv 3 \pmod 4$]
+For these $l$ the type word of period $l$ is impossible at $2k+1=l^2$ (below), but inserting two extra $FF$ at antipodal places into
+$2(l-1)$ periods gives a word of length $N=2l^2-2l+4=4k+2l+2$ with $k=(l-1)^2/2$. With the same triples $\{s,s+K,s+2K,s+3K+1\}$ at the
+first $F$ of every period, a half-turn automorphism and antipodal dots, a short search (no SAT) completes it to a valid code for
+$l=11,15,19,23,27$: $(n,k,N)=(81,50,224)$, $(155,98,424)$, $(253,162,688)$, $(375,242,1016)$, $(521,338,1408)$ (files \texttt{codes/dfam\_*}),
+and the symmetric $(31,18)$ codes of length $88$ have this shape too. For $l\ge 15$ the completion is given by a closed form (\texttt{PROOF2.md}, Section 6b; \texttt{struct/l3/dfam2.py}):
+the word is $(FF\,W_0^{\,l-1})^2$ with $W_0=FF.F.F\cdots F.$, the triples start at position $0$ and at the first letter of the periods $1,\dots,l-2$,
+and the remaining $F$ positions are joined in pairs at distance $N/4+d$, $d\in\{1,2,3,4,-2\}$. It is verified from the definition for
+$l=15,19,\dots,99$ and proved for $l\ge 43$ by the three steps of Theorem~\ref{fam} (with a cruder count in Step 1); a second AI instance
+checked the proof. So $k_{\max}(l)\ge (l-1)^2/2$ for every odd $l\ge 7$ (with equality for $l=7$, and $k_{\max}(l)=(l^2-1)/2$ for $l\equiv 1\pmod 4$).
+The proof is not yet written out in this note.
+\end{remark}
+For $l\equiv 3 \pmod 4$, $l\ge 7$, by contrast, no code of length $4k+2l+2$ exists at $2k+1=l^2$ (the argument for $(40,24)$ applies verbatim:
+the period is forced, and the triple needs an $F$ at residue $s+\tfrac{l+1}{2}$, which is a dot residue because $\tfrac{l+1}{2}$ is even).
+
+\section{The last spread on each line}\label{sec:last}
+Let $k_{\max}(l)$ be the largest $k$ (of the parity opposite to $l$) for which a code of length $4k+2l+2$ exists on the line $l$.
+Theorem~\ref{main} gives $k_{\max}(l)\le (l^2-1)/2$ for odd $l$ and $k_{\max}(l)\le (l^2-l-2)/2$ for even $l$ (for $l\equiv 2 \pmod 4$
+this number is even, so $k_{\max}(l)\le (l^2-l-4)/2$ there). Theorem~\ref{fam} shows equality for $l\equiv 1\pmod 4$.
+In this section $N=4k+2l+2$, so Proposition~\ref{shape} applies with $m=n-k$ (\eqref{H} holds in all cases below), and
+$\lfloor (L+2m-k)/2\rfloor=\lfloor (L+l+1)/2\rfloor$.
+\begin{theorem}\label{last}
+{\rm(a)} If $l\equiv 0\pmod 4$, $l\ge 8$ and $k=(l^2-l-2)/2$, there is no circuit code of length $4k+2l+2$.\\
+{\rm(b)} If $l\equiv 3\pmod 4$, $l\ge 11$ and $(l^2-l-2)/2\le k\le (l^2-1)/2$ ($k$ even), there is no circuit code of length $4k+2l+2$.\\
+In both cases $K(n,k)=4k+2l$. Hence $k_{\max}(l)\le (l^2-l-6)/2$ for $l\equiv 0,3\pmod 4$.
+\end{theorem}
+Longer lengths are excluded by Lemmas~\ref{L1} and \ref{L2} as before. Codes of length $4k+2l+2$ at $k=(l^2-l-6)/2$ exist for
+$l=7,11$ (found by the method of Section~\ref{sec:shape}) and, by explicit constructions (Theorem~\ref{fams} below),
+for every $l\equiv 0\pmod 4$, $l\ge 8$, and every $l\equiv 3\pmod 4$, $l\ge 15$; for $l\equiv 2\pmod 4$
+codes at $k=(l^2-l-4)/2$ exist for $l=6,10,\dots,30$ and $l=38$ (found by a satisfiability search inside a class of
+reflection-symmetric codes; the largest is a $(1071,701)$ code of length $2882$). So
+\[ k_{\max}(l)=\tfrac12(l^2-1),\quad \tfrac12(l^2-l-4),\quad \tfrac12(l^2-l-6),\quad \tfrac12(l^2-l-6)\qquad\text{for } l\equiv 1,2,3,0 \pmod 4 \]
+holds for all $7\le l\le 30$; for $l\equiv 0,1,3\pmod 4$ it is a theorem for all $l$ (Theorems~\ref{fam}, \ref{last}, \ref{fams}), and for
+$l\equiv 2\pmod 4$ the upper bound is proved while the lower bound is known for $l\le 30$, $l=38$ and conjectured in general.
+
+Both parts use one more elementary fact. A window of length $K+2=k+3$ has $\odd\ge k+1$ and contains no coordinate three times, so it
+contains at most one pair $(i,i^+)$:
+\begin{equation}\label{Y2} \text{for every position } t:\qquad \text{not both } e_t\le 1 \text{ and } e_{t+1}=0. \end{equation}
+
+\begin{proof}[Proof of (a)]
+Here $K=l(l-1)/2$, $N=2(l^2-1)$, $L_0=2K$, there are $l(l+1)$ $F$ positions, and with $p=N-4K=2l-2$ we have $N=(l+1)p$ and
+$K=(l/4)p\equiv 0\pmod p$. By \eqref{bal} every window of length $2K$ has $F(W)\le l^2/2$, which is also the average; so
+$F(W)=l^2/2$ for all of them, the type word is invariant under the shift by $2K$, hence has period $\gcd(2K,N)=p$, with $l>p/2$
+letters $F$ per period. So some two adjacent positions $s,s+1$ are both $F$ (an \emph{$FF$ pair at $s$}), and then there are $FF$ pairs
+at $s+K$ and $s+2K$. For an $FF$ pair at $s$ the window $[s,s+2K+2)$ has $F(W)=l^2/2+2$, one more than the floor in \eqref{bal},
+so it contains three consecutive occurrences $i,i^+,i^{++}$ of a coordinate, i.e.
+\begin{equation}\label{C1} e_s+e_{s^+}\le 1\qquad\text{or}\qquad e_{s+1}=e_{(s+1)^+}=0 . \end{equation}
+Suppose $(e_s,e_{s^+})=(0,0)$: the coordinate sits at $s,s+K,s+2K$. In \eqref{C1} for the pair at $s+K$ the second alternative
+contradicts \eqref{Y2} ($e_{s+K}=0$), so $e_{s+2K}\le 1$; then the fourth gap of this coordinate has $e=p-e_{s+2K}$, so the first
+alternative of \eqref{C1} fails for the pair at $s+2K$, and the second one gives $e_{s+2K+1}=0$, against \eqref{Y2} at $t=s+2K$.
+The cases $(0,1)$, $(1,0)$ and $e_{s+1}=e_{(s+1)^+}=0$ are refuted in the same way by following the coordinate through the pairs at
+$s+K$ and $s+2K$ (in the last case one ends with four gaps equal to $K$, whose sum is not $N$).
+\end{proof}
+
+\begin{proof}[Proof of (b)] Write $k=(l^2-1)/2-2j$, $0\le j\le (l+1)/4$; $j=0$ is the argument given for $(40,24)$. Let $j\ge1$.
+Now $K=(l^2+1)/2-2j$ is odd, $N=4K+2l-2$, and there are $2K+2l$ $F$ positions.
+Let $w$ be the walk on $\mathbb Z$ that steps $+1$ at an $F$ position and $-1$ at a dot (positions unrolled), and
+$\Delta(a,b)=w(b)-w(a)$; one turn of the code raises $w$ by $2l+2$. By \eqref{bal}, $\Delta(t,t+L)\le l$ for odd $L$ and $\le l+1$ for
+even $L$ in $[g_{\max},2K]$, and $\Delta(t,t+2K+1)\le l+2$, with equality only if $t,t+K,t+2K$ carry one coordinate. Taking
+complements, $\Delta(t,t+B)\ge 1$ for all $B\ge 2l-1$; in particular each level $m$ has a last visit $u_m$, followed by two up-steps.
+Put
+\[ x_m=u_{m+l}-u_m-(2K-1). \]
+Then $x_m\ge 0$ (as $\Delta(u_m,u_m+2K-1)\le l$), $x_m$ is even, $x_{m+2l+2}=x_m$ and $\sum_{m=1}^{2l+2}x_m=lN-(2l+2)(2K-1)=8j$.
+If $x_m=0$ then $\Delta(u_m,u_m+2K+1)=l+2$, so $q=u_m+K$ is an $F$ position. Since $K$ is odd and $(l+1)/2$ is even,
+$w(q)\ne m+(l+1)/2$: either $w(q)\le m+(l-1)/2$ (``low'') or $w(q)\ge m+(l+3)/2$ (``high''). Let $f_m=u_{m+1}-u_m-l$. Directly from
+the definitions,
+\[ f_m+\dots+f_{m+l-1}=x_m-4j,\qquad f_{m-2}+f_{m-1}=-(x_m+x_{m+l}) . \]
+In the low case $u_{m+(l-1)/2}\ge q$, i.e.\ $f_m+\dots+f_{m+(l-3)/2}\ge (l+1)/2-2j$; pairing consecutive terms and using the two
+identities this becomes: the sum of $x$ over a certain set $m+P_0$ of indices modulo $2l+2$ is at least $m_0=(l+1)/2+2j$. In the
+high case one gets the same for a set $m+Q_0$ (here one uses that the level $m+(l+1)/2+2$ cannot be reached before
+$u_{m-(l-1)/2}+2K+1$, which controls a possible later return of the walk to the level $m+(l+1)/2$). Since $l^2\equiv 1 \pmod{2l+2}$,
+$\tau=lm$ is a coordinate on $\mathbb Z_{2l+2}$ in which $m\mapsto m+l$ is the shift by one, and in it the two sets are intervals:
+with $a=(l+1)/2$ and $\xi(\tau)=x_m$,
+\begin{equation}\label{zero} \xi(\tau)=0\ \Longrightarrow\ \xi[\tau+1,\tau+a]\ge m_0\quad\text{or}\quad \xi[\tau-a-1,\tau-1]\ge m_0 . \end{equation}
+\emph{Case $1\le j\le (l-3)/4$.} The total mass $8j$ is less than $2m_0$, so the intervals chosen in \eqref{zero} for two zeros always
+intersect; having at most $a+1$ points on a cycle of $4a$ points, they have a common point $\pi$, and every zero lies in
+$[\pi-a,\pi-1]\cup[\pi+1,\pi+a+1]$. So $\xi$ has at most $2a+1$ zeros; but it has at most $4j$ nonzero values, and
+$4a-4j>2a+1$. (This case uses no property of the code beyond its type word.)\\
+\emph{Case $j=(l+1)/4$.} Now the mass is $4a=2m_0$, $K\equiv a+1 \pmod{4a}$, and the identities behind \eqref{zero} are exact:
+$\xi[\tau+1,\tau+a]=2a+G$ with $G=u_{m+(l-1)/2}-q\ge 0$ even (low), $\xi[\tau-a,\tau-1]=2a-1-g$ with $g=u_{m+a}-q$ odd (high).
+If $G=0$, $q$ is itself a last visit, of the level with coordinate $\tau+a+1$; if that level also has $x=0$, its triple
+continues the triple of $m$, one coordinate sits at $u_m,u_m+K,u_m+2K,u_m+3K$, and \eqref{Y2} at $t=u_m+2K-1=u_{m+l}$ shows
+$\xi(\tau+1)\ne 0$. If $g=-1$, then $q-1=u_{m+a}$ and \eqref{Y2} at $t=q-1$ shows $\xi(\tau-a)\ne0$. If $g\ge 1$ then $\xi(\tau-a-1)\ne 0$.
+So every zero $\tau$ has an adjacent interval of at most $a+1$ points and mass $\ge 2a$ which either has mass $\ge 2a+2$ or comes with
+a nonzero value of $\xi$ at a prescribed end point ($\tau+1$, $\tau+a+1$, $\tau-a$ or $\tau-a-1$). If these intervals pairwise intersect
+one gets a contradiction as before. Otherwise two of them are disjoint, each has mass exactly $2a$, and $\xi$ is supported on two
+clusters of spans $s_1,s_2\le a+1$ separated by two gaps of zeros of sizes $\gamma,\gamma'$. A zero in a gap can only use an interval that
+contains a whole cluster and begins or ends at a nonzero point, or that reaches across a cluster and the other gap into the second
+cluster; counting the possible positions gives
+\[ \gamma\ \le\ \pos{a+1-s_1-\gamma'}+\pos{a+1-s_2-\gamma'}+3 \]
+and the same with $\gamma,\gamma'$ exchanged, which is incompatible with $\gamma+\gamma'=4a-s_1-s_2$ for $a\ge 6$.
+\end{proof}
+\noindent The details of the index bookkeeping are in the accompanying file \texttt{PROOF2.md} (Sections 7--9); each of the three
+arguments was re-derived by an independent AI instance, which also tested every intermediate statement on the $2{,}181$ type words
+of $(87,54)$ and on $64$ real codes. For $l=11,15,19$ the statement (b) was first obtained by a SAT solver on the type word alone.
+
+\begin{theorem}\label{fams}
+For every $l\equiv 0\pmod 4$, $l\ge 8$, and every $l\equiv 3\pmod 4$, $l\ge 15$, there is an explicit circuit code of length $4k+2l+2$
+at $k=(l^2-l-6)/2$; for every $l\equiv 2\pmod 4$, $l\ge 10$, there is one at $k=(l^2-l-8)/2$. Consequently
+$k_{\max}(l)=(l^2-l-6)/2$ for all $l\equiv 0,3\pmod 4$, $l\ge 7$, and $(l^2-l-8)/2\le k_{\max}(l)\le (l^2-l-4)/2$ for $l\equiv 2\pmod 4$.
+\end{theorem}
+\noindent The codes have the automorphism $t\mapsto t+N/2$, their dots are antipodal, and the $F$ coordinates are given by an explicit
+gap function $x\mapsto x+K+e(x)$ on a periodic type word with one shortened period per half (files \texttt{PROOF3.md}--\texttt{PROOF5.md}).
+The proofs have three steps. (C) Following $x\mapsto x+K+e(x)$ row by row shows that every $F$ coordinate closes after four steps
+(most rows lie in $2$-cycles $x\to x^+\to x+N/2$, a few in genuine $4$-cycles). (2--3) For windows longer than every gap,
+$\odd(W)\ge k$ is the balance inequality \eqref{bal}; since the type word has no two adjacent dots, $2F(W)-L$ equals the number of
+$FF$ pairs inside $W$ plus $0,\pm1$, the pairs are spaced by the period, and the only windows that exceed the floor are those
+containing one pair too many, which contain one explicit triple at their first pair. (1) For windows of length $K+y$ shorter than
+the largest gap, $\odd(W)=L-2\,ch(W)$ where $ch(W)$ counts the ``chords'' $[x,x+e(x)]$ inside the first $y$ positions $J$; as every
+$F$ position of $J$ starts a chord, $ch(W)=F(J)-X(J)$ with $X(J)$ the number of chords leaving $J$ at its right end, and the claim
+becomes $X(J)\ge\lfloor (2F(J)-y)/2\rfloor$, which is at most $2$ and is settled by looking at the few rows with small $e$ just before
+the right end of $J$.
+
+
+\section{Codes four longer than $4k+2l$}\label{sec:four}
+Lemma~\ref{L1} with $L=2K$ also limits codes of length $4k+2l+e$ for larger even $e$: on an even line ($k$ odd) such a code needs
+\[ k\ \le\ k_e(l)=\frac{2l^2+(3e-8)l+(e-4)^2-8}{2e}, \]
+so $k_2=(l^2-l-2)/2$, $k_4=(l^2+2l-4)/4$, $k_6=(l^2+5l-2)/6$. For $e=4$ this is attained for every $l$ divisible by $4$.
+
+\begin{theorem}\label{four}
+Let $l\equiv 0\pmod 4$, $l\ge 8$, $k=(l^2+2l-4)/4$ and $n=(3k+l+1)/2$. Then $K(n,k)=4k+2l+4=l(l+4)$.
+\end{theorem}
+\noindent The first cases are $K(33,19)=96$, $K(68,41)=192$, $K(115,71)=320$.
+\begin{proof}
+\emph{Upper bound.} $k$ is odd and $k>3l-7$, so $N\le 5k+3$ by Lemma~\ref{L2}. For $N=4k+2l+e$, $4\le e\le k+3-2l$, Lemma~\ref{L1} with
+$L=2K$ requires $f(e)\le 0$, where $2f(e)=(k+l-1+e)(4k+8-2l-e)-(4k+2l+e)(k+1)$. One finds $f(4)=4k+4-l^2-2l=0$ and
+$2f(e)-2f(4)=(e-4)(2k+4-3l-e)$, which is positive for $6\le e\le k+3-2l$ because then $2k+4-3l-e\ge k+1-l>0$.
+
+\emph{The code.} Put $K=k+1=l(l+2)/4$, $N=l(l+4)=4K+2l$; then $N/4=K+l/2$, $N/2=2K+l$, $K\equiv l/2\pmod l$ and $K$ is even.
+Define $g$ on $\mathbb{Z}_N$ through $r=x \bmod l$:
+$g=K$ for $r=1$; $g=K+2l-2$ for $r=2$; $g=K+1$ for $r\in\{l/2,l/2+1\}$; $g=N/4$ for $r\in E$, the even numbers of $[4,l/2-2]$ and the
+odd numbers of $[l/2+3,l-1]$; and $g=N/2$ for the remaining $l/2-1$ residues. The map $x\mapsto x+g(x)$ permutes $\mathbb{Z}_N$; on residues it is
+$1\to l/2+1\to 2\to l/2\to 1$ and the identity elsewhere. Its orbits (four elements with gaps $K,K+1,K+2l-2,K+1$; four equally
+spaced elements; two antipodal elements) are the coordinates, $T_x$ is the orbit of $x$, and there are $(l+4)(3l-2)/8=n$ of them.
+
+\emph{Validity.} All gaps are $\ge K$, and a window has the same odd coordinates as its complement, so we need $\odd(W)\ge k$ for
+$W=[t,t+L)$, $L=K+y$, $0\le y\le K+l$. In such a window a twice-used coordinate occurs at most once, an equally spaced one at most
+twice, and one of the first kind at most three times, three times only as $x,x^+,x^{++}$ with $x\equiv 1$ or $l/2$ (span $2K+1$).
+Hence $\odd(W)=L-2(P-T)$, with $P$ the number of pairs $(x,x^+)$ in $W$ and $T$ the number of such triples, and the claim is
+\begin{equation}\label{four*} P(t,y)-T(t,y)\ \le\ \lfloor (y+1)/2\rfloor . \end{equation}
+For a set $S$ of residues write $|S\cap[a,b)|$ for the number of $x\in[a,b)$ with $x\bmod l\in S$. A pair starting at $x$ lies in $W$
+iff $t\le x<t+L-g(x)$. Moving each pair to $x+g(x)-K$ gives, with $E'=E+l/2$ and
+$M=\{0,1,l/2+1,l/2+2\}\cup E'$ (the odd numbers of $[1,l/2+1]$ and the even numbers of $[l/2+2,l]$),
+\begin{align*} P(t,y)&=|M\cap[t,t+y)|-R(t,y),\\ R(t,y)&=[\,y\ge1,\ t\equiv l/2+1\text{ or }l/2+2\,]+|E'\cap[t,t+\min(y,l/2))|+|\{0\}\cap[t,t+\min(y,2l-2))|, \end{align*}
+and $T(t,y)=|\{1,l/2\}\cap[t,t+y-K-1)|$.
+
+(A1) $P(t,K)=K/2$ for every $t$: as $K=l\cdot l/4+l/2$, this reduces to $|\{0,1,l/2+1,l/2+2\}\cap[t,t+l/2)|=z(t)+d(t)$ with $z$ the
+number of multiples of $l$ in $[t,t+2l-2)$ and $d$ the first term of $R$; both sides are $1,1,2,3,3,2$ for
+$t\bmod l=1$; $2$; $3..l/2$; $l/2+1$; $l/2+2$; $l/2+3..l$.
+
+(A2) $2l-2\le y\le K$: $R$ does not depend on $y$, and $M$ has no two adjacent non-members, so
+$P(t,K)-P(t,y)=|M\cap[t+y,t+K)|\ge\lfloor (K-y)/2\rfloor$, i.e.\ $P(t,y)\le\lceil y/2\rceil$.
+
+(A3) $y\le 2l-2$: now $P=|M'\cap[t,t+y)|-R'$ with $M'=M\setminus\{0\}$ and $R'$ the first two terms of $R$. Cut $[t,t+y)$ into
+consecutive pairs. A pair holds two members of $M'$ only if it is $\{l/2+1,l/2+2\}$, none only if it is $\{l-1,l\}$ (mod $l$),
+and these alternate; so $|M'\cap[t,t+y)|\le\lceil y/2\rceil+1$, with equality only if $t$ is odd, $1\le t\bmod l\le l/2+1$, and the
+pair $\{l/2+1,l/2+2\}$ is inside. Then $R'\ge1$: either $t\equiv l/2+1$, or $t\in E'$, or $t\equiv 1$ and $t+2\in E'$.
+
+(B) $y=K+d$, $1\le d\le l$: with $s=t+K$, $I=[s,s+d)$, $Z=\{0,l/2+1\}$ and $M''=M\setminus Z$, (A1) and $K\equiv l/2$ give
+$P-T=K/2+|M''\cap I|+[\,s+d-1\in Z\,]$. $M''$ has no two adjacent members, so $|M''\cap I|\le\lceil d/2\rceil$; and if the last
+position of $I$ is in $Z$, the last two positions of $I$ are non-members ($\{l-1,0\}$ or $\{l/2,l/2+1\}$), so
+$|M''\cap I|\le\lceil d/2\rceil-1$. In both cases $P-T\le K/2+\lceil d/2\rceil=\lfloor (y+1)/2\rfloor$.
+\end{proof}
+\noindent Equality in Lemma~\ref{L1} at $L=2K$ means that every window of length $2K$ contains exactly $K/2$ pairs (this is (A1)) and
+no twice-used coordinate twice; so the type word has period $\gcd(2K,N)$, which is $l$ here and $2l$ for $l\equiv 2\pmod 4$. The
+family was read off from the solver code for $(33,19)$, which turned out to be invariant under $t\mapsto t+8$, and from an exhaustive
+search of the codes invariant under $t\mapsto t+12$ for $(68,41)$. For $l=10$ the bound is attained as well, $K(49,29)=140$
+(solver; type word of period $20$, no code invariant under $t\mapsto t+10$), but not for $l=6$ ($K(20,11)=58$).
+The details are in \texttt{PROOF6.md}; an independent AI instance rebuilt the codes from the text for $l\le 64$ and checked every step.
+
+
+\begin{theorem}\label{four2}
+Let $l=8q+2$, $q\ge1$, $k=(l^2+2l-4)/4$ and $n=(3k+l+1)/2$. Then $K(n,k)=4k+2l+4=l(l+4)$.
+\end{theorem}
+\noindent The first cases are $K(49,29)=140$, $K(143,89)=396$, $K(285,181)=780$. The upper bound is as before. The code is invariant
+under $t\mapsto t+2l$; one period of its type word is
+\[ FF.\ \,FF.\ \,(F.)^{2q-2}\ \,FF.\ \,(F.)^{2q-1}\ \,FF.\ \,(F.)^{4q-1}, \]
+and the excesses $e=g-K$ of the gaps of the $F$ positions are, block by block,
+\[ (1,1)\ \ (1,\tfrac{3l}{2})\ \ (\tfrac l2-1)^{2q-2}\ \ (0,1)\ \ (\tfrac l2-1),(\tfrac{3l}{2})^{2q-2}\ \ (0,2l-2)\ \ 0^{2q-1},1,2l-2,1^{2q-2}. \]
+The twice-used positions are paired at distance $N/2+1$ (residue $2$), $N/2$ (odd residues in $[5,4q+1]$) and $N/2-1$
+(even residues in $[4q+4,l]$). The coordinates used four times have cyclic excess patterns $(0,1,1,2l-2)$, $(0,1,2l-2,1)$,
+$(0,\frac{3l}2,\frac l2-1,1)$ and, $2q-2$ times per period, $(0,\frac l2-1,1,\frac{3l}2)$.
+The proof (file \texttt{PROOF7.md}) follows the same four steps. Two of them are general: for any gap function invariant under a
+shift $p$ with $2K\equiv 0\pmod p$, the number $X(t)$ of ``excess chords'' $[x,x+e(x)]$ with $x<t\le x+e(x)$ and the number of
+members of $M=F-K$ in $[t,t+K)$ have the same increments in $t$, which gives (A1) by summing over a period; and (A2) only uses
+that the type word has no two adjacent dots. (A3) and (B) become statements about intervals $J$ of residues: the number of
+$F$ positions of $J$ whose preceding chord (resp.\ whose preceding triple does not) fit into $J$ is at most $\lceil |J|/2\rceil$,
+and both follow by cutting $J$ into pairs of consecutive positions. An independent AI instance rebuilt the codes from the text
+for $q\le 12$ and checked every step.
+
+\begin{theorem}\label{none}
+{\rm (a)} Let $l=8q+6$, $q\ge1$, $k=(l^2+2l-4)/4$. There is no spread-$k$ circuit code of length $4k+2l+4$ in dimension $(3k+l+1)/2$.
+{\rm (b)} Let $l=8j+5$, $j\ge1$, $k=l(l+3)/4$ (the only case of equality in Lemma~\ref{L1} for $N=4k+2l+4$ on an odd line).
+There is no spread-$k$ circuit code of length $4k+2l+4$ in dimension $(3k+l+1)/2$.
+In both cases $K(n,k)\le 4k+2l+2$.
+\end{theorem}
+\noindent Together with Theorems~\ref{four} and \ref{four2}: for even $l\ge8$ and odd $l\ge13$, a code of length $4k+2l+4$ with
+equality in Lemma~\ref{L1} exists if and only if $l\equiv 0,2,4\pmod 8$.
+\begin{proof}[Sketch]
+Let $L_0=2K$ ($k$ odd) or $2K-1$ ($k$ even). Equality in Lemma~\ref{L1} forces: every window of length $L_0$ contains the same
+number $c_0$ of pairs $(x,x^+)$; twice-used coordinates have gaps $\ge L_0$; hence (shift the window by one) the type word has period
+$L_0$, so period $p=\gcd(L_0,N)$. If $t,t+1$ are both four-times-used positions, the window $[t,t+L_0+2)$ contains $c_0+2$ pairs,
+one more than $\odd\ge k$ allows, so it contains a triple $x,x^+,x^{++}$ with $x\ge t$, $x^{++}\le t+L_0+1$.
+(a) Here $p=2l$ divides $K$, each period has $l+2>l$ such positions, so adjacent ones exist, say at residues $a,a+1$; there are
+$N/2l=4q+5$ such pairs. The triple of a pair has gaps $(K,K)$, $(K,K+1)$ or $(K+1,K)$, so it stays in the residues $a,a+1$ and starts in that pair.
+A coordinate has four positions with gap sum $N>4K+2$, so it contains at most two such triples, and two only if they are
+consecutive and all four positions have residues $a,a+1$. Counting positions, $4q+5\le\sum_c s_c\le\frac12\sum_c b_c=4q+5$
+($s_c$ triples, $b_c$ positions of $c$ at residues $a,a+1$), so every $s_c$ is $0$ or $2$: but $4q+5$ is odd.
+(b) Here $p=(l+1)/2=4j+3$ with $2j+2$ four-times-used positions per period; comparing windows of lengths $L_0$ and $L_0-2$ shows that
+no two twice-used positions are adjacent, so the type word is $FF.(F.)^{2j}$. The triple of the pair $FF$ at $t$ must have gaps $(K,K)$,
+so $t+K$ is four-times-used; but $K\equiv 2j+2\pmod p$ is a twice-used position.
+\end{proof}
+\noindent (File \texttt{PROOF8.md}; checked by an independent AI instance, which also verified the forced properties on eight real
+codes with equality.) The parity argument of (a) applies to any even excess $e$: it excludes every case of equality for $e=6$ and
+$e=10$ --- in particular there is no $(30,17)$ code of length $90$, which a SAT solver confirms --- and one residue class of $l$ in four
+for $e=8,12$. Most of the remaining cases are attained: see Section~\ref{sec:large}.
+
+\section{Arbitrarily large excess}\label{sec:large}
+The bound $k\le k_e(l)$ is attained for every excess $e$ divisible by $4$, on infinitely many lines each. Write $e=4j$.
+
+\begin{theorem}\label{large}
+Let $p\ge 10$ be even and $j\ge 1$, and put $k=jp(p+2)/4-1$, $n=j(3p-2)(p+4)/8$ (so $l=jp-2j+2$ and $k=k_{4j}(l)$).
+If $p\equiv 0,2,4\pmod 8$ then
+\[ K(n,k)\ =\ j\,p(p+4)\ =\ 4k+2l+4j ; \]
+if $p\equiv 6\pmod 8$ there is no circuit code of that length, and $K(n,k)\le 4k+2l+4j-2$.
+\end{theorem}
+\noindent So $(n,k+1,K(n,k))=j\cdot\bigl((3p-2)(p+4)/8,\ p(p+2)/4,\ p(p+4)\bigr)$ for every multiplier $j$: every multiple of the
+parameters of Theorems~\ref{four} and \ref{four2} is attained. Examples: $K(98,59)=280$ and $K(136,83)=384$ (excess $8$),
+$K(272,167)=768$ (excess $16$), $K(544,335)=1536$ (excess $32$). The excess over Byrnes' value $4k+2l$ is therefore unbounded.
+(For $p=8$ the statement holds for odd $j$ and is open for even $j$; the first case is $(66,39)$, $N=192$.)
+For $e=4j$ with $j$ squarefree these are all the cases of equality in Lemma~\ref{L1} at $L=2K$.
+In the proof below $p=4i$; the case $p\equiv 2\pmod 8$ is treated after it.
+\begin{proof}[Sketch]
+\emph{Upper bound} (all $p$). With $u=jp$, $K=k+1=jp(p+2)/4$, $e=4j$ one has $eK=u(u+e/2)$, which is $f(e)=0$ in the notation of the proof of
+Theorem~\ref{four}; $k>3l-7$ and $2f(e')-2f(e)=(e'-e)(2k+8-3l-e-e')>0$ for $e<e'\le k+3-2l$ as there.
+
+\emph{The code for $p=4i$, $i\ge 3$,} is invariant under $t\mapsto t+u$, $u=jp=4ji$; put $h=u/2$, $N=16ji(i+1)=4K+2u$, $X=2u-2$; then $K\equiv h\pmod u$
+(residues are taken mod $u$).
+A \emph{ladder} is a coordinate used four times whose gaps are $K+1,K+1,K,K+X$ in one of the three cyclic orders
+$A=(1,1,0,X)$, $B=(1,1,X,0)$, $C=(1,0,1,X)$ of the excesses; started at residue $a$ it occupies the residues
+$a,a+h+1,a+2,a+h+2$ (type $A$), $a,a+h+1,a+2,a+h$ (type $B$), $a,a+h+1,a+1,a+h+2$ (type $C$). For even $j$ take one ladder of
+type $A$ at $a=0$, one of type $B$ at $a=4$ and $j-1$ of type $C$ at $a=8,13,18,\dots,5j-2$; for odd $j$ take the code of
+Theorem~\ref{four} for $l=4i$ with $K$ and $N$ multiplied by $j$ and the long gap replaced by $N-3K-2$ (one ladder of type $C$,
+period $4i$); $j$ ladders of type $C$ at $a=0,5,\dots,5j-5$ with period $4ji$ also work in every case computed.
+Let $M_0$ be the set of the points $x+g(x)-K$ over the ladder residues $x$. In every maximal run of residues outside $M_0$ take
+every second residue, shift this set by $h$, and give those residues the gap $N/4$; all remaining residues get the gap $N/2$.
+
+\emph{Validity} follows the proof of Theorem~\ref{four}: $P(t,y)=|M\cap[t,t+y)|-R(t,y)$ where $M$ is the set of points
+$x+g(x)-K$. (A1) $P(t,K)=K/2$ holds ladder by ladder, hence for any disjoint union of ladders of the three types. (A2) uses that $M$
+has no two adjacent non-members. (B) uses that the adjacent pairs of members of $M$ are exactly the $2j$ pairs coming from the
+ladders, each of which is the end of a triple of span $2K+1$. (A3), for $y\le X$: the points of $M$ whose pair can fit into a
+window of length $K+y$, $y\le h$, form a sparse set $\Lambda$ ($3$ points per ladder) for which the pairing argument works
+directly; for $h<y\le X$ one adds $|\Lambda\cap[t,t+h)|\le 2j+1$ and the bound $\lceil m/2\rceil+j/2$ for the number of members of
+$M'$ in an interval of length $m$, and $2j+1+j/2\le h/2$ because $i\ge3$.
+\end{proof}
+\noindent\emph{The case $p=8q+2$.} Write the type word of Theorem~\ref{four2} (period $2p$) as $H_1H_2$ with
+$H_1=(F.)^{4q-2}FF.FF.$ and $H_2=(F.)^{2q-2}FF.(F.)^{2q-1}FF.F.$ The code for the multiplier $j$ has type word $H_1^{\,j}H_2^{\,j}$,
+period $2jp$: the four kinds of four-times-used coordinates of Theorem~\ref{four2} (excess patterns $(1,1,X,0)$, $(1,0,1,X)$,
+$(0,b,a,1)$ and $(0,a,1,b)$ with $X=2jp-2$, $a=4q$, $b=2jp-1-a$) are repeated at the shifts $0,p,\dots,(j-1)p$, and the
+twice-used positions are paired at distance $N/2$ or $N/2\pm1$ as before. The proof of Theorem~\ref{four2} goes through window by
+window (\texttt{PROOF11.md}).
+
+\noindent\emph{Where the bound is not attained.} The parity argument of Theorem~\ref{none}(a) needs only that the period
+$\gcd(2K,N)$ of the type word divides $K$ and that the number of periods is odd. For $e\equiv 2\pmod 4$ this always holds: on
+even lines the bound $k\le k_e(l)$ is \emph{never} attained when $e=6,10,14,\dots$ On odd lines ($L=2K-1$) the type word has an odd
+period $p'$ with $2K\equiv 1$; reading it in the order $m\mapsto Km$, an adjacent pair of four-times-used positions forces a
+triple with gaps $(K,K)$, which excludes the pattern $101$, and adjacent twice-used positions are excluded as before, which excludes
+$0{*}0$; so the twice-used positions of a period come in pairs, while their number is odd whenever $e\equiv 0\pmod 4$. Hence on odd
+lines the bound for $e=4,8,12,\dots$ is never attained either (\texttt{PROOF10.md}, sections 6 and 7).
+
+\noindent\emph{A common generalisation.} The ladder designs do not need $u=4ji$: let $j\ge1$, $m$ odd and $p$ be such that
+$4j\mid mp$ and $p/2\ge 5j+2$ ($j$ even) or $p/2\ge 5j+1$ ($j$ odd). Take the ladders above with period $p$ (for odd $j$: $j$ ladders of
+type $C$ at $a=0,5,\dots,5j-5$), $u=mp$, $K=mp(p+2j)/(4j)$, $N=4K+2u$, $X=2u-2$, and the same forced filling. This is a spread-$(K-1)$
+circuit code of length $N=4k+2l+4jm$, and $N=K(n,k)$ (\texttt{PROOF12.md}). For $m=1$ and even $j$ this is the code of the proof above; $j=1$
+gives the codes of Theorem~\ref{four} with $K$ and $N$ multiplied by $m$; and it attains further cases of equality when $e/4$ is not squarefree,
+e.g.\ $K(495,303)=1408$ ($e=36$, $u=96$).
+
+\noindent The details are in \texttt{PROOF9.md}, \texttt{PROOF10.md}, \texttt{PROOF11.md} and \texttt{PROOF12.md}, each checked by an independent AI instance that rebuilt
+the codes from the text. The proof template shows what a shift-invariant code at equality \emph{is}: a set of ladders whose
+points do not touch, with a forced filling. Searching such designs directly takes milliseconds where the solver timed out; for
+$e=16$ there are $46$ designs of this kind for $p=48$ and $1036$ for $p=64$, and none for $p=32$. Open: $p=8$ with $j$ even, the cases of equality for $e=4j$ with $j$ not squarefree and $j\nmid u$ (first $e=36$),
+and, on odd lines, $e\equiv 2\pmod 4$, $e\ge 6$ (first $(70,42)$, $N=200$).
+
+\section{Symmetric codes with a long bit run}\label{sec:sym}
+Byrnes' conjecture compares $K(n,k)$ with $S(n,k,r)$, the maximum length of a spread-$k$ code that is \emph{symmetric}
+($N=2H$ and $T_{i+H}=T_i$ for all $i$) and has a \emph{bit run} of length $r$ ($r$ cyclically consecutive distinct transitions).
+Conjecture~4.2 of \cite{B2} is $S(n,k,k+l)=K(n,k)$; Byrnes proves $S(n,k,k+l)=4k+2l$ for $k\ge 2l+1$ ($k$ odd), $k\ge 2l-2$ ($k$ even).
+The restriction on $k$ is not needed.
+
+\begin{theorem}\label{symall}
+Let $k\ge 1$, $a\ge 2$ and $2n\le a+2k+1$. A symmetric spread-$k$ circuit code in $Q_n$ with a bit run of length $a$ has length
+at most $2a+2k$. In particular, for all $k,l\ge 1$ with $2n=3k+l+1$, $S(n,k,k+l)\le 4k+2l$; and $S(n,k,k+l)=4k+2l$ for all
+$l\ge 2$, $k\ge l-1$. So Conjecture~4.2 holds at $(n,k)$ if and only if $K(n,k)=4k+2l$.
+\end{theorem}
+\begin{proof}
+Shift the code so that the run is $A=\{0,\dots,a-1\}$, and let $f(p)=\odd([0,p))=d_H(v_0,v_p)$.
+\emph{Two centres.} A coordinate of the run occurs once in $[0,a)$, so it is odd in exactly one of $[0,p)$ and $[a,p)$ ($p\ge a$);
+any other coordinate is odd in at most both. Hence $\odd([0,p))+\odd([a,p))\le a+2(n-a)=2n-a\le 2k+1$.
+\emph{Shell.} If $a+k\le p\le N-k$, both windows have length in $[k,N-k]$, so both counts are $\ge k$ by (F1), and therefore
+$k\le f(p)\le k+1$; as $f(p)\equiv p\pmod 2$, $f$ alternates between $k$ and $k+1$ on this range.
+\emph{End.} Suppose $H\ge a+k+1$. Then $p=H-1,H,H+1,H+2$ lie in the range. By symmetry $T_H=T_0$ and $T_{H+1}=T_1\ne T_0$,
+and $T_{H-1}\ne T_0$ by (F2) (it is $K$-close to $T_H=T_0$; $N\ge 2k+2$).
+If $f(H)=k+1$, then $f(H-1)=k$, and $T_0$ is odd in $[0,H)$ (else $f(H+1)=k+2$, as $T_H=T_0$); as $T_{H-1}\neq T_0$ it is odd in
+$[0,H-1)$ and even in $[1,H-1)$, so $\odd([1,H-1))=f(H-1)-1=k-1$, contradicting (F1) for a window of length $H-2\in[k,N-k]$.
+If $f(H)=k$, then $T_0$ is even in $[0,H)$ (else $f(H+1)=k-1$), $f(H+2)=k$, and $T_0$ is odd in $[0,H+2)$ (the transitions
+$T_H=T_0$, $T_{H+1}\ne T_0$ add one occurrence); so $\odd([1,H+2))=k-1$ for a window of length $H+1\in[k,N-k]$, again a
+contradiction. Hence $H\le a+k$. The lower bound $S\ge 4k+2l$ for $k\ge l-1$: Byrnes' sequence (eq.~(8) of \cite{B2}),
+$(w_1w_{2A}w_{2B})^2$ with $w_1=1,\dots,k+l$, $w_{2A}=2,4,\dots,2(l-1)$, $w_{2B}=g_1,2l,g_2,2l+2,\dots,g_m,k+l-1$
+($g_i=k+l+i$, $m=(k-l+1)/2$), is a spread-$k$ code of length $4k+2l$ for every $k\ge l-1$; we checked this by a counting
+argument over windows (Theorem~37 in the companion file \texttt{PROOF17.md}; machine-checked, Section~\ref{sec:formal}).
+\end{proof}
+
+So everything in Conjecture~4.2 beyond Byrnes' own bound is the question whether $K(n,k)=4k+2l$: true in the range of
+Theorem~\ref{main}, false at the points of Table~\ref{tab} and Sections~\ref{sec:last}--\ref{sec:large}, and on every line $l\ge 6$
+at some $k\ge 2l+1$.
+
+\paragraph{The block bound is Plotkin's.} Cutting a window of length $jK$ into $j$ blocks of length $K$ gives $j+1$ code vertices
+pairwise at Hamming distance $\ge k$ (adjacent ones at distance $K$, the blocks being bit runs by (F2)); Plotkin's double count
+(sum of the pairwise distances of $j+1$ binary words $\le n\lfloor (j+1)^2/4\rfloor$) gives, for $N\ge j(k+1)+k$,
+\[ j(k+1)+\Bigl(\tfrac{j(j+1)}2-j\Bigr)k\ \le\ \Bigl\lfloor\tfrac{j+1}2\Bigr\rfloor\Bigl\lfloor\tfrac{j+2}2\Bigr\rfloor n , \]
+with an extra $+1$ on each window of an odd number of blocks when $k$ is even (parity of $\odd$). For $j=4$ and $j=6$ this is
+exactly Lemma~\ref{L2} and its six-block analogue ($N\le 7k+5$ for $k\ge 2l$, $k$ even, or $k\ge 2l-3$, $k$ odd), and for every
+$n\le 2k-1$ it bounds $K(n,k)$ by $(2s+1)k+2s-1$ whenever $(s+1)(l+1)<(s-1)k+4$. This is weak in the tables
+(e.g.\ $78$ against $K(15,8)=42$) and is very likely in \cite{Si} or \cite{Do}; we record it because Lemma~\ref{L2} is a case of it.
+
+\section{Machine verification}\label{sec:formal}
+The following are theorems of a Lean~4 + Mathlib development (about $11{,}300$ hand-written lines plus $9{,}500$ generated lines of value certificates; file \texttt{ccformal/FORMAL.md} lists each
+statement), checked by the Lean kernel with no axioms beyond Lean's standard three (no \texttt{sorry}, no \texttt{native\_decide}).
+Definitions: a code is a function $v:\mathbb N\to(\mathrm{Fin}\,n\to\mathrm{Bool})$ with Byrnes' definition; an independent audit
+checked the definition against $57$ table entries and $194$ code files.
+\begin{itemize}\setlength\itemsep{0pt}
+\item Lemmas~\ref{L1}, \ref{L2}, Theorem~\ref{main}, the block bound above for every $j$, and the six-block lemma;
+\item the obstructions of Sections~\ref{sec:shape}--\ref{sec:last} that settle the upper side of $k_{\max}(l)$ for every $l$
+  (including the equality-point parity theorems), and the case $l=7$ of the last theorem of Section~\ref{sec:last};
+\item the explicit families for $l\equiv1\pmod 4$ (all $l\ge 9$ and all larger excesses $4i+2$) and the excess-$4m$ family for
+  $l\equiv 0\pmod 4$, $m$ odd, \emph{for all parameters} (via a general ``gap criterion'' for a transition word to be a code);
+\item Byrnes' sequence for all $k\ge l-1$, Theorem~\ref{symall}, and hence: for every $l\ge 6$ there is $k\ge 2l+1$ with
+  $S(n,k,k+l)=4k+2l<K(n,k)$, and $K-S$ is unbounded on the conjecture's range;
+\item $k_{\max}(l)$ for every $l=6,\dots,31$ (a kernel-checked code at $k_{\max}(l)$ and $K=4k+2l$ for every larger $k$ on the line),
+  and $94$ further exact values $K(n,k)$ via a verified checker.
+\end{itemize}
+Not formalized: the families for $l\equiv 0,2,3\pmod 4$ at general parameters (only instances), the SAT upper bounds of
+Section~\ref{comp} (DRAT-checked instead), and one half of the equality-point theorem of Section~\ref{sec:four} ($u\ge 2e$).
+
+\section{Counterexamples and computations}\label{comp}
+\paragraph{Search.} The codes for $(22,12)$, $(23,13)$, $(25,14)$, $(28,16)$, $(30,17)$, $(31,18)$ were found by a SAT solver
+(kissat) on a direct encoding of the definition for a fixed length and a prescribed longest run of distinct leading transitions
+($k+4$). Deleting a coordinate that is used twice from a spread-$k$ code of length $N$ in $Q_n$ gives a spread-$(k-1)$ code of length
+$N-2$ in $Q_{n-1}$ (Deimer \cite{De}; Theorem~4.2 of \cite{B1}); this maps $(n,k,l)\mapsto(n-1,k-1,l+1)$ and preserves the excess
+over $4k+2l$, and gives $(29,16)$, $(36,20)$, $(37,21)$, $(39,22)$. The remaining codes were produced without SAT by a local ``pump''
+$(n,k,N)\mapsto(n+3,k+2,N+8)$, which inserts one new coordinate at four places and two new twice-used coordinates into an existing
+excess-$2$ code and keeps the result when it is valid. In every case the final code was checked from the definition.
+
+\paragraph{Upper bounds by SAT.} For fixed $(n,k)$ split by the length $R$ of the longest run of distinct
+transitions ($k+1\le R\le n$); a code of length $N$ whose longest run is $R$ contains a spread-$k$ open path
+starting with that run, and unsatisfiability of ``path with $E$ edges starting with a maximal run $R$'' for all $R$ bounds $N$.
+This proved $K(15,8)=42$, $K(18,10)=50$, $K(21,12)=58$, $K(24,14)=66$, $K(17,9)=50$, $K(20,11)=58$, $K(23,13)=66$, $K(26,15)=72$
+(lower bounds: Byrnes' codes, our searches, and Table~\ref{tab}). For all eight, DRAT proofs of every unsatisfiable instance were produced with cadical and verified with drat-trim. The encoder, as opposed to the proofs, has only been validated empirically
+(it reproduces all known optima and excludes none of several thousand known codes).
+
+\paragraph{What is open.} Let $k_{\max}(l)$ be the largest $k$ with $K(n,k)>4k+2l$ on line $l$. Then $k_{\max}(5)=6$ and
+$k_{\max}(l)=13,18,25,40,43,52,63,84,89,102$ for $l=6,\dots,15$; Section~\ref{sec:last} gives $k_{\max}(l)$ for all $l\not\equiv 2\pmod 4$,
+and for $l\equiv 2\pmod 4$ the value $(l^2-l-4)/2$ is attained for every $l\le 38$ by solver codes (in a reflection-symmetric class),
+with no formula and no proof for general $l$. Below $k_{\max}(l)$ the exact values are mostly open; for $k\le 3l-3$ (e.g.\
+$K(31,18)\ge 88$, $K(22,12)\ge 64$) none of our upper-bound lemmas applies.
+
+\paragraph{Caveats.} The proofs above were machine-tested (each inequality of Lemmas~\ref{L1} and \ref{L2} on about $19{,}000$ codes;
+the arithmetic of Theorem~\ref{main} for $l\le 60$, $k\le 4000$) and read adversarially by a second AI instance, but by no human; later sections were added the same day; Section~\ref{sec:formal} lists what has since been checked by a proof assistant.
+\paragraph{Prior work.} The prior-art search covered \cite{B1,B2} and both papers of Douglas \cite{Do} in full.
+Douglas' first paper proves $K(n,k)=4k+2l$ on the lines $l=2$ (all odd $k$, with uniqueness of the code), $l=3$ (all even $k$)
+and $l=4$ (odd $k\ge 9$), by a case analysis of transition sequences that contain a block of $k+2$, $k+3$ or $k+4$ distinct
+transitions, and states without proof the bounds $4k+3l-1$ and $4k+3l+2$ for codes containing a block of $k+l$ distinct transitions;
+it has no statement for general $l$. So on the lines $l\le 4$ Theorem~\ref{main} is Douglas' result (he covers more values of $k$
+on the line $l=3$, we cover $k=7$ on the line $l=4$, where $K(13,7)=36$), and for $l\ge 5$ we found no earlier bound of this kind.
+His second paper concerns $n$ large compared with $k$ (sphere-packing bounds) and does not touch the range $n<2k$.
+The papers of Singleton and Deimer were not accessible to the author (Deimer's contraction is quoted from \cite{B2});
+the block bound of Section~\ref{sec:sym} is Plotkin's bound applied to block boundaries.
+
+\appendix
+\section*{Appendix: a $(23,13)$ circuit code of length $66$}
+Transition sequence (coordinates $0,\dots,22$; start at the zero vector):
+\begin{quote}\small\raggedright
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 3 17 1 18 7 6 19 9 20 4 13 21 11 22 16 3
+0 1 2 6 14 5 9 8 4 13 10 7 16 12 11 15 1 17 14 6 18 3 4 19 9 20 7 16 22 11 21 13 14
+\end{quote}
+Byrnes' Theorem~1.3 gives $64=4k+2l$ for $(n,k,l)=(23,13,6)$, the first case of his conjecture on the line $l=6$.
+
+\begin{thebibliography}{9}
+\bibitem{B1} K. M. Byrnes, \emph{The maximum length of circuit codes with long bit runs and a new characterization theorem},
+Des. Codes Cryptogr. 87 (2019); arXiv:1809.08428.
+\bibitem{B2} K. M. Byrnes, \emph{The maximum length and isomorphism of circuit codes with long bit runs}, arXiv:2008.04839.
+\bibitem{De} K. Deimer, \emph{Some new bounds for the maximum length of circuit codes}, IEEE Trans. Inform. Theory 30 (1984).
+\bibitem{Do} R. J. Douglas, \emph{Some results on the maximum length of circuits of spread $k$ in the $d$-cube}, J. Combin. Theory 6 (1969);
+\emph{Upper bounds on the length of circuits of even spread in the $d$-cube}, J. Combin. Theory 7 (1969).
+\bibitem{Si} R. C. Singleton, \emph{Generalized snake-in-the-box codes}, IEEE Trans. Electron. Comput. 15 (1966).
+\end{thebibliography}
+\end{document}

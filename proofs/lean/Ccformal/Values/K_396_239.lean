@@ -1,0 +1,156 @@
+import Ccformal.Checker
+
+namespace Coil
+
+def W_396_239 : ℕ := 0x18b015400ed018a0126018900ea00e90188015000e501870105018600e200e10185014c00dd01840100018300da00d90182014800d5018100fb018000d200d1017f014400cd017e00f6017d00ca00c9017c014000c5017b011100c2017a010a00c0017900be00bd0178013a00b9017700e7017600b600b50175013600b1017400df017300ae00ad0172013200a9017100d7017000a600a5016f012e00a1016e00cf016d009e009d016c012a0099016b00f1016a00960095016900930167009001680124008d016600ef0165008a0089016401200085016300b30162008200810161011c007d016000ab015f007a0079015e01180075015d00a3015c00720071015b0114006d015a009b0159006a00690158010f0065015700c70062015600bb00600155005e005d01530108005901520087015100560055014f01030051014e007f014d004e004d014b00fe0049014a0077014900460045014700f900410146006f0145003e003d014300f4003901420092014100360035013f0033013d0030013e00ec002d013c008f013b002a0029013900e4002501380053013700220021013500dc001d0134004b0133001a0019013100d4001501300043012f00120011012d00cc000d012c003b012b000a0009012900c400050128006700020127005b00000125015400ed012300b800ea012200270121015000e5011f00b000e2011e001f011d014c00dd011b00a800da011a00170119014800d5011700a000d20116000f0115014400cd0113009800ca011200320110014000c5010e0111010c010a010d008c00be010b002f0109013a00b90107008400b6010601050104013600b10102007c00ae0101010000ff013200a900fd007400a600fc00fb00fa012e00a100f8006c009e00f700f600f5012a009900f30064009600f20007009300f00126009000ee0124008d00eb0058008a00e800e700e60120008500e30050008200e000df00de011c007d00db0048007a00d800d700d60118007500d30040007200d000cf00ce0114006d00cb0038006a00c800c200c6010f006500c300c700bf00bb00c1002c005e00bc00c000ba0108005900b70024005600b400b300b20103005100af001c004e00ac00ab00aa00fe004900a70014004600a400a300a200f90041009f000c003e009c009b009a00f40039009700040036009400f10033009100ef0030008e00ec002d008b00e9002a00880087008600e40025008300e100220080007f007e00dc001d007b00d9001a00780077007600d40015007300d100120070006f006e00cc000d006b00c9000a00680062006600c4000500630067005f005b006100bd0154005c0060005a00b800ea005700b5015000540053005200b000e2004f00ad014c004c004b004a00a800da004700a5014800440043004200a000d2003f009d0144003c003b003a009800ca0037009501400034009201110031008f010a002e008c00be002b0089013a002800270026008400b60023008101360020001f001e007c00ae001b00790132001800170016007400a600130071012e0010000f000e006c009e000b0069012a0008000200060064009600030007018b01260001005d0124018a000001890058008a018800550120018701050186005000820185004d011c0184010001830048007a018200450118018100fb018000400072017f003d0114017e00f6017d0038006a017c0035010f017b003200c7017a002f00bb0179002c005e017800290108017700e7017600240056017500210103017400df0173001c004e0172001900fe017100d7017000140046016f001100f9016e00cf016d000c003e016c000900f4016b0093016a00040036016900f1016800ef016700ed00ec01660090016500e9002a016400e500e4016300b3016200e10022016100dd00dc016000ab015f00d9001a015e00d500d4015d00a3015c00d10012015b00cd00cc015a009b015900c9000a015800c500c4015700c20067015600c0005b015500bd0154015300b900b801520087015100b50150014f00b100b0014e007f014d00ad014c014b00a900a8014a0077014900a50148014700a100a00146006f0145009d014401430099009801420033014100950140013f0092013e008f013d008d008c013c0030013b0089013a013900850084013800530137008101360135007d007c0134004b01330079013201310075007401300043012f0071012e012d006d006c012c003b012b0069012a0129006500640128006200070127006001260125005d012401230059005801220027012100550120011f00510050011e001f011d004d011c011b00490048011a00170119004501180117004100400116000f0115003d01140113003900380112011101100035010f010e0032010d002f010c002d002c010b010a010900290108010700250024010601050104002101030102001d001c0101010000ff001900fe00fd0015001400fc00fb00fa001100f900f8000d000c00f700f600f5000900f400f30005000400f2000200f100f0000000ef00ee00ed00ec00eb00ea00e900e800e700e600e500e400e300e200e100e000df00de00dd00dc00db00da00d900d800d700d600d500d400d300d200d100d000cf00ce00cd00cc00cb00ca00c900c800c700c600c500c400c300c200c100c000bf00be00bd00bc00bb00ba00b900b800b700b600b500b400b300b200b100b000af00ae00ad00ac00ab00aa00a900a800a700a600a500a400a300a200a100a0009f009e009d009c009b009a0099009800970096009500940093009200910090008f008e008d008c008b008a0089008800870086008500840083008200810080007f007e007d007c007b007a0079007800770076007500740073007200710070006f006e006d006c006b006a0069006800670066006500640063006200610060005f005e005d005c005b005a0059005800570056005500540053005200510050004f004e004d004c004b004a0049004800470046004500440043004200410040003f003e003d003c003b003a0039003800370036003500340033003200310030002f002e002d002c002b002a0029002800270026002500240023002200210020001f001e001d001c001b001a0019001800170016001500140013001200110010000f000e000d000c000b000a0009000800070006000500040003000200010000
+
+def f_396_239 (i : ℕ) : ℕ := (W_396_239 >>> (16 * i)) &&& 0xFFFF
+
+theorem ok_396_239_0 : ∀ t < 0, okAt f_396_239 396 239 1152 t = true := allRange_zero
+
+theorem blk_396_239_0 : allRange (okAt f_396_239 396 239 1152) 0 17 = true := by decide +kernel
+theorem ok_396_239_17 : ∀ t < 17, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_0 blk_396_239_0
+theorem blk_396_239_17 : allRange (okAt f_396_239 396 239 1152) 17 17 = true := by decide +kernel
+theorem ok_396_239_34 : ∀ t < 34, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_17 blk_396_239_17
+theorem blk_396_239_34 : allRange (okAt f_396_239 396 239 1152) 34 17 = true := by decide +kernel
+theorem ok_396_239_51 : ∀ t < 51, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_34 blk_396_239_34
+theorem blk_396_239_51 : allRange (okAt f_396_239 396 239 1152) 51 17 = true := by decide +kernel
+theorem ok_396_239_68 : ∀ t < 68, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_51 blk_396_239_51
+theorem blk_396_239_68 : allRange (okAt f_396_239 396 239 1152) 68 17 = true := by decide +kernel
+theorem ok_396_239_85 : ∀ t < 85, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_68 blk_396_239_68
+theorem blk_396_239_85 : allRange (okAt f_396_239 396 239 1152) 85 17 = true := by decide +kernel
+theorem ok_396_239_102 : ∀ t < 102, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_85 blk_396_239_85
+theorem blk_396_239_102 : allRange (okAt f_396_239 396 239 1152) 102 17 = true := by decide +kernel
+theorem ok_396_239_119 : ∀ t < 119, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_102 blk_396_239_102
+theorem blk_396_239_119 : allRange (okAt f_396_239 396 239 1152) 119 17 = true := by decide +kernel
+theorem ok_396_239_136 : ∀ t < 136, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_119 blk_396_239_119
+theorem blk_396_239_136 : allRange (okAt f_396_239 396 239 1152) 136 17 = true := by decide +kernel
+theorem ok_396_239_153 : ∀ t < 153, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_136 blk_396_239_136
+theorem blk_396_239_153 : allRange (okAt f_396_239 396 239 1152) 153 17 = true := by decide +kernel
+theorem ok_396_239_170 : ∀ t < 170, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_153 blk_396_239_153
+theorem blk_396_239_170 : allRange (okAt f_396_239 396 239 1152) 170 17 = true := by decide +kernel
+theorem ok_396_239_187 : ∀ t < 187, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_170 blk_396_239_170
+theorem blk_396_239_187 : allRange (okAt f_396_239 396 239 1152) 187 17 = true := by decide +kernel
+theorem ok_396_239_204 : ∀ t < 204, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_187 blk_396_239_187
+theorem blk_396_239_204 : allRange (okAt f_396_239 396 239 1152) 204 17 = true := by decide +kernel
+theorem ok_396_239_221 : ∀ t < 221, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_204 blk_396_239_204
+theorem blk_396_239_221 : allRange (okAt f_396_239 396 239 1152) 221 17 = true := by decide +kernel
+theorem ok_396_239_238 : ∀ t < 238, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_221 blk_396_239_221
+theorem blk_396_239_238 : allRange (okAt f_396_239 396 239 1152) 238 17 = true := by decide +kernel
+theorem ok_396_239_255 : ∀ t < 255, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_238 blk_396_239_238
+theorem blk_396_239_255 : allRange (okAt f_396_239 396 239 1152) 255 17 = true := by decide +kernel
+theorem ok_396_239_272 : ∀ t < 272, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_255 blk_396_239_255
+theorem blk_396_239_272 : allRange (okAt f_396_239 396 239 1152) 272 17 = true := by decide +kernel
+theorem ok_396_239_289 : ∀ t < 289, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_272 blk_396_239_272
+theorem blk_396_239_289 : allRange (okAt f_396_239 396 239 1152) 289 17 = true := by decide +kernel
+theorem ok_396_239_306 : ∀ t < 306, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_289 blk_396_239_289
+theorem blk_396_239_306 : allRange (okAt f_396_239 396 239 1152) 306 17 = true := by decide +kernel
+theorem ok_396_239_323 : ∀ t < 323, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_306 blk_396_239_306
+theorem blk_396_239_323 : allRange (okAt f_396_239 396 239 1152) 323 17 = true := by decide +kernel
+theorem ok_396_239_340 : ∀ t < 340, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_323 blk_396_239_323
+theorem blk_396_239_340 : allRange (okAt f_396_239 396 239 1152) 340 17 = true := by decide +kernel
+theorem ok_396_239_357 : ∀ t < 357, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_340 blk_396_239_340
+theorem blk_396_239_357 : allRange (okAt f_396_239 396 239 1152) 357 17 = true := by decide +kernel
+theorem ok_396_239_374 : ∀ t < 374, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_357 blk_396_239_357
+theorem blk_396_239_374 : allRange (okAt f_396_239 396 239 1152) 374 17 = true := by decide +kernel
+theorem ok_396_239_391 : ∀ t < 391, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_374 blk_396_239_374
+theorem blk_396_239_391 : allRange (okAt f_396_239 396 239 1152) 391 17 = true := by decide +kernel
+theorem ok_396_239_408 : ∀ t < 408, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_391 blk_396_239_391
+theorem blk_396_239_408 : allRange (okAt f_396_239 396 239 1152) 408 17 = true := by decide +kernel
+theorem ok_396_239_425 : ∀ t < 425, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_408 blk_396_239_408
+theorem blk_396_239_425 : allRange (okAt f_396_239 396 239 1152) 425 17 = true := by decide +kernel
+theorem ok_396_239_442 : ∀ t < 442, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_425 blk_396_239_425
+theorem blk_396_239_442 : allRange (okAt f_396_239 396 239 1152) 442 17 = true := by decide +kernel
+theorem ok_396_239_459 : ∀ t < 459, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_442 blk_396_239_442
+theorem blk_396_239_459 : allRange (okAt f_396_239 396 239 1152) 459 17 = true := by decide +kernel
+theorem ok_396_239_476 : ∀ t < 476, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_459 blk_396_239_459
+theorem blk_396_239_476 : allRange (okAt f_396_239 396 239 1152) 476 17 = true := by decide +kernel
+theorem ok_396_239_493 : ∀ t < 493, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_476 blk_396_239_476
+theorem blk_396_239_493 : allRange (okAt f_396_239 396 239 1152) 493 17 = true := by decide +kernel
+theorem ok_396_239_510 : ∀ t < 510, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_493 blk_396_239_493
+theorem blk_396_239_510 : allRange (okAt f_396_239 396 239 1152) 510 17 = true := by decide +kernel
+theorem ok_396_239_527 : ∀ t < 527, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_510 blk_396_239_510
+theorem blk_396_239_527 : allRange (okAt f_396_239 396 239 1152) 527 17 = true := by decide +kernel
+theorem ok_396_239_544 : ∀ t < 544, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_527 blk_396_239_527
+theorem blk_396_239_544 : allRange (okAt f_396_239 396 239 1152) 544 17 = true := by decide +kernel
+theorem ok_396_239_561 : ∀ t < 561, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_544 blk_396_239_544
+theorem blk_396_239_561 : allRange (okAt f_396_239 396 239 1152) 561 17 = true := by decide +kernel
+theorem ok_396_239_578 : ∀ t < 578, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_561 blk_396_239_561
+theorem blk_396_239_578 : allRange (okAt f_396_239 396 239 1152) 578 17 = true := by decide +kernel
+theorem ok_396_239_595 : ∀ t < 595, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_578 blk_396_239_578
+theorem blk_396_239_595 : allRange (okAt f_396_239 396 239 1152) 595 17 = true := by decide +kernel
+theorem ok_396_239_612 : ∀ t < 612, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_595 blk_396_239_595
+theorem blk_396_239_612 : allRange (okAt f_396_239 396 239 1152) 612 17 = true := by decide +kernel
+theorem ok_396_239_629 : ∀ t < 629, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_612 blk_396_239_612
+theorem blk_396_239_629 : allRange (okAt f_396_239 396 239 1152) 629 17 = true := by decide +kernel
+theorem ok_396_239_646 : ∀ t < 646, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_629 blk_396_239_629
+theorem blk_396_239_646 : allRange (okAt f_396_239 396 239 1152) 646 17 = true := by decide +kernel
+theorem ok_396_239_663 : ∀ t < 663, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_646 blk_396_239_646
+theorem blk_396_239_663 : allRange (okAt f_396_239 396 239 1152) 663 17 = true := by decide +kernel
+theorem ok_396_239_680 : ∀ t < 680, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_663 blk_396_239_663
+theorem blk_396_239_680 : allRange (okAt f_396_239 396 239 1152) 680 17 = true := by decide +kernel
+theorem ok_396_239_697 : ∀ t < 697, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_680 blk_396_239_680
+theorem blk_396_239_697 : allRange (okAt f_396_239 396 239 1152) 697 17 = true := by decide +kernel
+theorem ok_396_239_714 : ∀ t < 714, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_697 blk_396_239_697
+theorem blk_396_239_714 : allRange (okAt f_396_239 396 239 1152) 714 17 = true := by decide +kernel
+theorem ok_396_239_731 : ∀ t < 731, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_714 blk_396_239_714
+theorem blk_396_239_731 : allRange (okAt f_396_239 396 239 1152) 731 17 = true := by decide +kernel
+theorem ok_396_239_748 : ∀ t < 748, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_731 blk_396_239_731
+theorem blk_396_239_748 : allRange (okAt f_396_239 396 239 1152) 748 17 = true := by decide +kernel
+theorem ok_396_239_765 : ∀ t < 765, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_748 blk_396_239_748
+theorem blk_396_239_765 : allRange (okAt f_396_239 396 239 1152) 765 17 = true := by decide +kernel
+theorem ok_396_239_782 : ∀ t < 782, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_765 blk_396_239_765
+theorem blk_396_239_782 : allRange (okAt f_396_239 396 239 1152) 782 17 = true := by decide +kernel
+theorem ok_396_239_799 : ∀ t < 799, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_782 blk_396_239_782
+theorem blk_396_239_799 : allRange (okAt f_396_239 396 239 1152) 799 17 = true := by decide +kernel
+theorem ok_396_239_816 : ∀ t < 816, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_799 blk_396_239_799
+theorem blk_396_239_816 : allRange (okAt f_396_239 396 239 1152) 816 17 = true := by decide +kernel
+theorem ok_396_239_833 : ∀ t < 833, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_816 blk_396_239_816
+theorem blk_396_239_833 : allRange (okAt f_396_239 396 239 1152) 833 17 = true := by decide +kernel
+theorem ok_396_239_850 : ∀ t < 850, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_833 blk_396_239_833
+theorem blk_396_239_850 : allRange (okAt f_396_239 396 239 1152) 850 17 = true := by decide +kernel
+theorem ok_396_239_867 : ∀ t < 867, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_850 blk_396_239_850
+theorem blk_396_239_867 : allRange (okAt f_396_239 396 239 1152) 867 17 = true := by decide +kernel
+theorem ok_396_239_884 : ∀ t < 884, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_867 blk_396_239_867
+theorem blk_396_239_884 : allRange (okAt f_396_239 396 239 1152) 884 17 = true := by decide +kernel
+theorem ok_396_239_901 : ∀ t < 901, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_884 blk_396_239_884
+theorem blk_396_239_901 : allRange (okAt f_396_239 396 239 1152) 901 17 = true := by decide +kernel
+theorem ok_396_239_918 : ∀ t < 918, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_901 blk_396_239_901
+theorem blk_396_239_918 : allRange (okAt f_396_239 396 239 1152) 918 17 = true := by decide +kernel
+theorem ok_396_239_935 : ∀ t < 935, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_918 blk_396_239_918
+theorem blk_396_239_935 : allRange (okAt f_396_239 396 239 1152) 935 17 = true := by decide +kernel
+theorem ok_396_239_952 : ∀ t < 952, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_935 blk_396_239_935
+theorem blk_396_239_952 : allRange (okAt f_396_239 396 239 1152) 952 17 = true := by decide +kernel
+theorem ok_396_239_969 : ∀ t < 969, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_952 blk_396_239_952
+theorem blk_396_239_969 : allRange (okAt f_396_239 396 239 1152) 969 17 = true := by decide +kernel
+theorem ok_396_239_986 : ∀ t < 986, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_969 blk_396_239_969
+theorem blk_396_239_986 : allRange (okAt f_396_239 396 239 1152) 986 17 = true := by decide +kernel
+theorem ok_396_239_1003 : ∀ t < 1003, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_986 blk_396_239_986
+theorem blk_396_239_1003 : allRange (okAt f_396_239 396 239 1152) 1003 17 = true := by decide +kernel
+theorem ok_396_239_1020 : ∀ t < 1020, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_1003 blk_396_239_1003
+theorem blk_396_239_1020 : allRange (okAt f_396_239 396 239 1152) 1020 17 = true := by decide +kernel
+theorem ok_396_239_1037 : ∀ t < 1037, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_1020 blk_396_239_1020
+theorem blk_396_239_1037 : allRange (okAt f_396_239 396 239 1152) 1037 17 = true := by decide +kernel
+theorem ok_396_239_1054 : ∀ t < 1054, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_1037 blk_396_239_1037
+theorem blk_396_239_1054 : allRange (okAt f_396_239 396 239 1152) 1054 17 = true := by decide +kernel
+theorem ok_396_239_1071 : ∀ t < 1071, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_1054 blk_396_239_1054
+theorem blk_396_239_1071 : allRange (okAt f_396_239 396 239 1152) 1071 17 = true := by decide +kernel
+theorem ok_396_239_1088 : ∀ t < 1088, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_1071 blk_396_239_1071
+theorem blk_396_239_1088 : allRange (okAt f_396_239 396 239 1152) 1088 17 = true := by decide +kernel
+theorem ok_396_239_1105 : ∀ t < 1105, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_1088 blk_396_239_1088
+theorem blk_396_239_1105 : allRange (okAt f_396_239 396 239 1152) 1105 17 = true := by decide +kernel
+theorem ok_396_239_1122 : ∀ t < 1122, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_1105 blk_396_239_1105
+theorem blk_396_239_1122 : allRange (okAt f_396_239 396 239 1152) 1122 17 = true := by decide +kernel
+theorem ok_396_239_1139 : ∀ t < 1139, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_1122 blk_396_239_1122
+theorem blk_396_239_1139 : allRange (okAt f_396_239 396 239 1152) 1139 13 = true := by decide +kernel
+theorem ok_396_239_1152 : ∀ t < 1152, okAt f_396_239 396 239 1152 t = true := allRange_extend ok_396_239_1139 blk_396_239_1139
+
+theorem coil_396_239 : ∃ v : ℕ → Fin 396 → Bool, IsCoil 239 1152 v :=
+  exists_coil_of_check f_396_239 239 1152 (by norm_num) ok_396_239_1152 (by decide +kernel)
+
+/-- K(396,239) = 1152  (= 4k+2l+48, l = 74; code: fam8_396_239_1152.txt) -/
+theorem K_396_239 : IsMaxLength 396 239 1152 :=
+  isMaxLength_of_chord coil_396_239 (by norm_num) 480 (by norm_num) (by norm_num) (by decide +kernel)
+
+
+end Coil

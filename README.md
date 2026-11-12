@@ -38,6 +38,12 @@ they are listed because they still beat the previous value.
   The same idea for open paths (`src/exhs.c`: the reflection fixes the middle vertex or flips the middle edge) gives
   new snakes, e.g. spread 4 in Q_11 with 71 edges (68) and spread 7 in Q_14 and Q_15 with 43 and 57 edges (42, 55).
 
+- **2026-11-12**: new folder [`proofs/`](proofs/README.md): theory for dimensions near 3k/2 (n = (3k+l+1)/2, small l).
+  An upper bound K(n,k) <= 4k+2l once k exceeds about l^2/2; counterexamples to Conjecture 4.2 of Byrnes (arXiv:2008.04839)
+  on every line l >= 6, the smallest being K(23,13) = 66; the exact place where the conjecture starts to hold on each line;
+  infinite families of exact values above 4k+2l. The main statements are machine-checked in Lean 4 (`proofs/lean/`);
+  207 codes with a checker. Not read by a human yet: see the caveats there.
+
 ## Checking
 `python3 verify.py --all` checks every file (requires numpy 2; about an hour on one core since the multi-million-vertex spread-3 and spread-4 codes were added). `python3 verify.py FILE n k [open]`
 checks one. It tests that consecutive vertices are adjacent, vertices are distinct, and the spread condition for every
