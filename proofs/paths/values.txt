@@ -34,3 +34,10 @@
 28 17 4 61
 29 18 3 61
 30 18 5 67
+# Added later on 2026-11-12 (exact). Unlike the lines above, the upper bounds here are not plain SAT:
+# 27 15: word = pfam3.py n = 2; one more edge UNSAT in all 11 type configurations (type reduction of PROOF_threshold.md, program not included)
+# 40 23, 50 29, 60 35: word = pfam2.py t = 4, 5, 6; upper bound = Theorem A (Lean: path_threshold_A). In general P(10t, 6t-1) = 24t+2 for t >= 2.
+27 15 8 72
+40 23 10 98
+50 29 12 122
+60 35 14 146

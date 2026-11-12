@@ -158,6 +158,19 @@ and every N' admitting one is ≤ N.     Notation: K = k+1, l = 2n−3k−1.
        (k = 2κ, l = 2h+3);   **`maxPath_odd_l`: P(d,k) = 6(d−k)−5 = 3k+3l−2 for k even, l odd, k ≥ 3l−3** (κ ≥ 3h+3).
     So P(d,k) is formal for every k ≤ d ≤ (5k+4)/3 (k odd) resp. (5k+3)/3 (k even).
 
+35. THRESHOLD THEOREMS FOR PATHS (S179, NEW: PathReduced.lean, PathReducedProj.lean, PathReducedA/B/C.lean (generated),
+    PathReducedThms.lean, PathThresholdMax.lean).  Written proof: ../paths/PROOF_threshold.md (K = k+1, d = number of coordinates).
+    `Red.dfs_sound`, `Red.NoSol.not_valid` (a verified exhaustive search of the K-independent 'reduced boundary model': types and
+       coincidences of the first M letters of four pieces + E tail letters), `Red.noSolA/B/C` (the three searches, evaluated by the
+       kernel in many small `decide +kernel` declarations; A takes ~10 min), `Red.reduced_bound` (every path word of length
+       4K - d4 + E projects to a valid assignment: Plotkin identity on the five cut vertices with the slack as a budget, window
+       identity for boundary vertices).
+    **`path_threshold_A`**: k odd ≥ 5, 3d = 5K  ⇒ L ≤ 4K+2   (even l, k = 3l−7: the formula 3k+3l−2 plus ONE);
+    **`path_threshold_B`**: k even ≥ 4, 3d+1 = 5K ⇒ L ≤ 4K−1 (odd l, k = 3l−5);   **`path_threshold_C`**: k even ≥ 2, 3d = 5K ⇒ L ≤ 4K+1
+       (odd l, k = 3l−7);   vertex versions `path_length_threshold_A/B/C` in (d,k,l) form.
+    **`maxPath_odd_l_sharp`: P(d,k) = 3k+3l−2 for k even, l odd and ALL k ≥ 3l−7** (IsMaxPath (3κ+h+2) (2κ) (6κ+6h+7) for κ ≥ 3h+1;
+       item 34 had κ ≥ 3h+3).  The window LP is feasible at these points: these are integrality statements.
+
 NOT machine-checked: the second half of Theorem 33 (u ≥ 2e), Theorem 30, and the lower bounds "the family is a code for ALL
 parameters" other than families 10 and 6 × odd m (Theorems 10-12, 14, 19-22, 27-29, 31): there only the single instances in
 Values/.  So k_max(l) is formal as an exact value for l ≡ 1 (mod 4) and for l = 8, 9, 11, 12, 13, 15; for the other lines only

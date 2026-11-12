@@ -2,8 +2,8 @@
 
 Added 2026-11-12. Everything in this folder was produced by Claude (an AI model made by Anthropic) working
 autonomously. **No human has read the proofs.** What stands in for a referee: the statements marked [Lean] are checked
-by the Lean 4 kernel (project in `../lean/`, files `Ccformal/Path*.lean`; item 34 of `../lean/FORMAL.md`), the family
-is checked from the definition by `pfam.py`, and each hand proof comes with brute-force tests of every step.
+by the Lean 4 kernel (project in `../lean/`, files `Ccformal/Path*.lean`; items 34-35 of `../lean/FORMAL.md`), the families
+are checked from the definition by `pfam.py`, `pfam2.py`, `pfam3.py`, and each hand proof comes with brute-force tests of every step (the test scripts are not included).
 Corrections are welcome.
 
 ## Setting
@@ -53,11 +53,39 @@ Proofs: `PROOF_family_even.md`, `PROOF_family_odd.md`. Idea (Walk Lemma): fix th
 the word is a path word iff this walk is at height >= K before every down-step, and for the family the down-steps and
 the heights at the boundaries of pairs/quadruples of letters are explicit.
 
-**Beyond the range** (SAT, exact): P(17,9) = 46, P(20,11) = 50 (the formula would give 43, 49), while P(23,13) = 55
-at the first k of the proven range: the threshold k >= 3l-5 is sharp on the line l = 6. For odd l the formula still
-holds at the two values of k just below the proven range in all tested cases (P(15,8) = 37, P(18,10) = 43,
-P(25,14) = 61, P(28,16) = 67); at (15,8) and (18,10) the window-parity linear program is feasible, so the method of
-`PROOF_upper.md` cannot prove them. No formula is known beyond d ~ 5k/3.
+## The edge of the range (added later on 2026-11-12)
+
+The table above stops at k = 3l-5 (l even) resp. k = 3l-3 (l odd). What happens at the next values of k is now known:
+
+| point | P(d,k) | upper bound | lower bound |
+|---|---|---|---|
+| l odd, k = 3l-5 and k = 3l-7 (k even) | 3k + 3l - 2 (the formula still holds) | [Lean] `path_threshold_B`, `path_threshold_C` | [Lean] `famOdd_isPathWord`; together `maxPath_odd_l_sharp` |
+| l even, k = 3l-7 (K = 6t, d = 10t, t >= 2) | 3k + 3l - 1 = 4K + 2 (formula + 1) | [Lean] `path_threshold_A` | `pfam2.py` (t >= 3; hand proof `PROOF_family_excess.md`; checked from the definition for t <= 30); t = 2: SAT word `word_20_11_50.txt` |
+| l even, k = 3l-9 (K = 6n+4, d = 10n+7, n >= 1) | >= 3k + 4l - 5 = (13K+8)/3, with equality for n = 1, 2 | 5K - 1 for K >= 16 (computer-assisted, `PROOF_threshold.md` Theorem D) | `pfam3.py` (checked from the definition for n <= 14; proof `PROOF_family_second.md`, a case analysis whose 343 cases were generated and certified by program) |
+
+So for odd l the formula 3k+3l-2 holds for all even k >= 3l-7 [Lean]; at k = 3l-9 it fails in the two computed cases (l = 5:
+P(12,6) = 33 > 31; l = 7: P(22,12) >= 59 > 55, SAT word not included). For even l >= 6 it holds exactly for k >= 3l-5 (at l = 4
+it still holds at k = 5: P(10,5) = 25); one step further the maximum is the formula plus one, and two steps further it is at
+least the formula plus l-3, with equality at l = 6 and l = 8: P(17,9) = 46 by SAT, P(27,15) = 72 by SAT restricted by the
+type reduction of `PROOF_threshold.md` (computer-assisted; program not included).
+
+**Method** (`PROOF_threshold.md`). At these points the Plotkin count on the five cut vertices v_0, v_K, .., v_4K is tight or
+has slack 1 or 2. Tightness forces a rigid structure: every coordinate splits the five cut vertices 2|3, so it has one of
+ten 'types' (for slack: a bounded number of exceptions). The Hamming distance between two vertices just after two cuts
+is then K plus a signed count over the few letters that follow the cuts, and the path condition for these vertices
+becomes a finite problem about the types and coincidences of the first M letters of each piece (M = 4, 2, 2 in the three
+theorems) in which K does not occur. An exhaustive search (1325, 114, 886 nodes) finds no solution, which proves the
+bounds for all sizes at once. In Lean: `PathReduced.lean` (the finite model and a verified search), `PathReducedProj.lean`
+(every path word projects to a solution), `PathReducedA/B/C.lean` (the three searches, evaluated by the kernel).
+A second, independently written implementation of the search (by a separate AI referee run; not included) agrees on all counts.
+The same reduction with five pieces gives Theorem D (computer-assisted only, not formalized).
+
+**The two new families** are given by columns in the headers of `pfam2.py` and `pfam3.py`; both were read off solver output
+printed 'in columns' (the letters at the same offset of the four pieces side by side), where coordinates recurring with
+period K become visible.
+
+**Beyond.** At d = (5K+1)/3 the maximum is no longer 4K + O(1): the excess over 4K grows with K (46 = 4K+6 at K = 10,
+72 = 4K+8 at K = 16, >= 4K + (K+8)/3 in general by `pfam3.py`). No formula is proved there or for larger d.
 
 ## Prior work
 Douglas (1969) as above. Byrnes' three papers on circuit codes (arXiv:1809.08428, 2008.04839, 2101.00642) and
@@ -72,7 +100,14 @@ overlap with the latter.
 - `PROOF_family_even.md`, `PROOF_family_odd.md`: the family is a path word (working notes: complete, tested step by
   step, not polished; they refer to test scripts that are not included).
 - `pfam.py`: the family and a checker from the definition (pure Python).
+- `PROOF_threshold.md`: the threshold theorems A, B, C (and D, E with five pieces), the reduction and the list of searches;
+  `reduced.py` (the search, Python), `red.c` (the same for any number of pieces, C).
+- `pfam2.py`, `PROOF_family_excess.md`, `word_20_11_50.txt`: the family of length 4K+2, its proof, and the SAT word for t = 2;
+  `pfam3.py` (+ `pfam3_raw.py`, `chk.py`), `PROOF_family_second.md`: the family of length (13K+8)/3 and its proof. Both proofs are
+  working notes: complete, tested step by step, not polished; the test scripts and data files they name are not included, and
+  in the second one the 343 cases of the main table were generated and certified by a program that is not included.
 - `values.txt`: the exact values of P(d,k) computed by SAT / exhaustive search that are quoted above.
 - Lean: `../lean/Ccformal/Path.lean` (upper bound), `PathDouglas.lean`, `PathDouglasWord.lean` (rows 1-2),
   `PathWalk.lean` (Walk Lemma), `PathFamEven*.lean` (the family, even l), `PathFamOdd*.lean` (the family, odd l).
-- Labels such as S177, S178 in the files are internal session numbers.
+  `PathReduced*.lean`, `PathThresholdMax.lean` (threshold theorems; generator and python twin of the search: `../lean/scripts/pathred/`).
+- Labels such as S177, S178, S179 in the files are internal session numbers.

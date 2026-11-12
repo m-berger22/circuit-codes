@@ -46,3 +46,5 @@ import Ccformal.PathWalk
 import Ccformal.PathDouglasWord
 import Ccformal.PathFamEven
 import Ccformal.PathFamOdd
+import Ccformal.PathReducedThms
+import Ccformal.PathThresholdMax
