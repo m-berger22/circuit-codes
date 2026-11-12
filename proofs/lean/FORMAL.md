@@ -153,7 +153,10 @@ and every N' admitting one is ≤ N.     Notation: K = k+1, l = 2n−3k−1.
        sizes): the even-l family A B C D is a spread-k path word of length 6κ+6h+1 = 3k+3l−2 over 3κ+h coordinates for ALL
        κ ≥ max(1, 2h) (k = 2κ−1, l = 2h+2);   **`maxPath_even_l`: P(d,k) = 6(d−k)−5 = 3k+3l−2 for k odd, l even, k ≥ 3l−5**
        (IsMaxPath (3κ+h) k (6κ+6h+1) for κ ≥ 3h+1).  Proof = Walk Lemma + Sign Table (17 rows) + block heights.
-    NOT formal yet: the odd-l family (hand proof ../paths/PROOF_family_odd.md).
+    `famOdd_isPathWord` (PathFamOdd*.lean, 6 files; `FamOdd.famT κ h` = ../paths/pfam.py fam(2κ, 2h+1), checked by #eval at 6 sizes):
+       the odd-l family z A z B C z D is a spread-k path word of length 6κ+6h+7 = 3k+3l−2 over 3κ+h+2 coordinates for all κ ≥ 2h
+       (k = 2κ, l = 2h+3);   **`maxPath_odd_l`: P(d,k) = 6(d−k)−5 = 3k+3l−2 for k even, l odd, k ≥ 3l−3** (κ ≥ 3h+3).
+    So P(d,k) is formal for every k ≤ d ≤ (5k+4)/3 (k odd) resp. (5k+3)/3 (k even).
 
 NOT machine-checked: the second half of Theorem 33 (u ≥ 2e), Theorem 30, and the lower bounds "the family is a code for ALL
 parameters" other than families 10 and 6 × odd m (Theorems 10-12, 14, 19-22, 27-29, 31): there only the single instances in

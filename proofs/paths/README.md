@@ -21,7 +21,7 @@ Write K = k+1 and l = 2d-3k-1, the same 'lines' as in the circuit-code part of t
 | k <= d <= (3k+1)/2 | 2d - k | [Lean] `path_bound_low` | [Lean] `trivial_path` (the word 0 1 .. d-1 0 1 .. d-k-1) |
 | d = 3k/2 + 1, k even | 2k + 3 | [Lean] `path_bound_douglas_even` | [Lean] `maxPath_douglas_even` |
 | (3k+3)/2 <= d <= (5k+4)/3, k odd | 6(d-k) - 5 | [Lean] `path_bound_odd` | [Lean] `famEven_isPathWord`, `maxPath_even_l` |
-| 3k/2 + 2 <= d <= (5k+3)/3, k even | 6(d-k) - 5 | [Lean] `path_bound_even` | family `pfam.py`; hand proof `PROOF_family_odd.md` (Lean: in progress) |
+| 3k/2 + 2 <= d <= (5k+3)/3, k even | 6(d-k) - 5 | [Lean] `path_bound_even` | [Lean] `famOdd_isPathWord`, `maxPath_odd_l` |
 
 In terms of l: P(d,k) = 3k + 3l - 2 for every l >= 2 and k >= 3l-5 (k odd, l even) resp. k >= 3l-3 (k even, l odd).
 
@@ -74,5 +74,5 @@ overlap with the latter.
 - `pfam.py`: the family and a checker from the definition (pure Python).
 - `values.txt`: the exact values of P(d,k) computed by SAT / exhaustive search that are quoted above.
 - Lean: `../lean/Ccformal/Path.lean` (upper bound), `PathDouglas.lean`, `PathDouglasWord.lean` (rows 1-2),
-  `PathWalk.lean` (Walk Lemma), `PathFamEven*.lean` (the family, even l).
+  `PathWalk.lean` (Walk Lemma), `PathFamEven*.lean` (the family, even l), `PathFamOdd*.lean` (the family, odd l).
 - Labels such as S177, S178 in the files are internal session numbers.
