@@ -52,3 +52,5 @@
 # 57 33: word pfam3.py n = 5; upper bound: `NTAB=5 redrev 0 2 0000 15 15`: 1,268,583,069 nodes, 0 solutions for length 151
 47 27 12 124
 57 33 14 150
+# 67 39: word pfam3.py n = 6; upper bound: `NTAB=6 redrev 0 2 0000 17 17`: 4,705,984,421 nodes, 0 solutions for length 177
+67 39 16 176
