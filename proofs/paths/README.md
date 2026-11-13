@@ -67,13 +67,13 @@ The table above stops at k = 3l-5 (l even) resp. k = 3l-3 (l odd). What happens 
 So for odd l the formula 3k+3l-2 holds for all even k >= 3l-7 [Lean], and at k = 3l-9 it fails for every odd l >= 5 (l >= 7: family
 `pfam4.py`, proof `PROOF_family_second_odd.md`, not formalized, checked from the definition for l <= 31; l = 5: P(12,6) = 33 > 31). For even l >= 6 it holds exactly for k >= 3l-5 (at l = 4
 it still holds at k = 5: P(10,5) = 25); one step further the maximum is the formula plus one. At k = 3l-9, for both parities of l, the maximum
-is at least the formula plus l-3, i.e. (13K+8)/3, and this is the exact value in the eight cases that could be decided:
+is at least the formula plus l-3, i.e. (13K+8)/3, and this is the exact value in the nine cases that could be decided:
 P(12,6) = 33 and P(17,9) = 46 by plain SAT; P(22,12) = 59 and P(27,15) = 72 by SAT restricted by the type reduction of
 `PROOF_threshold.md` (one more edge is unsatisfiable in every type configuration of the first window; program not included);
 P(37,21) = 98 by the reduced model with a bound on the number of coordinates per type (`redcap 0 2 0000 11 11 1 4`, compiled from `redcap.c`; about an
-hour); P(47,27) = 124, P(57,33) = 150 and P(67,39) = 176 by the same model with the exact number of coordinates of each type prescribed per
-budget configuration (`NTAB=n redrev 0 2 0000 E E` with E = 2n+5 for n = 4, 5, 6, compiled from `redrev.c`; 0 solutions; for n = 6:
-4,705,984,421 nodes, 90 minutes). All of these upper bounds are computer-assisted, none is formalized. Conjecture: P((5K+1)/3, K-1) = (13K+8)/3 for
+hour); P(47,27) = 124, P(57,33) = 150, P(67,39) = 176 and P(77,45) = 202 by the same model with the exact number of coordinates of each type prescribed per
+budget configuration (`NTAB=n redrev 0 2 0000 E E` with E = 2n+5 for n = 4, 5, 6, 7, compiled from `redrev.c`; 0 solutions; for n = 6:
+4,705,984,421 nodes, 90 minutes; for n = 7: 15,038,252,472 nodes, 7 hours). All of these upper bounds are computer-assisted, none is formalized. Conjecture: P((5K+1)/3, K-1) = (13K+8)/3 for
 every K = 1 (mod 3), K >= 7.
 
 **Method** (`PROOF_threshold.md`). At these points the Plotkin count on the five cut vertices v_0, v_K, .., v_4K is tight or

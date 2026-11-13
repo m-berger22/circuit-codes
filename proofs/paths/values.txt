@@ -54,3 +54,5 @@
 57 33 14 150
 # 67 39: word pfam3.py n = 6; upper bound: `NTAB=6 redrev 0 2 0000 17 17`: 4,705,984,421 nodes, 0 solutions for length 177
 67 39 16 176
+# 77 45: word pfam3.py n = 7; upper bound: `NTAB=7 redrev 0 2 0000 19 19`: 15,038,252,472 nodes, 0 solutions for length 203 (7 hours)
+77 45 18 202
